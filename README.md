@@ -16,11 +16,11 @@ The marketplace will act as a middle man and *possibly* have an escrow system to
 
 ## Buying
 
-Buying starts at the home page where the user can search for a product by entering a term or browsing through various categories of products. It also allows the user to filter the search based on parameters like price, estimated delivery time etc. 
+Buying starts at the home page where the user can search for a product by entering either a description, brand, category, or product name in the search tool. Moreover, the search tool will include advanced filter options such as sorting by price, reviews, delivery time and many more.
 
-Next, the application displays all the products that match the user’s criteria along with a brief description and price. The user can choose to buy or add the product to their Shopping Cart. The Shopping Cart feature allows the buyer to keep a track of all the items they wish to purchase. In addition, it also allows the user to remove or add new products to the list. The total price changes accordingly.
+Then the application displays all the products that match the user’s criteria along with a brief description and price. The user can choose to either add the product to their cart where said product can be purchased or click "Info" for more product information. The Shopping Cart feature allows the buyer to keep a track of all the items they wish to purchase. In addition, it also allows the user to remove or add new products to the list. The total price changes accordingly.
 
-Final step is proceeding to the payment/transaction module.
+When satisfied, the buyer can then proceed to the payment page where they can check out their shopping cart with the appropriate cryptocurrency.
 
 ## Selling
 
