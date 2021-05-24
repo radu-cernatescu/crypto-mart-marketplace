@@ -16,13 +16,25 @@ The marketplace will act as a middle man and *possibly* have an escrow system to
 
 ## Buying
 
-The Buying module starts at the home page where the user can search for a product by entering a term or browsing through various categories of products. It also allows the user to filter the search based on parameters like price, estimated delivery time etc. 
+Buying starts at the home page where the user can search for a product by entering a term or browsing through various categories of products. It also allows the user to filter the search based on parameters like price, estimated delivery time etc. 
 
 Next, the application displays all the products that match the user’s criteria along with a brief description and price. The user can choose to buy or add the product to their Shopping Cart. The Shopping Cart feature allows the buyer to keep a track of all the items they wish to purchase. In addition, it also allows the user to remove or add new products to the list. The total price changes accordingly.
 
 Final step is proceeding to the payment/transaction module.
 
 ## Selling
+
+First, for an account to be eligible as a seller, it must be protected by 2-Factor-Authentification (2FA). Then, the user must state their interest in becoming a seller by completing a simple consent form. Lastly, the seller must indicate what delivery companies are in their area.
+
+When the account processing is complete, the seller will be shown a page called "My Shop" which will display all items put up for sale by the user. Furthermore, the "My Shop" page allows for adding and removing offers. Seeing the "My Shop" page finalizes seller account creation.
+
+Another available tool to sellers is the "Offers" page under "My Shop". When accessing the "Offers" page the seller can see user negotiations which may involve a different cryptocurrency being paid for the item. Sellers can accept or decline offers depending on their own interests.
+
+### Putting Items For Sale:
+
+The seller must first take a minimum of 4 accurate photos of the product. The photos must be at least 1280 x 720p in resolution for them to be considered as accurate.
+
+Once product evidence is sufficient, the seller must state the product's price in their preffered fiat currency (i.e. CAD, USD, EUR, CHF, etc) as well as the crypto they'd like to pe paid in. The seller chooses their asking price in a fiat currency, due to the high volatility of cryptocurrencies, so that the asking price of an item is not pegged to a quickly moving crypto market. Instead, when a buyer chooses an item that costs 25 USD for example, that value will be converted, using an API, to whatever the crypto equivalent of 25 USD is.
 
 ## Transacting in cryptocurrency
 
