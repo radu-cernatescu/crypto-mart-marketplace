@@ -10,6 +10,8 @@ Members
 
 # Project Description
 
+Name: **CryptoMart**
+
 In this project, a web based marketplace will be developed. The website will act as a platform where users can post whatever items they are trying to sell and other users may purchase them. The seller is responsible for shipping or other transportation costs to get their item to their buyer (if the item is physical). Transactions will occur using cryptocurrencies such as Bitcoin, Bitcoin Cash, Dogecoin and possibly more.
 
 The marketplace will act as a middle man and *possibly* have an escrow system to ensure that neither buyers nor sellers are scammed. First the marketplace ensures funds are recieved from the buyer, withholds them from the seller, then waits for a response from the buyer whether or not they have recieved their item in the mail, then releases funds to seller.
