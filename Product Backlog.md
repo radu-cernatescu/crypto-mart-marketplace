@@ -1,11 +1,11 @@
-| Priority | Backlog Item                 | User Story    |
-| -------- | ---------------------------- | ------------- |
-| 1        | Home page                    | TO DO: Charmi |
-| 2        | Login page                   | TO DO: Eduard |
-| 3        | Database creation            | TO DO:  Radu  |
-| 4        | Admin Panel page             | TO DO: Daniel |
-| 5        | Profile page                 |               |
-| 6        | Market/Listings Page         |               |
-| 7        | Shopping cart page           |               |
-| 8        | Wallet page/Wallet generator |               |
-| 9        | Payment page                 |               |
+| Priority | User Story # | Backlog Item                 | ASSIGNED TO   | 
+| -------- | ------------ | ---------------------------- | ------------- |
+| 1        | TBD          | Home page                    | Charmi        |
+| 2        | TBD          | Login page                   | Eduard        |
+| 3        | TBD          | Database creation            | Radu          |
+| 4        | TBD          | Admin Panel page             | Daniel        |
+| 5        | TBD          | Profile page                 |               |
+| 6        | TBD          | Market/Listings Page         |               |
+| 7        | TBD          | Shopping cart page           |               |
+| 8        | TBD          | Wallet page/Wallet generator |               |
+| 9        | TBD          | Payment page                 |               |
