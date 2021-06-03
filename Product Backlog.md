@@ -1,7 +1,7 @@
 | Priority | User Story | Backlog Item                 | ASSIGNED TO | Actors               |
 | -------- | ---------- | ---------------------------- | ----------- | -------------------- |
 | 1        | TBD        | Home page                    | Charmi      | Buyer, Seller, Admin |
-| 2        | As a client, I want to be able to create an account and log in, so that I can see my listings | Login page                   | Eduard      | Client               |
+| 2        | As a client, I want to be able to create an account and log in, so that I can see my listings. | Login page                   | Eduard      | Client               |
 | 3        | TBD        | Database creation            | Radu        | Admin                |
 | 4        | TBD        | Admin Panel page             | Daniel      | Admin                |
 | 5        |            | Profile page                 |             | Buyer, Seller        |
