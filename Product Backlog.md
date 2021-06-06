@@ -1,12 +1,12 @@
 # Home page
 ### Actors: Buyer, Seller, Admin
-* As an Admin, I want to be able to have control on the overall look.
-* As an Admin, I want to be able to design a prominent area to post promotions/deals.
-* As a buyer/seller, I want to be able to explore popular categories.
-* As a buyer/seller, I want to be able to search for products under all categories.
-* As a buyer I want to be able to see the price listing for all products.
-* As a buyer/seller, I want to be able to save my favorite products. 
-* As a buyer/seller, I want to be able to choose my location and preferred currency.
+* As an Admin, I want to be able to have control on the overall look so that I can give my website a good structure, update it over time and resolve issues. 
+* As an Admin, I want to be able to design a prominent area to post promotions/deals so that I can attract more buyers and allow sellers to promote their products.
+* As a buyer/seller, I want to be able to explore popular categories so that I can be more explicit about what I’m looking for.
+* As a buyer/seller, I want to be able to search for products under all categories so that I can compare products and choose the best ones.
+* As a buyer I want to be able to see the price listing for all products so that I can decide if they fit in my budget and sort them accordingly. 
+* As a buyer/seller, I want to be able to save my favorite products so that I can check them out later.
+* As a buyer/seller, I want to be able to choose my location and preferred currency so that I can see products available in my region and its assigned price.
 
 # Login page
 ### Actors: Client
@@ -26,13 +26,14 @@
 
 # Profile page
 ### Actors: Buyer, Seller
-* As a buyer/seller, I want to be able to edit my profile.
-* As a buyer/seller, I want to able to see my account setting and details.
-* As a buyer/seller, I want to be able to see my shipping/selling address.
-* As a buyer/seller, I want to be able to edit my shipping/selling address.
-* As a buyer/seller, I want to be able to see my membership details.
-* As a buyer, I want to be able to see my wallet funds.
-* As a seller, I want to be able to see my ‘Items for Sale’. 
+* As a buyer/seller, I want to be able to edit my profile so that I can add my personal information and interests. 
+* As a buyer/seller, I want to able to see my account setting and details so that I can edit my membership, payment methods. 
+* As a buyer/seller, I want to be able to see my shipping/selling address so that I can edit my address with time. 
+* As a buyer/seller, I want to be able to see my membership details so that I can change my plan. 
+* As a buyer/seller, I want to be able to have access to my privacy settings so that I can reset my credentials.
+* As a buyer, I want to be able to see my wallet funds so that I know when to add more funds to my account. 
+* As a buyer, I want to be able to see my shopping cart so that I can add or remove items from there. 
+* As a seller, I want to be able to see my ‘Items for Sale’ so that I can modify the offers and delete any item if needed. 
 
 # Market/Listings Page
 ### Actors: Buyer, Seller, Admin
