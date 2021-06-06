@@ -41,7 +41,7 @@
 * As a Buyer/Seller/Admin I want to be able to sort items by my own search criteria so that it is easier to navigate.
 * As a Buyer/Seller/Admin I want to be able to sort items by categories so that it is easier to navigate.
 * As a Buyer I want to be able to click on each individual item in order to see the item's details so that I can learn about the item.
-* As a Buyer I want to be able to add an item to my shopping card so that I can keep browsin or checkout.
+* As a Buyer I want to be able to add an item to my shopping card so that I can keep browsing or checkout.
 * As a Seller I want to be able to list an item on the market so that I can sell my wares.
 * As a Seller I want to be able to edit my listed items' details so that I can clarify or change the item's information.
 * As a Seller I want to be able to delete my listings so that I can decide to not sell an item.
