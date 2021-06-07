@@ -22,7 +22,13 @@
 
 # Admin Panel page
 ### Actors: Admin
-*
+* As an Admin, I want to be able to manage purchases so that I review them as needed.
+* As an Admin, I want to be able to manage accounts so that I can provide changes if necessary.
+* As an Admin, I want to be able to offer customer service so that I can help with any questions that someone might have
+* As an Admin, I want to be able to see account activity so that I can verify that the account is not doing anything out of line.
+* As an Admin, I want to be able to receive customer tickets so that I can resolve a problem they have described.
+* As an Admin, I want to be able to send direct messages to any account so that I can inform them of important information.
+* As an Admin, I want to be able to see purchasing trends so that I know what is popular or not.
 
 # Profile page
 ### Actors: Buyer, Seller
@@ -50,7 +56,14 @@
 
 # Shopping cart page
 ### Actors: Buyer
-*
+* As a Buyer, I want to be able view my currently carted items so that I know what I am purchasing
+* As a Buyer, I want to be able to click on a carted item so that I can review the item's details
+* As a Buyer, I want to be able to save a carted item so that I may decide to get it at a later date.
+* As a Buyer, I want to be able to go to the payment page so that I can pay for my currently carted items.
+* As a Buyer, I want to be able to delete a carted item so that I don't pay for an item I do not want anymore.
+* As a Buyer, I want to be able to select how much of a carted item I want so that I can get more or less of it.
+* As a Buyer, I want to be able to go back to the item listings so that I can add more to my cart.
+* As a Buyer, I want to be able to see the total price of all my carted items so that I know how much I'm going to pay.
 
 # Wallet page/Wallet generator
 ### Actors: Buyer, Seller
