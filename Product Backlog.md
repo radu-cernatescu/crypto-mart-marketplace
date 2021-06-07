@@ -9,7 +9,7 @@
 * As a buyer/seller, I want to be able to choose my location and preferred currency so that I can see products available in my region and its assigned price.
 
 # Login page
-### Actors: Client
+### Actors: Client (Generalization of Buyer & Seller)
 * As a Client I want to be able to create an account so that I can log in.
 * As a Client I want to be able to validate my account credentials through my email so that I can secure my account.
 * As a Client I want to be able to reset my password so that I can secure/recover my account.
@@ -18,7 +18,9 @@
 
 # Database creation
 ### Actors: Admin
-*
+* As an Admin, I want the users to have their information persistently stored, so that their logins will be saved for when they login.
+* As an Admin, I want all orders to be stored, so that there is a record of transaction and both buyers and sellers have a reference.
+* As an Admin, I want be able to store sensitive information, like passwords, by hashing them, so that there is increased security. 
 
 # Admin Panel page
 ### Actors: Admin
@@ -67,17 +69,22 @@
 
 # Wallet page/Wallet generator
 ### Actors: Buyer, Seller
-*
+* As a Buyer, I want to be able to generate a [wallet address](https://www.bitcoinforbeginners.io/cryptocurrency-guide/wallet-addresses-keys/), so that I can move my cryptocurrency to the marketplace, to pay for orders.
+* As a Buyer, I want to be able to re-generate my wallet address at any time, so that I can ensure my [privacy](https://jtyun.medium.com/one-societal-benefit-of-anonymous-blockchain-wallet-addresses-f4f12b929974).
+* As a Buyer/Seller, I want to be able to withdraw my cryptocurrency from the marketplace wallet, so that I can access my funds outside the market.
+* As a Buyer/Seller, I want to be able to see the progress of my [transaction on the blockchain](https://payspacemagazine.com/cryptocurrency/how-to-track-a-bitcoin-transaction/), so that I can track when my money arrives to the marketplace wallet.
+* As a Buyer/Seller, I want to be able to see my transaction ID ([TxID](https://www.binance.com/en/support/faq/2c325e53daf04442adbaf8f6ba052f71)) when withdrawing, so that I can have transparent access to see my transaction on a [blockchain explorer](https://coinsutra.com/blockchain-explorer/).
 
 # Payment page
 ### Actors: Buyer
-* As a Buyer I want to be able to add a payment method so that I can change the method.
-* As a Buyer I want to be able to remove a payment method so that I no longer use this method.
-* As a Buyer I want to be able to change between my payment methods so that I can purchase an item through my preferred method.
-* As a Buyer I want to be able to change my shipping and billing address so that I can recieve items at a different home address.
+* As a Buyer I want to be able to change between my payment methods (cryptocurrencies) so that I can purchase an item through my preferred currency.
+* As a Buyer I want to be able to change my shipping and billing address so that I can recieve items at a different address.
 * As a Buyer I want to be able to give special delivery instructions to the seller so that the item is delivered correctly.
 
 # Transaction page
 ### Actors: Buyer, Seller
-*
-
+* As a Seller, I want to be able to see special delivery instructions, so that I can apply what I can (i.e. gift wrapping) or pass the delivery instructions to the courier.
+* As a Buyer, I want to be able to see a confirmation of the order going through and my wallet being debited, so that I know my order has been recieved.
+* As a Buyer/Seller, I want to be able to see the total cryptocurrency involved in the transaction, so that I can verify the amount is accurate.
+* As a Buyer/Seller, I want to be able to see the transaction fee given to the marketplace, so that there is transparency about fees.
+* As a Buyer/Seller, I want to be able to print the page by pressing a button, so that I can store the transaction details on paper for record keeping.
