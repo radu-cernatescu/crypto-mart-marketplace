@@ -1,3 +1,12 @@
+# Actors
+#### Buyer: can purchase items from the marketplace.
+
+#### Seller: can place items for sale on the marketplace; is responsible for shipping items.
+
+#### Admin: is in charge of providing customer support, and resolving disputes.
+
+#### Client: an unauthenticated user; a visitor on the website; can only see the home page (incl ToS, Privacy Policy)
+
 # Home page
 ### Actors: Buyer, Seller, Admin
 * As an Admin, I want to be able to have control on the overall look so that I can give my website a good structure, update it over time and resolve issues. 
@@ -15,12 +24,6 @@
 * As a Client I want to be able to reset my password so that I can secure/recover my account.
 * As a Client I want to be able to access the terms & conditions for use so that I can abide by them.
 * As a Client I want to be able to access the privacy notice so that I understand how my data is shared.
-
-# Database creation
-### Actors: Admin
-* As an Admin, I want the users to have their information persistently stored, so that their logins will be saved for when they login.
-* As an Admin, I want all orders to be stored, so that there is a record of transaction and both buyers and sellers have a reference.
-* As an Admin, I want be able to store sensitive information, like passwords, by hashing them, so that there is increased security. 
 
 # Admin Panel page
 ### Actors: Admin
