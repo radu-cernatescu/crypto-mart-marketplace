@@ -8,14 +8,14 @@
 #### Client: an unauthenticated user; a visitor on the website; can only see the home page (incl ToS, Privacy Policy)
 
 # Home page
-### Actors: Buyer, Seller, Admin
+### Actors: Client, Admin
 * As an Admin, I want to be able to have control on the overall look so that I can give my website a good structure, update it over time and resolve issues. 
 * As an Admin, I want to be able to design a prominent area to post promotions/deals so that I can attract more buyers and allow sellers to promote their products.
-* As a buyer/seller, I want to be able to explore popular categories so that I can be more explicit about what I’m looking for.
-* As a buyer/seller, I want to be able to search for products under all categories so that I can compare products and choose the best ones.
-* As a buyer I want to be able to see the price listing for all products so that I can decide if they fit in my budget and sort them accordingly. 
-* As a buyer/seller, I want to be able to save my favorite products so that I can check them out later.
-* As a buyer/seller, I want to be able to choose my location and preferred currency so that I can see products available in my region and its assigned price.
+* As a Client, I want to be able to explore popular categories so that I can be more explicit about what I’m looking for.
+* As a Client, I want to be able to search for products under all categories so that I can compare products and choose the best ones.
+* As a Client I want to be able to see the price listing for all products so that I can decide if they fit in my budget and sort them accordingly. 
+* As a Client, I want to be able to save my favorite products so that I can check them out later.
+* As a Client, I want to be able to choose my location and preferred currency so that I can see products available in my region and its assigned price.
 
 # Login page
 ### Actors: Client (Generalization of Buyer & Seller)
