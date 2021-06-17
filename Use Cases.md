@@ -2,11 +2,17 @@
 
 ### 1. Buyer checks out and pays
   1.1. *Author*: Radu Cernatescu
+  
   1.2. *Description*: Buyer has finished shopping then clicks checkout in shopping cart and pays.
+  
   1.3. *Actor(s)*: Buyer
+  
   1.4. *Preconditions*: Buyer must have generated at least one wallet address in the wallet page (otherwise there's no way he has money to pay).
+  
   1.5. *Sucessful Post Conditions*: The buyer's marketplace wallet will be debited the grand total in the respective cryptocurrencies of the transaction.
+  
   1.6. *Business Rules*: The Buyer must have enough balance in their marketplace cryptocurrency wallet to cover the grand total.
+  
   1.7. *Main Flow*:
 
 |     | Buyer                              | System                                                                                                                                                                                                                                                                                          |
@@ -28,14 +34,19 @@
 
 ### 2. Create Client's Profile
   2.1. *Author*: Charmi Darji
-  2.2. *Description*: Client creates a Buyer/Seller account and becomes validated as an official customer for CryptoMart. 
+  
+  2.2. *Description*: Client creates a Buyer/Seller account and becomes validated as an official customer for CryptoMart.
+  
   2.3. *Actor(s)*: Buyer
+  
   2.4. *Preconditions*: 
      2.4.1. The CryptoMart system is running and working.
      2.4.2. The Client is at home page.
+     
   2.5. *Sucessful Post Conditions*: 
      2.5.1. The Client has successfully created a Buyer/Seller Profile 
      2.5.2. Client has been added to the system database 
+     
   2.6. *Business Rules*: 
      2.6.1. Client must have valid billing details, personal contact information, and password.
      2.6.2. The Buyer has a valid payment method.
@@ -63,15 +74,20 @@
 
 ### 3. Buyer views a product and adds it to the shopping cart
 3.1. *Author*: Eduard Moise
+
   3.2. *Description*: Buyer clicks on a product in order to view its details and proceeds to add it to the virtual shopping cart so they may continue shopping or check out.
+  
   3.3. *Actor(s)*: Buyer
+  
   3.4. *Preconditions*: 
      3.4.1. The CryptoMart system is running and working.
      3.4.2. The Client has successfully created a Buyer Profile.
      3.4.3. The Client is on the Market page.
+     
   3.5. *Sucessful Post Conditions*: 
      3.5.1. The Client has successfully viewed and added a product to their shopping cart.
      3.5.2. Shopping cart has been saved in the database for future actions.
+     
   3.6. *Business Rules*:
      3.6.1. They Buyer must not have marketplace restricitons (service ban) on their profile.
 
@@ -91,12 +107,17 @@
 
 ### 4. 
 4.1. *Author*: Daniel Perusse
+
   4.2. *Description*: 
+  
   4.3. *Actor(s)*: 
+  
   4.4. *Preconditions*: 
-     4.4.1.  
+     4.4.1. 
+     
   4.5. *Sucessful Post Conditions*: 
      4.5.1. 
+     
   4.6. *Business Rules*: 
      4.6.1. 
 
