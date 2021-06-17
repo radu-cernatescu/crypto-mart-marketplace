@@ -9,7 +9,7 @@
   
   1.4. *Preconditions*: Buyer must have generated at least one wallet address in the wallet page (otherwise there's no way he has money to pay).
   
-  1.5. *Sucessful Post Conditions*: The buyer's marketplace wallet will be debited the grand total in the respective cryptocurrencies of the transaction.
+  1.5. *Successful Post Conditions*: The buyer's marketplace wallet will be debited the grand total in the respective cryptocurrencies of the transaction.
   
   1.6. *Business Rules*: The Buyer must have enough balance in their marketplace cryptocurrency wallet to cover the grand total.
   
@@ -43,7 +43,7 @@
      2.4.1. The CryptoMart system is running and working.
      2.4.2. The Client is at home page.
      
-  2.5. *Sucessful Post Conditions*: 
+  2.5. *Successful Post Conditions*: 
      2.5.1. The Client has successfully created a Buyer/Seller Profile 
      2.5.2. Client has been added to the system database 
      
@@ -84,7 +84,7 @@
      3.4.2. The Client has successfully created a Buyer Profile.
      3.4.3. The Client is on the Market page.
      
-  3.5. *Sucessful Post Conditions*: 
+  3.5. *Successful Post Conditions*: 
      3.5.1. The Client has successfully viewed and added a product to their shopping cart.
      3.5.2. Shopping cart has been saved in the database for future actions.
      
@@ -105,38 +105,36 @@
 | --- | ------------------------------------- | ---------------------------------- |
 | A1  | Does not add product to shopping cart | Displays previous product listings |
 
-### 4. 
+### 4. Seller adds an item to the market
 4.1. *Author*: Daniel Perusse
 
-  4.2. *Description*: 
+  4.2. *Description*: Seller adds an item on the market to be purchased by a future client.
   
-  4.3. *Actor(s)*: 
+  4.3. *Actor(s)*: Seller
   
-  4.4. *Preconditions*: 
+  4.4. *Preconditions*: The seller is currently logged in and has a wallet address.
      4.4.1. 
      
-  4.5. *Sucessful Post Conditions*: 
+  4.5. *Successful Post Conditions*: The seller successfully posts and item on the market for sale.
      4.5.1. 
      
-  4.6. *Business Rules*: 
+  4.6. *Business Rules*: The seller cannot put illegal goods for sale.
      4.6.1. 
 
   4.7. *Main Flow*:
  
-|     | Buyer/Seller | System |
-| --- | ------------ | ------ |
-| 1   |              |        |
-| 2   |              |        |
-| 3   |              |        |
-| 4   |              |        |  
-| 5   |              |        |
-| 6   |              |        |  
-| 7   |              |        |  
+|     | Buyer/Seller                                                      |                                                                                    System |
+| --- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 1   | Click button to add an item for sale                              | Display add item page                                                                     |
+| 2   | Fill in item name, description, type, weight, other details, etc. | Ask for item picture                                                                      |
+| 3   | Selects an image from device (A3)                                 | Ask for selling method (Auction or Fixed price .A2 )                                      | 
+| 4   | Seller sets method to auction (A2)                                | Ask for minimum price and number of days for auction                                      |
+| 5   | Seller sets price and days                                        | Display example of item posting. Request confirmation of posting                          |
+| 6   | Seller confirms his item.                                         | Display success screen and confirmation of item posting. Send an email to sellers address |  
 
 4.8. *Alternate Flow*:
   
-|     | Alternate Flow | Description |
-| --- | -------------- | ----------- |
-| A1  |                |             |
-| A2  |                |             |
-| A3  |                |             |
+|     | Alternate Flow                    | Description                                                                                                                                                                        |
+| --- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A1  | Seller cancels item posting       | At any time during the process, the seller may decide to cancel putting the item for sale                                                                                          |
+| A2  | Seller sets method to fixed price | Instead of auctioning the item, the user can choose to sell it to any client who is willing to pay upfront. The Seller can also list how much of said item is available for sale. |
