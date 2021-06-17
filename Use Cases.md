@@ -37,7 +37,7 @@
   
   2.2. *Description*: Client creates a Buyer/Seller account and becomes validated as an official customer for CryptoMart.
   
-  2.3. *Actor(s)*: Buyer
+  2.3. *Actor(s)*: Buyer/Seller
   
   2.4. *Preconditions*: 
   
