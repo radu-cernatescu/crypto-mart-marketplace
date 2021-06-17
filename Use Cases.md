@@ -1,13 +1,13 @@
 # Use Cases
 
 ### 1. Buyer checks out and pays
-  1. *Author*: Radu Cernatescu
-  2. *Description*: Buyer has finished shopping then clicks checkout in shopping cart and pays.
-  3. *Actor(s)*: Buyer
-  4. *Preconditions*: Buyer must have generated at least one wallet address in the wallet page (otherwise there's no way he has money to pay).
-  5. *Sucessful Post Conditions*: The buyer's marketplace wallet will be debited the grand total in the respective cryptocurrencies of the transaction.
-  6. *Business Rules*: The Buyer must have enough balance in their marketplace cryptocurrency wallet to cover the grand total.
-  7. *Main Flow*:
+  1.1. *Author*: Radu Cernatescu
+  1.2. *Description*: Buyer has finished shopping then clicks checkout in shopping cart and pays.
+  1.3. *Actor(s)*: Buyer
+  1.4. *Preconditions*: Buyer must have generated at least one wallet address in the wallet page (otherwise there's no way he has money to pay).
+  1.5. *Sucessful Post Conditions*: The buyer's marketplace wallet will be debited the grand total in the respective cryptocurrencies of the transaction.
+  1.6. *Business Rules*: The Buyer must have enough balance in their marketplace cryptocurrency wallet to cover the grand total.
+  1.7. *Main Flow*:
 
 |     | Buyer                              | System                                                                                                                                                                                                                                                                                          |
 | --- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -16,7 +16,7 @@
 | 3   | Clicks pay                         | For each order, the Buyer can select which crypto wallet (BTC, BHC, DOGE) to debit from, if and only if, the Seller allows payment of multiple cryptos, otherwise Buyer is forced to debit whatever Seller prefers. Sellers are encouraged to accept more cryptos for more potential customers. |
 | 4   | Clicks place order                 | Order confirmation page appears                                                                                                                                                                                                                                                                 |
 
-  8. *Alternate Flow*:
+  1.8. *Alternate Flow*:
   
 |     | Alternate Flow                                          | Description                                                                                                                                                                                             |
 | --- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,21 +27,21 @@
 
 
 ### 2. Create Client's Profile
-  1. *Author*: Charmi Darji
-  2. *Description*: Client creates a Buyer/Seller account and becomes validated as an official customer for CryptoMart. 
-  3. *Actor(s)*: Buyer
-  4. *Preconditions*: 
-     1. The CryptoMart system is running and working.
-     2. The Client is at home page.
-  5. *Sucessful Post Conditions*: 
-     1. The Client has successfully created a Buyer/Seller Profile 
-     2. Client has been added to the system database 
-  6. *Business Rules*: 
-     1. Client must have valid billing details, personal contact information, and password.
-     2. The Buyer has a valid payment method.
-     3. The Seller agrees to terms and conditions of not putting up illegal items for sale
+  2.1. *Author*: Charmi Darji
+  2.2. *Description*: Client creates a Buyer/Seller account and becomes validated as an official customer for CryptoMart. 
+  2.3. *Actor(s)*: Buyer
+  2.4. *Preconditions*: 
+     2.4.1. The CryptoMart system is running and working.
+     2.4.2. The Client is at home page.
+  2.5. *Sucessful Post Conditions*: 
+     2.5.1. The Client has successfully created a Buyer/Seller Profile 
+     2.5.2. Client has been added to the system database 
+  2.6. *Business Rules*: 
+     2.6.1. Client must have valid billing details, personal contact information, and password.
+     2.6.2. The Buyer has a valid payment method.
+     2.6.3. The Seller agrees to terms and conditions of not putting up illegal items for sale
 
-  7. *Main Flow*:
+  2.7. *Main Flow*:
  
 |     | Buyer/Seller                       | System                                                                                                                                                                                                                                                                                          |
 | --- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -53,7 +53,7 @@
 | 6   | Buyer can access Shopping Cart     | Add, delete or view items in the Shopping  Cart list                                                            |  
 | 7   | Buyer can switch his current account to a Seller account     | Agree to terms and conditions which adds a section to put up items for sale making it a Seller account                                                      |  
 
-8. *Alternate Flow*:
+2.8. *Alternate Flow*:
   
 |     | Alternate Flow                                          | Description                                                                                                                                                                                             |
 | --- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -61,6 +61,61 @@
 | A2  | Login through FaceBook or Google account                | Redirect to Facebook or google account login page and request account information including username/email and password to sign in using an existing third party account (google or facebook  |
 | A3  | User cancels request                                    | User Cancels Request	At any time, the User may choose to cancel the account creation.  At this point, the processing is discontinued and the user is notified that the account management request has been cancelled.     |           
 
-### 3. 
+### 3. Buyer views a product and adds it to the shopping cart
+3.1. *Author*: Eduard Moise
+  3.2. *Description*: Buyer clicks on a product in order to view its details and proceeds to add it to the virtual shopping cart so they may continue shopping or check out.
+  3.3. *Actor(s)*: Buyer
+  3.4. *Preconditions*: 
+     3.4.1. The CryptoMart system is running and working.
+     3.4.2. The Client has successfully created a Buyer Profile.
+     3.4.3. The Client is on the Market page.
+  3.5. *Sucessful Post Conditions*: 
+     3.5.1. The Client has successfully viewed and added a product to their shopping cart.
+     3.5.2. Shopping cart has been saved in the database for future actions.
+  3.6. *Business Rules*:
+     3.6.1. They Buyer must not have marketplace restricitons (service ban) on their profile.
+
+3.7. *Main Flow*:
+ 
+|     | Buyer/Seller                                        | System                                                                      |
+| --- | --------------------------------------------------- | --------------------------------------------------------------------------- |
+| 1   | Sorts products by search criteria and or categories | Displays product listings accordingly                                       |
+| 2   | Selects specific listed product                     | Loads new page and displays all information related to the selected product |
+| 3   | Adds product to the shopping cart (A1)              | Saves shopping cart products in database ready for further actions          |
+
+3.8. *Alternate Flow*:
+
+|     | Alternate Flow                        | Description                        |
+| --- | ------------------------------------- | ---------------------------------- |
+| A1  | Does not add product to shopping cart | Displays previous product listings |
 
 ### 4. 
+4.1. *Author*: Daniel Perusse
+  4.2. *Description*: 
+  4.3. *Actor(s)*: 
+  4.4. *Preconditions*: 
+     4.4.1.  
+  4.5. *Sucessful Post Conditions*: 
+     4.5.1. 
+  4.6. *Business Rules*: 
+     4.6.1. 
+
+  4.7. *Main Flow*:
+ 
+|     | Buyer/Seller | System |
+| --- | ------------ | ------ |
+| 1   |              |        |
+| 2   |              |        |
+| 3   |              |        |
+| 4   |              |        |  
+| 5   |              |        |
+| 6   |              |        |  
+| 7   |              |        |  
+
+4.8. *Alternate Flow*:
+  
+|     | Alternate Flow | Description |
+| --- | -------------- | ----------- |
+| A1  |                |             |
+| A2  |                |             |
+| A3  |                |             |
