@@ -40,16 +40,23 @@
   2.3. *Actor(s)*: Buyer
   
   2.4. *Preconditions*: 
+  
      2.4.1. The CryptoMart system is running and working.
+     
      2.4.2. The Client is at home page.
      
   2.5. *Successful Post Conditions*: 
+  
      2.5.1. The Client has successfully created a Buyer/Seller Profile 
+     
      2.5.2. Client has been added to the system database 
      
   2.6. *Business Rules*: 
+  
      2.6.1. Client must have valid billing details, personal contact information, and password.
+     
      2.6.2. The Buyer has a valid payment method.
+     
      2.6.3. The Seller agrees to terms and conditions of not putting up illegal items for sale
 
   2.7. *Main Flow*:
@@ -80,15 +87,21 @@
   3.3. *Actor(s)*: Buyer
   
   3.4. *Preconditions*: 
+  
      3.4.1. The CryptoMart system is running and working.
+     
      3.4.2. The Client has successfully created a Buyer Profile.
+     
      3.4.3. The Client is on the Market page.
      
   3.5. *Successful Post Conditions*: 
+  
      3.5.1. The Client has successfully viewed and added a product to their shopping cart.
+     
      3.5.2. Shopping cart has been saved in the database for future actions.
      
   3.6. *Business Rules*:
+  
      3.6.1. They Buyer must not have marketplace restricitons (service ban) on their profile.
 
 3.7. *Main Flow*:
@@ -113,13 +126,10 @@
   4.3. *Actor(s)*: Seller
   
   4.4. *Preconditions*: The seller is currently logged in and has a wallet address.
-     4.4.1. 
      
   4.5. *Successful Post Conditions*: The seller successfully posts and item on the market for sale.
-     4.5.1. 
      
   4.6. *Business Rules*: The seller cannot put illegal goods for sale.
-     4.6.1. 
 
   4.7. *Main Flow*:
  
