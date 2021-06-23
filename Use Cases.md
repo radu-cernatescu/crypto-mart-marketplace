@@ -106,7 +106,7 @@
 
 3.7. *Main Flow*:
  
-|     | Buyer/Seller                                        | System                                                                      |
+|     | Buyer                                               | System                                                                      |
 | --- | --------------------------------------------------- | --------------------------------------------------------------------------- |
 | 1   | Sorts products by search criteria and or categories | Displays product listings accordingly                                       |
 | 2   | Selects specific listed product                     | Loads new page and displays all information related to the selected product |
@@ -125,15 +125,16 @@
   
   4.3. *Actor(s)*: Seller
   
-  4.4. *Preconditions*: The seller is currently logged in and has a wallet address.
+  4.4. *Preconditions*: The seller is currently logged in.
      
-  4.5. *Successful Post Conditions*: The seller successfully posts and item on the market for sale.
+  4.5. *Successful Post Conditions*: The seller successfully posts an item on the market for sale.
      
-  4.6. *Business Rules*: The seller cannot put illegal goods for sale.
+  4.6. *Business Rules*: The seller has agreed to not post illegal goods.
+                         The seller has a wallet address ready.
 
   4.7. *Main Flow*:
  
-|     | Buyer/Seller                                                      |                                                                                    System |
+|     | Seller                                                            |                                                                                    System |
 | --- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | 1   | Click button to add an item for sale                              | Display add item page                                                                     |
 | 2   | Fill in item name, description, type, weight, other details, etc. | Ask for item picture                                                                      |
