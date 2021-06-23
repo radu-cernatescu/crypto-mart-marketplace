@@ -63,13 +63,14 @@
  
 |     | Buyer/Seller                       | System                                                                                                                                                                                                                                                                                          |
 | --- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   |Visits Home page to create Profile  | Request personal details including: email address, first name, last name, contact number.                                                                                                                                                                                                        |
+| 1   |Visits Home page to create Profile  | Request personal details including: email address, first name, last name, contact number.   (A1, A2)                                                                                                                                                                                            |
 | 2   | Enter the required information     | Send a validation code to the provided number to verity the details and authenticate the profile                                                                                                                                                                                                |
 | 3   | Create a wallet                    | Link the user's crypto currency to their Profile and add funds to the wallet                                    |
 | 4   | Add Shipping information           | Enter Apt/house no., Postal code, City and Country                                                              |  
-| 5   | Confirm profile details            | Save all account information to system and save the user information including wallet information, e-mail, shipping address, phone number and personal information                                                        |
+| 5   | Confirm profile details            | Save all account information to system and save the user information including wallet information, e-mail, shipping address, phone number and personal information     (A3)                                                   |
 | 6   | Buyer can access Shopping Cart     | Add, delete or view items in the Shopping  Cart list                                                            |  
 | 7   | Buyer can switch his current account to a Seller account     | Agree to terms and conditions which adds a section to put up items for sale making it a Seller account                                                      |  
+| 8   | View or Add Items for Sale          | Seller can login to his profile to view, add or delete items he has put up on sale.                            |
 
 2.8. *Alternate Flow*:
   
