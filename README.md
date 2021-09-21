@@ -6,13 +6,12 @@ Members
 | Radu Cernatescu | radu-cernatescu | rcernatescu@myseneca.ca         |
 | Eduard Moise    | 2Lich           | emoise@myseneca.ca              |
 | Charmi Darji    | charmi2000      | cbdarji@myseneca.ca             |
-| Daniel Perusse  | MapleTaco       | dperusse@myseneca.ca            |
 
 # Project Description
 
 Name: **CryptoMart**
 
-In this project, a web based marketplace will be developed. The website will act as a platform where users can post whatever items they are trying to sell and other users may purchase them. The seller is responsible for shipping or other transportation costs to get their item to their buyer (if the item is physical). Transactions will occur using cryptocurrencies such as Bitcoin, Bitcoin Cash, Dogecoin and possibly more.
+In this project, a web based marketplace will be developed. The website will act as a platform where users can post whatever items they are trying to sell and other users may purchase them. The seller is responsible for shipping or other transportation costs to get their item to their buyer (if the item is physical). Transactions will occur using a cryptocurrency called Bitcoin Cash, which has very low transaction fees and is easily obtainable/exchangeable from fiat.
 
 The marketplace will act as a middle man and *possibly* have an escrow system to ensure that neither buyers nor sellers are scammed. First the marketplace ensures funds are recieved from the buyer, withholds them from the seller, then waits for a response from the buyer whether or not they have recieved their item in the mail, then releases funds to seller.
 
@@ -36,7 +35,7 @@ Another available tool to sellers is the "Offers" page under "My Shop". When acc
 
 The seller must first take a minimum of 4 accurate photos of the product. The photos must be at least 1280 x 720p in resolution for them to be considered as accurate.
 
-Once product evidence is sufficient, the seller must state the product's price in their preffered fiat currency (i.e. CAD, USD, EUR, CHF, etc) as well as the crypto they'd like to pe paid in. The seller chooses their asking price in a fiat currency, due to the high volatility of cryptocurrencies, so that the asking price of an item is not pegged to a quickly moving crypto market. Instead, when a buyer chooses an item that costs 25 USD for example, that value will be converted, using an API, to whatever the crypto equivalent of 25 USD is.
+Once product evidence is sufficient, the seller must state the product's price in their preffered fiat currency (i.e. CAD, USD, EUR, CHF, etc). The seller chooses their asking price in a fiat currency, due to the high volatility of cryptocurrencies, so that the asking price of an item is not pegged to a quickly moving crypto market. Instead, when a buyer chooses an item that costs 25 USD for example, that value will be converted, using an API, to whatever the crypto equivalent of 25 USD is.
 
 ## Transacting in cryptocurrency
 
