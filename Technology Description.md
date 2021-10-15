@@ -15,7 +15,8 @@ __App Frameworks:__
 * Express.js
 
 __Automation Framworks:__
-* Jenkins
+
+* Github Actions
 
 __SQL Data Storage:__
 
@@ -37,7 +38,6 @@ __Programming languages:__
 __JavaScript Frameworks:__ 
 
 * Angular
-* Redux
 
 __Automation Frameworks:__
 

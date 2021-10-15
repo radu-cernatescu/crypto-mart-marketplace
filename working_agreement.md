@@ -27,7 +27,7 @@
 Failure to follow any of the above will result in your pull request collecting dust until the issue is cured.
 
 ### Version Control
-* Team members will work on their own branches until their story point is completed and ready to be merged into production (main branch)
+* Team members will work on feature branches until their story point is completed and ready to be merged into production (main branch)
 * Merge conflicts will be solved using Visual Studio because it’s a beauty for merge conflicts; all team members will be notified of a conflict and we shall agree on a solution
 * To merge code into main, a pull request will be made and the reviewers are the other two team members, BOTH reviewers must accept the pull request
 * Code must meet acceptance criteria, tested on multiple browsers
