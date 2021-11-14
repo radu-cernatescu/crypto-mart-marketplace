@@ -55,14 +55,16 @@
             <div class="form-group">
                 <label for="rePassword">Re Enter Password</label>
                 <input type="password" id="rePassword" class="form-control"
-                  formControlName="rePassword" name="rePassword" required/>
-                  <div *ngIf="loginForm.controls.rePassword.invalid && (loginForm.controls.rePassword.dirty || loginForm.controls.rePassword.touched)"
+                  formControlName="rePassword" name="rePassword"/>
+                  <div *ngIf="this.loginForm.controls['rePassword'].value ==='' && (loginForm.controls.rePassword.dirty || loginForm.controls.rePassword.touched)"
                   class="alert alert-danger">
-                  <div *ngIf="loginForm.controls.rePassword.errors?.['required']">
+                  <div>
                     Field is required.
                   </div>
                   </div>
-                  <div class="alert alert-danger" *ngIf="!loginForm.controls.rePassword.invalid && loginForm.controls.password.value !== loginForm.controls.rePassword.value">
+                  <div class="alert alert-danger" *ngIf="this.loginForm.controls['rePassword'].value !=='' &&
+                  (loginForm.controls.rePassword.dirty || loginForm.controls.rePassword.touched) &&
+                    loginForm.controls.password.value !== loginForm.controls.rePassword.value">
                     Passwrd didn't match.
                   </div>
               </div>
@@ -70,7 +72,7 @@
               <button
                 class="btn btn-primary"
                 type="submit"
-                [disabled]="!loginForm.valid"
+                [disabled]="!passwordMatch"
               > Signup</button>
             </div>
           </form>

@@ -10,16 +10,25 @@ import { Observable } from 'rxjs';
 export class SignUpComponent implements OnInit {
   isLoading!: boolean;
   isLoginMode: any;
+  passwordMatch= false;
   loginForm = new FormGroup({
     first: new FormControl('', Validators.required,),
     last: new FormControl('', Validators.required,),
     email: new FormControl('', Validators.required,),
     password: new FormControl('', Validators.minLength(8)),
-    rePassword: new FormControl('', Validators.required,),
+    rePassword: new FormControl(''),
   });
   constructor() { }
 
   ngOnInit(): void {
+    this.loginForm.valueChanges.subscribe(() => {
+      if((this.loginForm.controls['password'].value === this.loginForm.controls['rePassword'].value) &&
+      this.loginForm.valid){
+        this.passwordMatch = true;
+      } else{
+        this.passwordMatch = false;
+      }
+    })
   }
 
   onSubmit() {
