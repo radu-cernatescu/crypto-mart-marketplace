@@ -68,12 +68,14 @@
                     Passwrd didn't match.
                   </div>
               </div>
-            <div>
+            <div style="float: right;">
               <button
                 class="btn btn-primary"
                 type="submit"
                 [disabled]="!passwordMatch"
-              > Signup</button>
+              > SIGNUP </button>
+              <div class="divider"></div>
+              <button class="btn btn-success" routerLink="/main">BACK</button>
             </div>
           </form>
     </div>
