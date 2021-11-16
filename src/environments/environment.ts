@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  CMS_API: 'http://localhost:80/api/'
+  CMS_API: 'http://localhost:8080/api/'
 };
 
 /*
