@@ -20,11 +20,12 @@ export class UserService {
         this.CMS_API = ENV.CMS_API;
     }
 
-    loginUser(username: any): Observable<any> {
-        return this.http.get(this.CMS_API + 'user?username=' + username, httpOptions)
-          .pipe(
-            catchError(this.handleError('get user', []))
-          );
+    getUser(email: any, password: any): Observable<any> {
+      console.log('here')
+      return this.http.get(this.CMS_API + 'user?email=' + email + "&password=" + password, httpOptions)
+        .pipe(
+          catchError(this.handleError('get user', []))
+      ); 
     }
 
     /**
