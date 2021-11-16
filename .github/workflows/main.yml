@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  front-end:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +15,7 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "capstone-group15"
           heroku_email: "rcernatescu@myseneca.ca"
-  build:
+  back-end:
     runs-on: ubuntu-latest
     steps:
       - working-directory: backend
