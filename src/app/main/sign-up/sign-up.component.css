@@ -1,0 +1,36 @@
+button.btn-success {
+    background-color: #eae7dc;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+}
+
+button.btn-success:hover {
+    animation-name: colorhover;
+    animation-duration: 500ms;
+    background-color: #d8c3a5
+}
+
+button.btn-primary {
+    background-color: #eae7dc;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+}
+
+button.btn-primary:hover {
+    animation-name: colorhover;
+    animation-duration: 500ms;
+    background-color: #d8c3a5
+}
+
+@keyframes colorhover {
+    from {background-color: #eae7dc}
+    to {background-color: #d8c3a5}
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
