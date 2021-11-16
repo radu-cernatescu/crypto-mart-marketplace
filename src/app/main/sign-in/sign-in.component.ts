@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { UserService } from 'src/app/user.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
+  providers: [UserService]
 })
 export class SignInComponent implements OnInit {
   isLoading!: boolean;
@@ -15,7 +17,7 @@ export class SignInComponent implements OnInit {
     password: new FormControl('', Validators.minLength(8)),
   });
 
-  constructor() { }
+  constructor(private service: UserService) { }
 
   ngOnInit(): void {
   }
@@ -23,14 +25,19 @@ export class SignInComponent implements OnInit {
     // if (!form.valid) {
     //   return;
     // }
-    // const email = form.value.email;
-    // const password = form.value.password;
-
-    let authObs: Observable<any>;
-
+    this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) =>
+    {
+      console.log(this.loginForm.value.email)
+      if (res.message == "SUCCESS") {
+        //User found
+        alert("Login Succesful");
+      }
+      else{
+        alert("NO login")
+      }
+    });
+    
     this.isLoading = true;
-    //authObs = this.authService.login(email, password);
-    alert("Login Succesful");
   }
     
 }
