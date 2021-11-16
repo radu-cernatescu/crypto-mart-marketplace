@@ -21,8 +21,15 @@ export class UserService {
     }
 
     getUser(email: any, password: any): Observable<any> {
-      console.log('here')
-      return this.http.get(this.CMS_API + 'user?email=' + email + "&password=" + password, httpOptions)
+      return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
+        .pipe(
+          catchError(this.handleError('get user', []))
+      ); 
+    }
+
+    addUser(firstName: any, lastName: any, email: any, password: any) {
+      const userObj = {firstName: firstName, lastName: lastName, email: email, password: password};
+      return this.http.post(this.CMS_API + 'sign-up', userObj)
         .pipe(
           catchError(this.handleError('get user', []))
       ); 

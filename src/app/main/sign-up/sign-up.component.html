@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="first">First Name</label>
                 <input
                   type="strig" id="first" class="form-control"
                   formControlName="first" name="first" required/>
-                  <div *ngIf="loginForm.controls.first.invalid && (loginForm.controls.first.dirty || loginForm.controls.first.touched)"
+                  <div *ngIf="signUpForm.controls.first.invalid && (signUpForm.controls.first.dirty || signUpForm.controls.first.touched)"
                   class="alert alert-danger">
-                  <div *ngIf="loginForm.controls.first.errors?.['required']">
+                  <div *ngIf="signUpForm.controls.first.errors?.['required']">
                     First Name is required.
                   </div>
                   </div>
@@ -18,9 +18,9 @@
                 <input
                   type="email" id="last" class="form-control"
                   formControlName="last" name="last" required/>
-                  <div *ngIf="loginForm.controls.last.invalid && (loginForm.controls.last.dirty || loginForm.controls.last.touched)"
+                  <div *ngIf="signUpForm.controls.last.invalid && (signUpForm.controls.last.dirty || signUpForm.controls.last.touched)"
                   class="alert alert-danger">
-                  <div *ngIf="loginForm.controls.last.errors?.['required']">
+                  <div *ngIf="signUpForm.controls.last.errors?.['required']">
                     Last Name is required.
                   </div>
                   </div>
@@ -30,24 +30,24 @@
               <input
                 type="email" id="email" class="form-control"
                 formControlName="email" name="email" required email/>
-                <div *ngIf="loginForm.controls.email.invalid && (loginForm.controls.email.dirty || loginForm.controls.email.touched)"
+                <div *ngIf="signUpForm.controls.email.invalid && (signUpForm.controls.email.dirty || signUpForm.controls.email.touched)"
                 class="alert alert-danger">
-                <div *ngIf="loginForm.controls.email.errors?.['required']">
+                <div *ngIf="signUpForm.controls.email.errors?.['required']">
                     E-Mail is required.
                 </div>
-                <span *ngIf="!loginForm.controls.email.errors?.['required']">email is not correrct</span>
+                <span *ngIf="!signUpForm.controls.email.errors?.['required']">email is not correrct</span>
                 </div>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" id="password" class="form-control"
                 formControlName="password" name="password" required/>
-                <div *ngIf="loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)"
+                <div *ngIf="signUpForm.controls.password.invalid && (signUpForm.controls.password.dirty || signUpForm.controls.password.touched)"
                 class="alert alert-danger">
-                <div *ngIf="loginForm.controls.password.errors?.['required']">
+                <div *ngIf="signUpForm.controls.password.errors?.['required']">
                     Password is required.
                 </div>
-                <div *ngIf="loginForm.controls.password.errors?.['minlength']">
+                <div *ngIf="signUpForm.controls.password.errors?.['minlength']">
                     Password must be at least 8 characters long.
                 </div>
                 </div>
@@ -56,15 +56,15 @@
                 <label for="rePassword">Re Enter Password</label>
                 <input type="password" id="rePassword" class="form-control"
                   formControlName="rePassword" name="rePassword"/>
-                  <div *ngIf="this.loginForm.controls['rePassword'].value ==='' && (loginForm.controls.rePassword.dirty || loginForm.controls.rePassword.touched)"
+                  <div *ngIf="this.signUpForm.controls['rePassword'].value ==='' && (signUpForm.controls.rePassword.dirty || signUpForm.controls.rePassword.touched)"
                   class="alert alert-danger">
                   <div>
                     Field is required.
                   </div>
                   </div>
-                  <div class="alert alert-danger" *ngIf="this.loginForm.controls['rePassword'].value !=='' &&
-                  (loginForm.controls.rePassword.dirty || loginForm.controls.rePassword.touched) &&
-                    loginForm.controls.password.value !== loginForm.controls.rePassword.value">
+                  <div class="alert alert-danger" *ngIf="this.signUpForm.controls['rePassword'].value !=='' &&
+                  (signUpForm.controls.rePassword.dirty || signUpForm.controls.rePassword.touched) &&
+                    signUpForm.controls.password.value !== signUpForm.controls.rePassword.value">
                     Passwrd didn't match.
                   </div>
               </div>
