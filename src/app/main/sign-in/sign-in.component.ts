@@ -27,13 +27,12 @@ export class SignInComponent implements OnInit {
     // }
     this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) =>
     {
-      console.log(this.loginForm.value.email)
       if (res.message == "SUCCESS") {
         //User found
         alert("Login Succesful");
       }
       else{
-        alert("NO login")
+        alert("Username or password incorrect.")
       }
     });
     
