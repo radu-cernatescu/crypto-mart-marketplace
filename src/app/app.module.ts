@@ -9,7 +9,6 @@ import { SignInComponent } from './main/sign-in/sign-in.component';
 import { SignUpComponent } from './main/sign-up/sign-up.component';
 import { NavbarComponent } from './main/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './user.service'
 
 @NgModule({
   declarations: [

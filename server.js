@@ -65,4 +65,10 @@ app.post("/api/sign-up", async (req, res) => {
     client.close();
 });
 
-app.listen(process.env.PORT || 8080);
+app.use(express.static('dist/Group15'))
+
+app.get('/*', function(req, res) {
+    res.sendFile('index.html', {root: 'dist/Group15'});
+});
+
+app.listen(process.env.PORT || 80);

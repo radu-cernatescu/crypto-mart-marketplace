@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  CMS_API: 'https://capstone-group15-endpoint.herokuapp.com/api'
+  CMS_API: 'http://localhost:80/api/'
 };
