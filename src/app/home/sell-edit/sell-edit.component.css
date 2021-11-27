@@ -1,0 +1,9 @@
+.btn-bwm {
+    background-color: #f2f0f8;
+    color: rgb(12, 12, 12);
+    /* padding: 15px 30px; */
+    font-size: 20px;
+}
+.image-upload-container {
+    cursor: pointer;
+  } 

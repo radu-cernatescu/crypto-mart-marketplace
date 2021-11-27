@@ -9,6 +9,9 @@ import { SignInComponent } from './main/sign-in/sign-in.component';
 import { SignUpComponent } from './main/sign-up/sign-up.component';
 import { NavbarComponent } from './main/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileComponent } from './home/profile.component';
+import { SellEditComponent } from './home/sell-edit/sell-edit.component';
+import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { HttpClientModule } from '@angular/common/http';
     MainComponent,
     SignInComponent,
     SignUpComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProfileComponent,
+    SellEditComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
@@ -25,6 +31,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] 
 })
 export class AppModule { }

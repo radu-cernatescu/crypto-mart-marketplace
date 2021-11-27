@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/user.service';
 
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
     password: new FormControl('', Validators.minLength(8)),
     rePassword: new FormControl(''),
   });
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.signUpForm.valueChanges.subscribe(() => {
@@ -44,12 +46,14 @@ export class SignUpComponent implements OnInit {
       if (res.message == "SUCCESS") {
         //User found
         alert("Signup successful!");
+        this.router.navigate(['/main']); 
       }
       else if (res.message == "EXISTING USER"){
         alert("User already exists");
       }
       else {
-        alert("There was an error signing up.")
+        alert("There was an error signing up.");
+        //this.router.navigate(['/main']);
       }
     });
 

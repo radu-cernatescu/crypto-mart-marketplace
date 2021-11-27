@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-xs-10">
+        <app-sell-edit></app-sell-edit>
+      <hr>
+      <h3>Items for Sale: </h3>
+      <ul class="list-group">
+        <a
+        class="list-group-item"
+        style="cursor: pointer; background: rgb(245, 244, 242);"
+        *ngFor="let sellItem of sellItems; let i = index"
+        (click)="onEditItem(i)">
+        <div style="display: flex;
+        justify-content: space-between">
+            <div>
+                <img height="50px" width="50px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.imageInput}} alt="hi">
+            </div>
+            <div>
+                <span style="font-weight: bold;">{{ sellItem.name }}</span>
+                <p>{{ sellItem.description }}</p>
+            </div>
+            <div>
+                <span class="badge">{{ sellItem.amount }}</span>
+            </div>
+        </div>
+        
+        </a>
+      </ul> 
+    </div>
+  </div>
