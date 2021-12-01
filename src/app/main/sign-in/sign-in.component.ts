@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/user.service';
 
@@ -17,7 +18,8 @@ export class SignInComponent implements OnInit {
     password: new FormControl('', Validators.minLength(8)),
   });
 
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,
+    private router: Router) { } 
 
   ngOnInit(): void {
   }
@@ -30,9 +32,11 @@ export class SignInComponent implements OnInit {
       if (res.message == "SUCCESS") {
         //User found
         alert("Login Succesful");
+        this.router.navigate(['/main']);
       }
       else{
-        alert("Username or password incorrect.")
+        alert("Username or password incorrect.");
+        //this.router.navigate(['/main']);
       }
     });
     
