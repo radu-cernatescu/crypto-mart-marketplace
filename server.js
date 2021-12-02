@@ -20,15 +20,15 @@ app.post("/api/user-login", async (req, res) => {
                     res.send({message: "SUCCESS", data: user});
                 }
                 else{
-                    res.send({message:"FAILED"})
+                    res.send({message:"FAILED"});
                 }
             }
             else{
-                res.send({message:"FAILED"})
+                res.send({message:"FAILED"});
             }
         }).catch(err => {
             //console.log(err)
-            res.send({message:"FAILED"})
+            res.send({message:"FAILED"});
         });
         
     });

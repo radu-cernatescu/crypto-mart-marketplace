@@ -27,18 +27,22 @@ export class SignInComponent implements OnInit {
     // if (!form.valid) {
     //   return;
     // }
-    this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) =>
-    {
-      if (res.message == "SUCCESS") {
-        //User found
-        alert("Login Succesful");
-        this.router.navigate(['/main']);
+    this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe(
+      (res: any) => { 
+        console.log(res); // this will also return false
       }
-      else{
-        alert("Username or password incorrect.");
-        //this.router.navigate(['/main']);
-      }
-    });
+    );
+
+    if (this.service.getIsLoggedIn() == true) {
+      //User found
+      alert("Login Successful");
+      this.router.navigate(['/main']);
+      
+    }
+    else{
+      alert("Username or password incorrect.");
+      //this.router.navigate(['/main']);
+    }
     
     this.isLoading = true;
   }

@@ -15,24 +15,42 @@ const httpOptions = {
 })
 export class UserService {
     CMS_API: string;
+    isLoggedIn: boolean;
 
     constructor(private http: HttpClient) { 
         this.CMS_API = ENV.CMS_API;
+        this.isLoggedIn = false;
     }
 
     getUser(email: any, password: any): Observable<any> {
-      return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
+      this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
         .pipe(
           catchError(this.handleError('get user', []))
-      ); 
+      ).subscribe((res: any) => {
+        if (res.message == "SUCCESS"){
+          // this will execute when the user is successfully logged in
+          // but the isLoggedIn variable isn't update, I don't understand
+          // the scoping
+          this.isLoggedIn = true;
+        }
+      });
+      console.log("logged in " + this.isLoggedIn); // this will print false, like what?
+      return of(this.isLoggedIn);
     }
 
     addUser(firstName: any, lastName: any, email: any, password: any) {
       const userObj = {firstName: firstName, lastName: lastName, email: email, password: password};
       return this.http.post(this.CMS_API + 'sign-up', userObj)
-        .pipe(
-          catchError(this.handleError('get user', []))
+        .pipe(catchError(this.handleError('get user', []))
       ); 
+    }
+
+    getIsLoggedIn(): boolean {
+      return this.isLoggedIn;
+    }
+
+    setIsLoggedIn(isLoggedIn: boolean) {
+      this.isLoggedIn = isLoggedIn;
     }
 
     /**
