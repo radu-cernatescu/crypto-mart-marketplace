@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 const httpOptions = {
     headers: new HttpHeaders(
@@ -15,27 +17,15 @@ const httpOptions = {
 })
 export class UserService {
     CMS_API: string;
-    isLoggedIn: boolean;
+    isLoggedIn = false;
 
-    constructor(private http: HttpClient) { 
+    constructor(private http: HttpClient, private router: Router) { 
         this.CMS_API = ENV.CMS_API;
-        this.isLoggedIn = false;
     }
 
-    getUser(email: any, password: any): Observable<any> {
-      this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
-        .pipe(
-          catchError(this.handleError('get user', []))
-      ).subscribe((res: any) => {
-        if (res.message == "SUCCESS"){
-          // this will execute when the user is successfully logged in
-          // but the isLoggedIn variable isn't update, I don't understand
-          // the scoping
-          this.isLoggedIn = true;
-        }
-      });
-      console.log("logged in " + this.isLoggedIn); // this will print false, like what?
-      return of(this.isLoggedIn);
+    loginUser(email: any, password: any): Observable<any> {
+      return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
+        .pipe(catchError(this.handleError('get user', [])));
     }
 
     addUser(firstName: any, lastName: any, email: any, password: any) {
@@ -43,14 +33,6 @@ export class UserService {
       return this.http.post(this.CMS_API + 'sign-up', userObj)
         .pipe(catchError(this.handleError('get user', []))
       ); 
-    }
-
-    getIsLoggedIn(): boolean {
-      return this.isLoggedIn;
-    }
-
-    setIsLoggedIn(isLoggedIn: boolean) {
-      this.isLoggedIn = isLoggedIn;
     }
 
     /**

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TokenStorageService } from 'src/app/token-storage.service';
+
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -17,34 +19,36 @@ export class SignInComponent implements OnInit {
     email: new FormControl('', Validators.required,),
     password: new FormControl('', Validators.minLength(8)),
   });
+  isLoggedIn = false;
+  isLoginFailed = false;
 
   constructor(private service: UserService,
-    private router: Router) { } 
+    private router: Router, private tokenStorage: TokenStorageService) { } 
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken() != "") {
+      this.isLoggedIn = true;
+    }
   }
-  onSubmit() {
-    // if (!form.valid) {
-    //   return;
-    // }
-    this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe(
-      (res: any) => { 
-        console.log(res); // this will also return false
-      }
-    );
 
-    if (this.service.getIsLoggedIn() == true) {
-      //User found
-      alert("Login Successful");
-      this.router.navigate(['/main']);
-      
-    }
-    else{
-      alert("Username or password incorrect.");
-      //this.router.navigate(['/main']);
-    }
-    
+  onSubmit() {
+    this.service.loginUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) => {
+      if (res.message === "SUCCESS") {
+        console.log(res);
+        this.tokenStorage.saveToken(res.data._id);  
+        this.service.isLoggedIn = true;     
+        window.location.replace("/main");
+      }
+      else {
+        alert("Username or password incorrect.");
+      }
+    });
+
+
     this.isLoading = true;
   }
-    
+
+  reloadPage(): void {
+    window.location.reload();
+  }
 }
