@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+/* '..\\assets\\user-img\\Iphone-6s.jpg' */
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +13,7 @@ export class SellService {
     {name: 'Coffee Mug', amount: 3, description:"djkadkel",
     imageInput: '../../assets/img/logo.png'},
     {name: 'iPhone 13', amount: 0.3, description:"waste of $$$",
-    imageInput: '../../assets/img/logo.png'},
+    imageInput: '..\\assets\\user-img\\Iphone-6s.jpg'},
   ];
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<number>();

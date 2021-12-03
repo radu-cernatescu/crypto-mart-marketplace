@@ -10,7 +10,7 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 app.post("/api/user-login", async (req, res) => {
-    await client.connect().then(async err => {
+    await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
             email: {$eq: req.body.email}
@@ -27,7 +27,6 @@ app.post("/api/user-login", async (req, res) => {
                 res.send({message:"FAILED"});
             }
         }).catch(err => {
-            //console.log(err)
             res.send({message:"FAILED"});
         });
         
@@ -36,7 +35,7 @@ app.post("/api/user-login", async (req, res) => {
 });
 
 app.post("/api/sign-up", async (req, res) => {
-    await client.connect().then(async err => {
+    await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
             email: {$eq: req.body.email}
@@ -44,7 +43,7 @@ app.post("/api/sign-up", async (req, res) => {
             if (user) {
                 res.send({message:"EXISTING USER"});
             }
-            else{
+            else {
                 const user = {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
@@ -57,10 +56,26 @@ app.post("/api/sign-up", async (req, res) => {
                     res.send({message: "FAILED"});
                 });
             }
-        }).catch(err => {
-            //console.log(err)
+        }).catch(() => {
             res.send({message:"FAILED"});
         });
+    });
+    client.close();
+});
+
+app.get("/api/items", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        
+        const items = await collection.find().toArray();
+        console.log(items);
+        if (items) {
+            res.send({ message: "SUCCESS", data: items });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
     });
     client.close();
 });
@@ -71,4 +86,4 @@ app.get('/*', function(req, res) {
     res.sendFile('index.html', {root: 'dist/Group15'});
 });
 
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);

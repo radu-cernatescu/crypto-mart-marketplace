@@ -7,14 +7,14 @@ style="cursor: pointer; background: rgb(245, 244, 242);"
 <div style="display: flex;
 justify-content: space-between">
     <div>
-        <img height="50px" width="50px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.imageInput}} alt="hi">
+        <img height="100px" width="100px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.images}} alt="hi">
     </div>
     <div>
-        <span style="font-weight: bold;">{{ sellItem.name }}</span>
+        <span style="font-weight: bold;">{{ sellItem.title }}</span>
         <p>{{ sellItem.description }}</p>
     </div>
     <div>
-        <span class="badge">{{ sellItem.amount }}</span>
+        <span class="badge">{{ sellItem.price.$numberDecimal }}</span>
     </div>
 </div>
 

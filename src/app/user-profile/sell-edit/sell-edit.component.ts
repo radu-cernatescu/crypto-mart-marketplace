@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SellService } from '../sell.service';
+import { ItemsService } from 'src/app/items.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SellEditComponent implements OnInit {
   editedItemIndex!: number;
   editedItem: any;
 
-  constructor(private sellServicce: SellService) { }
+  constructor(private sellServicce: SellService, private ItemsService: ItemsService) { }
 
   ngOnInit(): void {
     this.subscription = this.sellServicce.startedEditing
