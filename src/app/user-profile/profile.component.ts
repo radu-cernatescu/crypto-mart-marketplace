@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SellService } from './sell.service';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-profile',
@@ -11,12 +13,15 @@ import { SellService } from './sell.service';
 export class ProfileComponent implements OnInit {
   sellItems: any;
   subscription!: Subscription;
+  user: User;
 
-  constructor(private sellServicce: SellService) { }
+  constructor(private sellService: SellService, private tokenService: TokenStorageService) {
+    this.user = this.tokenService.getUser();
+   }
 
   ngOnInit(): void {
-    this.sellItems = this.sellServicce.getSellItems();
-    this.subscription = this.sellServicce.sellItemsChanged
+    this.sellItems = this.sellService.getSellItems();
+    this.subscription = this.sellService.sellItemsChanged
       .subscribe(
         (sellItems: any[]) => {
           this.sellItems = sellItems;
@@ -24,7 +29,7 @@ export class ProfileComponent implements OnInit {
       );
   }
   onEditItem(i:number){
-    this.sellServicce.startedEditing.next(i);
+    this.sellService.startedEditing.next(i);
   }
 }
  

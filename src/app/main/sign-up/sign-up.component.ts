@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from 'src/app/user.service';
+import { User } from '../../User';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  user: User;
   isLoading!: boolean;
   isLoginMode: any;
   passwordMatch= false;
@@ -21,7 +23,9 @@ export class SignUpComponent implements OnInit {
     rePassword: new FormControl(''),
   });
   constructor(private service: UserService,
-    private router: Router) { }
+    private router: Router) {
+      this.user = new User();
+     }
 
   ngOnInit(): void {
     this.signUpForm.valueChanges.subscribe(() => {
@@ -35,12 +39,12 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (!form.valid) {
-    //   return;
-    // }
-    // const email = form.value.email;
-    // const password = form.value.password;
-    this.service.addUser(this.signUpForm.value.first, this.signUpForm.value.last, this.signUpForm.value.email, this.signUpForm.value.password).subscribe((res: any) =>
+    this.user.firstName = this.signUpForm.value.first;
+    this.user.lastName = this.signUpForm.value.last;
+    this.user.email = this.signUpForm.value.email;
+    this.user.password = this.signUpForm.value.password;
+
+    this.service.addUser(this.user).subscribe((res: any) =>
     {
       console.log(res.message)
       if (res.message == "SUCCESS") {
@@ -56,8 +60,6 @@ export class SignUpComponent implements OnInit {
         //this.router.navigate(['/main']);
       }
     });
-
-    let authObs: Observable<any>;
 
     this.isLoading = true;
   }
