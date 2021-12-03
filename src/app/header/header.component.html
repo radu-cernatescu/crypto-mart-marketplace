@@ -1,0 +1,38 @@
+<header style="display: flex;">
+    <div>
+      <h1 style="margin-top: -40px;"><a ><img height="200px" width="600px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1>
+    </div>
+    
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-12">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <div class="mininavbar">
+                    <div *ngIf="!this.isLoggedIn">
+                        <button class="btn btn-success" routerLink="/sign-in"><i class="fa fa-user"></i> SIGN IN</button>
+                        <div class="divider"></div>
+                        <button class="btn btn-success" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP</button>
+                    </div>
+                    <div *ngIf="this.isLoggedIn">
+                        <div class="mininavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="dropdown" appDropdown>
+                                <a style="cursor: pointer;" class="dropdown-toggle" role="button"> Manage <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+                                    </li>
+                                    <li>
+                                        <a style="cursor: pointer;" routerLink="/profile" >Profile</a>
+                                    </li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</header>
