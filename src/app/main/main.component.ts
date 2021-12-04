@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SellService } from '../user-profile/sell.service';
 import { ItemsService } from '../items.service';
 
 @Component({
@@ -12,7 +11,7 @@ export class MainComponent implements OnInit {
   sellItems: any[];
   subscription!: Subscription;
 
-  constructor(private sellService: SellService, private itemsService: ItemsService) {
+  constructor(private itemsService: ItemsService) {
     this.sellItems = [];
    }
 
@@ -21,12 +20,11 @@ export class MainComponent implements OnInit {
       //console.log(items.data);
       this.sellItems = items.data;
     });
-    this.subscription = this.sellService.sellItemsChanged
-      .subscribe(
-        (sellItems: any[]) => {
-          this.sellItems = sellItems;
-        }
-      );
+    this.subscription = this.itemsService.sellItemsChanged.subscribe(
+      (sellItems: any[]) => {
+        this.sellItems = sellItems;
+      }
+    );
   }
 
 }

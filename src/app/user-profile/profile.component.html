@@ -9,7 +9,7 @@
         class="list-group-item"
         style="cursor: pointer; background: rgb(245, 244, 242);"
         *ngFor="let sellItem of sellItems; let i = index"
-        (click)="onEditItem(i)">
+        (click)="onEditItem(sellItem)">
         <div style="display: flex;
         justify-content: space-between">
             <div>
@@ -20,7 +20,7 @@
                 <p>{{ sellItem.description }}</p>
             </div>
             <div>
-                <span class="badge">{{ sellItem.price.$numberDecimal }}</span>
+                <span class="badge">{{ sellItem.price }}</span>
             </div>
         </div>
         
