@@ -1,9 +1,9 @@
-name: Deploy to Heroku (Production)
+name: Deploy to Heroku (Test)
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   build:
