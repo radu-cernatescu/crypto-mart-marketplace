@@ -1,4 +1,3 @@
-<h2>Welcome User!</h2>
 <div *ngIf="!sellMode">
     <button class="btn btn-success" (click)="sellItem()">Sell an Item</button>
 </div>
@@ -60,7 +59,7 @@
               (click)="onDelete()"
               *ngIf="editMode">Delete</button>
             <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
-            <button *ngIf="!editMode" class="btn btn-danger" type="button" (click)="onCancle()">Cancel</button>
+            <button *ngIf="!editMode" class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
           </div>
         </div>
       </form>

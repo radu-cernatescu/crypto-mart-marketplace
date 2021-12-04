@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { SellService } from './sell.service';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
+import { Item } from '../Item';
+import { ItemsService } from '../items.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,22 +12,39 @@ import { SellService } from './sell.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  sellItems: any;
+  sellItems: Item[];
   subscription!: Subscription;
+  user: User;
 
-  constructor(private sellServicce: SellService) { }
+  constructor(private tokenService: TokenStorageService, private itemsService: ItemsService) {
+    this.user = this.tokenService.getUser();
+    this.sellItems = [];
+  }
 
   ngOnInit(): void {
-    this.sellItems = this.sellServicce.getSellItems();
-    this.subscription = this.sellServicce.sellItemsChanged
-      .subscribe(
-        (sellItems: any[]) => {
-          this.sellItems = sellItems;
+    this.itemsService.getItems().subscribe(items => {
+      items.data.forEach((element: any) => {
+        if (element.userId == this.user._id) {
+
+          let item = new Item();
+          item.userId = element._id;
+          item.title = element.title;
+          item.description = element.description;
+          item.price = element.price;
+          item.images = element.images;
+
+          this.sellItems.push(item);
         }
-      );
+      });
+    });
+    this.subscription = this.itemsService.sellItemsChanged.subscribe(
+      (sellItems: any[]) => {
+        this.sellItems = sellItems;
+      }
+    );
   }
-  onEditItem(i:number){
-    this.sellServicce.startedEditing.next(i);
+  onEditItem(item: Item){
+    this.itemsService.startedEditing.next(item);
   }
 }
  

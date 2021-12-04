@@ -3,8 +3,8 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TokenStorageService } from 'src/app/token-storage.service';
-
 import { UserService } from 'src/app/user.service';
+import { User } from 'src/app/User';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,6 +13,7 @@ import { UserService } from 'src/app/user.service';
   providers: [UserService]
 })
 export class SignInComponent implements OnInit {
+  user: User;
   isLoading!: boolean;
   isLoginMode: any;
   loginForm = new FormGroup({
@@ -23,7 +24,9 @@ export class SignInComponent implements OnInit {
   isLoginFailed = false;
 
   constructor(private service: UserService,
-    private router: Router, private tokenStorage: TokenStorageService) { } 
+    private router: Router, private tokenStorage: TokenStorageService) {
+      this.user = new User();
+     } 
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken() != "") {
@@ -32,10 +35,18 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit() {
+    this.user.email = this.loginForm.value.email;
+    this.user.password = this.loginForm.value.password;
     this.service.loginUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) => {
       if (res.message === "SUCCESS") {
         console.log(res);
-        this.tokenStorage.saveToken(res.data._id);  
+        this.tokenStorage.saveToken(res.data._id);
+
+        this.user._id = res.data._id;
+        this.user.password = res.data.password;
+        this.user.firstName = res.data.firstName;
+        this.user.lastName = res.data.lastName;
+        this.tokenStorage.saveUser(this.user);
         this.service.isLoggedIn = true;     
         window.location.replace("/main");
       }

@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const argon2 = require('argon2');
+const { APP_BASE_HREF } = require('@angular/common');
+const bodyParser = require('body-parser');
 
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -9,8 +11,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 const app = express();
 app.use(cors())
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.post("/api/user-login", async (req, res) => {
-    await client.connect().then(async err => {
+    await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
             email: {$eq: req.body.email}
@@ -27,7 +31,6 @@ app.post("/api/user-login", async (req, res) => {
                 res.send({message:"FAILED"});
             }
         }).catch(err => {
-            //console.log(err)
             res.send({message:"FAILED"});
         });
         
@@ -36,7 +39,7 @@ app.post("/api/user-login", async (req, res) => {
 });
 
 app.post("/api/sign-up", async (req, res) => {
-    await client.connect().then(async err => {
+    await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
             email: {$eq: req.body.email}
@@ -44,7 +47,7 @@ app.post("/api/sign-up", async (req, res) => {
             if (user) {
                 res.send({message:"EXISTING USER"});
             }
-            else{
+            else {
                 const user = {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
@@ -57,15 +60,86 @@ app.post("/api/sign-up", async (req, res) => {
                     res.send({message: "FAILED"});
                 });
             }
-        }).catch(err => {
-            //console.log(err)
+        }).catch(() => {
             res.send({message:"FAILED"});
         });
     });
     client.close();
 });
 
-app.use(express.static('dist/Group15'))
+app.get("/api/items", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        
+        const items = await collection.find().toArray();
+        if (items) {
+            res.send({ message: "SUCCESS", data: items });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
+    });
+    client.close();
+});
+
+app.post("/api/add-item", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        await collection.findOne({
+            userId: {$eq: req.body.user._id},
+            title: {$eq: req.body.item.title}
+        }).then(async item => {
+            if (item) {
+                res.send({message:"EXISTING ITEM WITH SAME TITLE"});
+            }
+            else {
+                req.body.item.userId = req.body.user._id;
+                await collection.insertOne(req.body.item).then(() => {
+                    res.send({message: "SUCCESS"});
+                }).catch(() => {res.send({message: "FAILED"})});
+            }
+        }).catch(() => {
+            res.send({message:"FAILED"});
+        });
+    });
+    client.close();
+});
+
+app.post("/api/update-item", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        //console.log(req.body)
+
+        let items = await collection.find({
+            userId: {$eq: req.body.user._id},
+            title: {$eq: req.body.newitem.title}
+        }).toArray();
+        if (items.length > 0) {
+            res.send({message:"EXISTING ITEM WITH SAME TITLE"});
+        }
+        else {
+            let myquery = { userId: req.body.user._id, title: req.body.olditem.title };
+            let newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price } };
+            await collection.updateOne(myquery, newvalues).then(() => {
+                res.send({message: "SUCCESS"});
+            }).catch(() => {res.send({message: "FAILED"})});
+        }        
+    });
+});
+
+app.post("/api/remove-item", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        let myquery = { userId: req.body.user._id, title: req.body.item.title };
+        await collection.deleteOne(myquery).then(() => {
+            res.send({message: "SUCCESS"});
+        }).catch(() => {res.send({message: "FAILED"})});
+    });
+    client.close();
+});
+
+app.use(express.static('dist/Group15'));
 
 app.get('/*', function(req, res) {
     res.sendFile('index.html', {root: 'dist/Group15'});

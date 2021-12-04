@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from 'src/app/User';
 
 const httpOptions = {
     headers: new HttpHeaders(
@@ -27,9 +28,9 @@ export class UserService {
       return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
         .pipe(catchError(this.handleError('get user', [])));
     }
-
-    addUser(firstName: any, lastName: any, email: any, password: any) {
-      const userObj = {firstName: firstName, lastName: lastName, email: email, password: password};
+    //firstName: any, lastName: any, email: any, password: any
+    addUser(user: User): Observable<any> {
+      const userObj = {firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password};
       return this.http.post(this.CMS_API + 'sign-up', userObj)
         .pipe(catchError(this.handleError('get user', []))
       ); 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { Subscription } from 'rxjs';
+import { ItemsService } from '../items.service';
 
 @Component({
   selector: 'app-main',
@@ -7,10 +8,23 @@ import { UserService } from '../user.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  sellItems: any[];
+  subscription!: Subscription;
 
-  constructor(public userService: UserService) { }
+  constructor(private itemsService: ItemsService) {
+    this.sellItems = [];
+   }
 
   ngOnInit(): void {
+    this.itemsService.getItems().subscribe(items => {
+      //console.log(items.data);
+      this.sellItems = items.data;
+    });
+    this.subscription = this.itemsService.sellItemsChanged.subscribe(
+      (sellItems: any[]) => {
+        this.sellItems = sellItems;
+      }
+    );
   }
 
 }
