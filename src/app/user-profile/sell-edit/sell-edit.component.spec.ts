@@ -6,7 +6,7 @@ describe('SellEditComponent', () => {
   let component: SellEditComponent;
   let fixture: ComponentFixture<SellEditComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => { 
     await TestBed.configureTestingModule({
       declarations: [ SellEditComponent ]
     })
