@@ -30,10 +30,10 @@ export class ItemsService {
     return this.http.post(this.CMS_API + "user-item", { item: item });
   }
 
-  getUserItems(user: User): Observable<any> {
+  getUserItems(user: User): Observable<any> { 
     return this.http.post(this.CMS_API + "user-items", user);
   }
-
+ 
   addUserItem(user: User, item: Item): Observable<any> {
     item.userId = user._id;
     return this.http.post(this.CMS_API + "add-item", {user: user, item: item});

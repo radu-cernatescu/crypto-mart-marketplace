@@ -3,5 +3,5 @@ export class Item {
     title: string = "";
     price: number = 0;
     description: string = "";
-    images: string = "";
-}
+    images: string[] = [];
+}  

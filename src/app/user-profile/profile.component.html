@@ -4,7 +4,7 @@
         <app-sell-edit></app-sell-edit>
       <hr>
       <h3>Your items: </h3>
-      <ul class="list-group">
+      <ul class="list-group"> 
         <a
         class="list-group-item"
         style="cursor: pointer; background: rgb(245, 244, 242);"
@@ -13,7 +13,7 @@
         <div style="display: flex;
         justify-content: space-between">
             <div>
-                <img height="50px" width="50px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.images}} alt="hi">
+                <img height="50px" width="50px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.images[0]}} alt="hi">
             </div>
             <div>
                 <span style="font-weight: bold;">{{ sellItem.title }}</span>
