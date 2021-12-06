@@ -4,6 +4,52 @@
     /* padding: 15px 30px; */
     font-size: 20px;
 }
+
 .image-upload-container {
     cursor: pointer;
-  } 
+}
+
+#SellButton {
+    position: relative;
+    transform: translate(5px, 10px);
+    background-color: #e9e3cf;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+}
+
+#SellButton:hover {
+    animation-name: colorhover;
+    animation-duration: 500ms;
+    background-color: #d8c3a5
+}
+
+#SellForm {
+    position:relative;
+    top: 10px;
+    left: 10px;
+}
+
+.divider {
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+#FormButton {
+    background-color: #e9e3cf;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+}
+
+#FormButton:hover {
+    animation-name: colorhover;
+    animation-duration: 500ms;
+    background-color: #d8c3a5
+}
+
+@keyframes colorhover {
+    from {background-color: #e9e3cf}
+    to {background-color: #d8c3a5}
+}

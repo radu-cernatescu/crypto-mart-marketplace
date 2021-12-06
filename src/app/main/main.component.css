@@ -1,0 +1,9 @@
+#MarketPage {
+    overflow-y:scroll;
+}
+
+#inLine {
+    position:relative;
+    left: 5px;
+    top: -5px;
+}

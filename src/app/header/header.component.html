@@ -1,19 +1,36 @@
-<header style="display: flex;">
+<header style="display: flex;" id="head">
     <div>
       <h1 style="margin-top: -40px;"><a ><img height="200px" width="600px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1>
     </div>
-    <button class="btn btn-success" routerLink="/main"> HOME</button>
-    <button class="btn btn-success" routerLink="/profile">PROFILE</button>
+    <div class="mininavbar" class="row" class="col-md-12">
+        <div *ngIf="!this.isLoggedIn">
+            <button class="btn btn-success" id="UserButtons" routerLink="/sign-in"><i class="fa fa-user"></i> SIGN IN</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="UserButtons" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP</button>
+        </div>
+        <div *ngIf="this.isLoggedIn">
+            <h4 id="WelcomeMessage">Welcome Yeetermeister !</h4>
+        </div>
+        <div class="MenuButtonBar">
+            <button class="btn btn-success" id="MenuButton" routerLink="/profile">PROFILE</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="MenuButton" routerLink="/main"> HOME</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="MenuButton" routerLink="">PLACEHOLDER</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="MenuButton" routerLink="">PLACEHOLDER</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="MenuButton" routerLink="">PLACEHOLDER</button>
+            <div class="divider"></div>
+            <button class="btn btn-success" id="MenuButton" routerLink="">PLACEHOLDER</button>
+            
+        </div>
+    </div>
     <div class="container" >
         <div class="row">
             <div class="col-md-12">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
                 <div class="mininavbar">
-                    <div *ngIf="!this.isLoggedIn">
-                        <button class="btn btn-success" routerLink="/sign-in"><i class="fa fa-user"></i> SIGN IN</button>
-                        <div class="divider"></div>
-                        <button class="btn btn-success" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP</button>
-                    </div>
                     <div *ngIf="this.isLoggedIn">
                         <div class="mininavbar">
                             <ul class="nav navbar-nav navbar-right">

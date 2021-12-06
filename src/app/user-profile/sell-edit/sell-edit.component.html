@@ -1,7 +1,7 @@
 <div *ngIf="!sellMode">
-    <button class="btn btn-success" (click)="sellItem()">Sell an Item</button>
+    <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
 </div>
-<div *ngIf="sellMode">
+<div *ngIf="sellMode" id="SellForm">
     <form [formGroup]="itemForm">
         <div class="row">
           <div class="col-sm-5 form-group">
@@ -21,6 +21,7 @@
               required
               formControlName="amount"
             >
+            <select class="1-100"></select>
           </div>
         </div>
         <div class="row">
@@ -47,19 +48,13 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <button
-              class="btn btn-success"
-              type="button"
-              (click)= "onAdd()"
-              [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }}
-            </button>
-            <button
-              class="btn btn-danger"
-              type="button"
-              (click)="onDelete()"
-              *ngIf="editMode">Delete</button>
-            <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
-            <button *ngIf="!editMode" class="btn btn-danger" type="button" (click)="onCancel()">Cancel</button>
+            <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
+            <div class="divider"></div>
+            <button class="btn btn-danger" type="button" id="FormButton" (click)="onDelete()" *ngIf="editMode">Delete</button>
+            <div class="divider"></div>
+            <button class="btn btn-primary" type="button" id="FormButton" (click)="onClear()">Clear</button>
+            <div class="divider"></div>
+            <button *ngIf="!editMode" class="btn btn-danger" type="button" id="FormButton" (click)="onCancel()">Cancel</button>
           </div>
         </div>
       </form>
