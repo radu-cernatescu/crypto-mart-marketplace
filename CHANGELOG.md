@@ -1,6 +1,50 @@
 # CHANGELOG
 
-### PR #53 (Development starts at this PR)
+## Sprint 2 
+
+### PR #63 (Development of Sprint 2 starts at this PR)
+*Include PR comments in CHANGELOG.
+
+### PR #64
+* Make development and main branches even, as there were some commits made that were merged directly into main.
+
+### PR #65
+* created user profile view
+* created sell item form, where user can add a new item or update an existing one
+* view items that have been posted
+* added home page drop down, to access the profile page
+
+### PR #66
+* Once user logs in, a token is placed in Session Storage. Since Session Storage is read-only, it is great for basic authentication. JWT will be used for auth later.
+* Profile route is protected from unauthenticated users and will redirect to sign in page.
+* Sign In & Sign Up buttons appear for unauthenticated users and the Manage dropdown will appear for authenticated users, allowing access to Profile and logging out.
+* Logging out simply clears Session Storage.
+
+### PR #67
+* The main website page now displays all listings made by all users
+* The profile page displays a specific user's listings
+* The profile page allows for adding a new item/listing, modifying an existing one and deleting
+* Listing allows for a single image to be uploaded (for now), Imgur does the hosting for us for free
+
+### PR #68
+* Added a GitHub actions workflow to deploy dev branch to a test application on Heroku; the endpoint API is broken; WIP!
+
+### PR #70
+* allows multiple images to be uploaded
+* fixed price issue
+
+### PR #72
+* Overhaul of app background to match palette
+* Header background color change
+* Several style changes to market item lists
+* Position adjustments
+
+### PR #73
+
+
+## Sprint 1
+
+### PR #53 (Development of Sprint 1 starts at this PR)
 * Added: create main.yml in .github directory that will deploy the main branch to heroku
 
 ### PR #54

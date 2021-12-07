@@ -28,11 +28,11 @@ export class SellEditComponent implements OnInit{
   initialItem: Item;
   newItem: Item;
 
-  constructor(private ItemsService: ItemsService, private TokenStorageService: TokenStorageService) {
+  constructor(private ItemsService: ItemsService, private tokenStorageService: TokenStorageService) {
     this.editedItem = new Item();
     this.initialItem = new Item(); 
     this.newItem = new Item();
-    this.user = TokenStorageService.getUser();
+    this.user = tokenStorageService.getUser();
    }
    ngAfterViewInit(){ 
     this.subscription = this.ItemsService.startedEditing
@@ -81,7 +81,8 @@ export class SellEditComponent implements OnInit{
     this.newItem.price = this.itemForm.value['amount'];
     this.newItem.userId = this.user._id;
 
-    if (this.selectedFile.length > 0) {
+    if (this.selectedFile) {
+      this.newItem.images = [];
       // Upload to Imgur
       for(let i of this.selectedFile){
         this.ItemsService.uploadImage(i).subscribe(
@@ -95,6 +96,7 @@ export class SellEditComponent implements OnInit{
       }
       setTimeout(() => {
         if (this.editMode) {
+          console.log(this.newItem);
           this.updateItem();
         }
         else {
@@ -102,12 +104,6 @@ export class SellEditComponent implements OnInit{
         }
         
       }, 5000);
-      // if (this.editMode) {
-      //   this.updateItem();
-      // }
-      // else {
-      //   this.addItem();
-      // }
     }
     else {
       if (this.editMode) {
@@ -124,6 +120,8 @@ export class SellEditComponent implements OnInit{
     this.editMode = false;
   }
   onCancel(){
+    this.itemForm.reset();
+    this.editMode = false;
     this.sellMode = false;
   }
 
@@ -141,7 +139,7 @@ export class SellEditComponent implements OnInit{
     );
   }
   processFile(event: any) {
-    debugger
+    //debugger
     // const ll = event.target.files.length;
     // let i = 0;
     // while(i < ll){
@@ -150,11 +148,10 @@ export class SellEditComponent implements OnInit{
     //   i++;
     // }
     this.selectedFile = event.target.files;
-    console.log(this.selectedFile)
+    //console.log(this.selectedFile)
   }
 
   // Helpers
-
   updateItem() {
     this.ItemsService.updateUserItem(this.user, this.initialItem, this.newItem).subscribe(
       (res: any) => {
@@ -176,13 +173,12 @@ export class SellEditComponent implements OnInit{
   addItem() {
     this.ItemsService.addUserItem(this.user, this.newItem).subscribe(
       (res: any) => {
-        //console.log(res);
         if (res.message == "SUCCESS") {
           alert("Item added successfully");
           this.editMode = false;
           this.sellMode = false;
           this.itemForm.reset();
-         // window.location.reload();
+          window.location.reload();
         }
         else if (res.message == "EXISTING ITEM WITH SAME TITLE") {
           alert("Item with same title already exists");

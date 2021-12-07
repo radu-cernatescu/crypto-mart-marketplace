@@ -109,18 +109,23 @@ app.post("/api/add-item", async (req, res) => {
 app.post("/api/update-item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
-        //console.log(req.body)
-
         let items = await collection.find({
             userId: {$eq: req.body.user._id},
             title: {$eq: req.body.newitem.title}
         }).toArray();
-        if (items.length > 0) {
+        if (items.length > 1) {
             res.send({message:"EXISTING ITEM WITH SAME TITLE"});
         }
         else {
             let myquery = { userId: req.body.user._id, title: req.body.olditem.title };
-            let newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price } };
+            let newvalues;
+            if (req.body.olditem.images[0] == req.body.newitem.images[0]) {
+                newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price } };
+            }
+            else {
+                newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price, images: req.body.newitem.images } };
+            }
+            
             await collection.updateOne(myquery, newvalues).then(() => {
                 res.send({message: "SUCCESS"});
             }).catch(() => {res.send({message: "FAILED"})});
