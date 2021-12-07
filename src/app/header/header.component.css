@@ -1,6 +1,6 @@
 #head {
     position: sticky;
-    background-color: #e9e3cf;
+    background-color: #f8eeca;
     z-index: 1;
 }
 
@@ -50,4 +50,20 @@ button.btn-success:hover {
     position: relative;
     top: 20px;
     left: 1050px;
+}
+
+.dropdown-toggle {
+    position: relative;
+    right: 25px;
+    top: 50px;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+    width: 160px;
+}
+
+.dropdown-menu {
+    position: relative;
+    right: 25px;
+    top: 50px;
 }

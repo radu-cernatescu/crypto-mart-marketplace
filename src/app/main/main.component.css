@@ -1,9 +1,48 @@
 #MarketPage {
-    overflow-y:scroll;
+    width:1850px;
+    height:400px;
+    overflow-y: scroll;
+    border-radius: 10px;
 }
 
 #inLine {
     position:relative;
     left: 5px;
     top: -5px;
+}
+
+#marketItem { 
+    cursor: pointer; 
+    background-color: #f7f3e9;
+
+}
+
+#marketItem:hover {
+    animation-name: colorhover;
+    animation-duration: 300ms;
+    background-color: #e9e3cf
+}
+
+@keyframes colorhover {
+    from {background-color: #f7f3e9}
+    to {background-color: #e9e3cf}
+}
+
+.verticalDivisor {
+    width: 2000px;
+    height: auto;
+    display:inline-block;
+}
+
+#itemDesc {
+    position: relative;
+    top: -50px;
+    left: 20px;
+    font-size: large;
+	width: 1500px;
+	margin: auto;
+}
+
+.badge {
+    font-size: large;
 }

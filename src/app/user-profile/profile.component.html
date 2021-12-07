@@ -1,31 +1,32 @@
 <div class="row">
     <div class="col-xs-10">
         <app-sell-edit></app-sell-edit>
-      <hr>
+      <div class="spacer"></div>
       <h3 id="inLine">Current active market listings: </h3>
-      <ul class="list-group">
+      <ul class="list-group" id="userActiveListings">
         <a
         class="list-group-item"
-        style="cursor: pointer; background: rgb(245, 244, 242);"
+        id="listItem"
         *ngFor="let sellItem of sellItems; let i = index"
         (click)="onEditItem(sellItem)">
-        <div style="display: flex;
-        justify-content: space-between">
+        <div style="display: flex;">
             <div>
-                <img height="50px" width="50px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.images}} alt="hi">
+                <img height="200px" width="250px" style="border: 1px solid #e98074;"  src={{sellItem.images}} alt="hi">
             </div>
-            <div>
-                <span style="font-weight: bold;">{{ sellItem.title }}</span>
-                <p>{{ sellItem.description }}</p>
+            <div id="itemDesc">
+                <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+                <p><b>Description:</b><br> {{ sellItem.description }}</p>
             </div>
+            <div class="verticalDivisor"></div>
             <div>
-                <span class="badge">{{ sellItem.price }}</span>
+                <span class="badge">${{ sellItem.price }}</span>
             </div>
         </div>
-        
         </a>
-        <h3 id="inLine">Archived market listings: </h3>
-        <h3 id="inLine">Sold item liststings: </h3>
       </ul> 
+      <div class="spacer"></div>
+      <h3 id="inLine">Archived market listings: </h3>
+      <div class="spacer"></div>
+      <h3 id="inLine">Sold item liststings: </h3>
     </div>
   </div>
