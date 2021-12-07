@@ -34,13 +34,13 @@
                         <div class="mininavbar">
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown" appDropdown>
-                                <a style="cursor: pointer;" class="dropdown-toggle" role="button"> Account Settings <span class="caret"></span></a>
+                                <a style="cursor: pointer;" class="dropdown-toggle" role="button"> My Account <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
+                                        <a style="cursor: pointer;" routerLink="/profile" >Profile</a>
                                     </li>
                                     <li>
-                                        <a style="cursor: pointer;" routerLink="/profile" >Profile</a>
+                                        <a style="cursor: pointer;"  (click)="logout()">Logout</a>
                                     </li>
                                 </ul>
                                 </li>
