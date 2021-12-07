@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
     this.sellItems = [];
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.itemsService.getItems().subscribe(items => {
       items.data.forEach((element: any) => {
         if (element.userId == this.user._id) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ItemsService } from 'src/app/items.service';
@@ -11,7 +11,7 @@ import { TokenStorageService } from 'src/app/token-storage.service';
   templateUrl: './sell-edit.component.html',
   styleUrls: ['./sell-edit.component.css']
 })
-export class SellEditComponent implements OnInit {
+export class SellEditComponent implements OnInit{
   sellMode: boolean = false;
   editMode!: boolean; 
   itemForm = new FormGroup({
@@ -20,7 +20,7 @@ export class SellEditComponent implements OnInit {
     amount: new FormControl('', Validators.required),
     imageInput: new FormControl('', Validators.required),
   });
-  selectedFile!: File;
+  selectedFile!: File[];
   subscription!: Subscription;
   editedItemIndex!: number;
   editedItem: Item;
@@ -30,15 +30,16 @@ export class SellEditComponent implements OnInit {
 
   constructor(private ItemsService: ItemsService, private TokenStorageService: TokenStorageService) {
     this.editedItem = new Item();
-    this.initialItem = new Item();
+    this.initialItem = new Item(); 
     this.newItem = new Item();
     this.user = TokenStorageService.getUser();
    }
-
-  ngOnInit(): void {
+   ngAfterViewInit(){ 
     this.subscription = this.ItemsService.startedEditing
     .subscribe(
       (item: Item) => {
+        this.itemForm.controls['imageInput'].clearValidators();
+        this.itemForm.controls['imageInput'].updateValueAndValidity();
         this.editMode = true;
         this.sellMode = true;
         this.editedItem = item;
@@ -46,8 +47,30 @@ export class SellEditComponent implements OnInit {
         this.itemForm.controls['name'].setValue(this.editedItem.title);
         this.itemForm.controls['amount'].setValue(this.editedItem.price);
         this.itemForm.controls['description'].setValue(this.editedItem.description);
+        this.newItem.images = item.images; 
+        // this.itemForm.controls['imageInput'].clearValidators;
+        // this.itemForm.controls['imageInput'].updateValueAndValidity;
       }
     );
+
+   }
+  ngOnInit(): void {
+    // this.subscription = this.ItemsService.startedEditing
+    // .subscribe(
+    //   (item: Item) => {
+    //     this.itemForm.controls['imageInput'].clearValidators;
+    //     this.itemForm.controls['imageInput'].updateValueAndValidity;
+    //     this.editMode = true;
+    //     this.sellMode = true;
+    //     this.editedItem = item;
+    //     this.initialItem = item;
+    //     this.itemForm.controls['name'].setValue(this.editedItem.title);
+    //     this.itemForm.controls['amount'].setValue(this.editedItem.price);
+    //     this.itemForm.controls['description'].setValue(this.editedItem.description);
+    //     // this.itemForm.controls['imageInput'].clearValidators;
+    //     // this.itemForm.controls['imageInput'].updateValueAndValidity;
+    //   }
+    // );
   }
   sellItem(){
     this.sellMode = true;
@@ -58,22 +81,33 @@ export class SellEditComponent implements OnInit {
     this.newItem.price = this.itemForm.value['amount'];
     this.newItem.userId = this.user._id;
 
-    if (this.selectedFile.size > 0) {
+    if (this.selectedFile.length > 0) {
       // Upload to Imgur
-      this.ItemsService.uploadImage(this.selectedFile).subscribe(
-        (res: any) => {
-          if (res.success == true) {
-            this.newItem.images = res.data.link;
+      for(let i of this.selectedFile){
+        this.ItemsService.uploadImage(i).subscribe(
+          (res: any) => {
+            if (res.success == true) {
+              this.newItem.images.push(res.data.link);
+            }
+  
           }
-
-          if (this.editMode) {
-            this.updateItem();
-          }
-          else {
-            this.addItem();
-          }
+        );
+      }
+      setTimeout(() => {
+        if (this.editMode) {
+          this.updateItem();
         }
-      );
+        else {
+          this.addItem();
+        }
+        
+      }, 5000);
+      // if (this.editMode) {
+      //   this.updateItem();
+      // }
+      // else {
+      //   this.addItem();
+      // }
     }
     else {
       if (this.editMode) {
@@ -107,8 +141,16 @@ export class SellEditComponent implements OnInit {
     );
   }
   processFile(event: any) {
-    console.log(event.target.files);
-    this.selectedFile = (event.target.files[0]);
+    debugger
+    // const ll = event.target.files.length;
+    // let i = 0;
+    // while(i < ll){
+    //   const aa = event.target.files[i];
+    //   this.selectedFile.push((aa));
+    //   i++;
+    // }
+    this.selectedFile = event.target.files;
+    console.log(this.selectedFile)
   }
 
   // Helpers
@@ -140,7 +182,7 @@ export class SellEditComponent implements OnInit {
           this.editMode = false;
           this.sellMode = false;
           this.itemForm.reset();
-          window.location.reload();
+         // window.location.reload();
         }
         else if (res.message == "EXISTING ITEM WITH SAME TITLE") {
           alert("Item with same title already exists");
