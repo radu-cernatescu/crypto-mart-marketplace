@@ -1,0 +1,54 @@
+#userActiveListings {
+    width:1850px;
+    height:400px;
+    overflow-y:scroll;
+    border-radius: 10px;
+}
+
+#inLine {
+    position: relative;
+    left: 5px;
+    top: -20px;
+    width: 400px;
+}
+
+#listItem {
+    cursor: pointer; 
+    background-color: #f7f3e9;
+}
+
+#listItem:hover {
+    animation-name: colorh;
+    animation-duration: 300ms;
+    background-color: #e9e3cf
+}
+
+@keyframes colorh {
+    from {background-color: #f7f3e9}
+    to {background-color: #e9e3cf}
+}
+
+.verticalDivisor {
+    width: 2000px;
+    height: auto;
+    display:inline-block;
+}
+
+#itemDesc {
+    position: relative;
+    top: -50px;
+    left: 20px;
+    font-size: large;
+	width: 1250px;
+	margin: auto;
+}
+
+.spacer {
+    width: auto;
+    height: 30px;
+    display:inline-block;
+}
+
+.badge {
+    font-size: large;
+}

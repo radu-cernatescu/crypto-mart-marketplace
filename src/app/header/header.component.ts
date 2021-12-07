@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/user.service';
-import { Observable } from 'rxjs';
+import { User } from '../User';
 import { TokenStorageService } from '../token-storage.service';
 
 @Component({
@@ -8,10 +7,14 @@ import { TokenStorageService } from '../token-storage.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent implements OnInit {
   isLoggedIn = false;
+  user: User;
 
-  constructor(public userService: UserService, private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService) { 
+    this.user = this.tokenStorageService.getUser();
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();

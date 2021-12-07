@@ -1,22 +1,22 @@
-<h3>Items for Sale: </h3>
-<ul class="list-group">
+<h3 id="inLine">Items for Sale: </h3>
+<ul class="list-group" id="MarketPage">
 <a
 class="list-group-item"
-style="cursor: pointer; background: rgb(245, 244, 242);"
+id="marketItem"
 *ngFor="let sellItem of sellItems; let i = index">
-<div style="display: flex;
-justify-content: space-between">
+<div style="display: flex;">
     <div>
-        <img height="100px" width="100px" style="border: 1px solid rgb(205, 240, 247);"  src={{sellItem.images}} alt="hi">
+        <img height="200px" width="250px" style="border: 1px solid #e98074;"  src={{sellItem.images}} alt="hi">
     </div>
-    <div>
-        <span style="font-weight: bold;">{{ sellItem.title }}</span>
-        <p>{{ sellItem.description }}</p>
+    <div id="itemDesc">
+        <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+        <p><b>Description:</b><br> {{ sellItem.description }}</p>
     </div>
+    <div class="verticalDivisor"></div>
     <div>
-        <span class="badge">{{ sellItem.price }}</span>
+        <span class="badge">${{ sellItem.price }}</span>
     </div>
 </div>
-
 </a>
 </ul> 
+<h3 id="inLine">Categories: </h3>
