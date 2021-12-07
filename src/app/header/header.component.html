@@ -9,7 +9,7 @@
             <button class="btn btn-success" id="UserButtons" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP</button>
         </div>
         <div *ngIf="this.isLoggedIn">
-            <h4 id="WelcomeMessage">Welcome !</h4>
+            <h4 id="WelcomeMessage">Welcome {{this.user.firstName}}!</h4>
         </div>
         <div class="MenuButtonBar">
             <button class="btn btn-success" id="MenuButton" routerLink="/main"> HOME</button>
