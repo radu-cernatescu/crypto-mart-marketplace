@@ -1,29 +1,29 @@
-#MarketPage {
+#userActiveListings {
     width:1850px;
-    height:600px;
-    overflow-y: scroll;
+    height:400px;
+    overflow-y:scroll;
     border-radius: 10px;
 }
 
 #inLine {
-    position:relative;
+    position: relative;
     left: 5px;
-    top: -5px;
+    top: -20px;
+    width: 400px;
 }
 
-#marketItem { 
+#listItem {
     cursor: pointer; 
     background-color: #f7f3e9;
-
 }
 
-#marketItem:hover {
-    animation-name: colorhover;
+#listItem:hover {
+    animation-name: colorh;
     animation-duration: 300ms;
     background-color: #e9e3cf
 }
 
-@keyframes colorhover {
+@keyframes colorh {
     from {background-color: #f7f3e9}
     to {background-color: #e9e3cf}
 }
@@ -39,8 +39,14 @@
     top: -30px;
     left: 20px;
     font-size: large;
-	width: 1500px;
+	width: 1250px;
 	margin: auto;
+}
+
+.spacer {
+    width: auto;
+    height: 30px;
+    display:inline-block;
 }
 
 .badge {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import { SellEditComponent } from './sell-edit.component';
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('SellEditComponent', () => {
+  let component: SellEditComponent;
+  let fixture: ComponentFixture<SellEditComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => { 
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [ SellEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(SellEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

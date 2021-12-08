@@ -1,0 +1,61 @@
+<div *ngIf="!sellMode">
+    <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
+</div>
+<div *ngIf="sellMode" id="SellForm">
+    <form [formGroup]="itemForm">
+        <div class="row">
+          <div class="col-sm-5 form-group"> 
+            <label for="name">Name</label>
+            <input
+              type="text" id="name" class="form-control"
+              name="name" required formControlName="name"
+            >
+          </div> 
+          <div class="col-sm-2 form-group">
+            <label for="amount">Price</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              name="amount"
+              required
+              formControlName="amount"
+            >
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 form-group">
+                <label for="description">Description</label>
+                <textarea
+                  type="text"
+                  id="description"
+                  class="form-control"
+                  formControlName="description"
+                  rows="3"></textarea>
+            </div>
+            <div class="col-sm-5 form-group">
+                <label for="imageInput">Select Image</label>
+                <input 
+                    type="file" 
+                    id="imageInput"
+                    multiple
+                    formControlName="imageInput"
+                    class="form-control"
+                    accept="image/*"
+                    (change)="processFile($event)"
+                >
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
+            <div class="divider"></div>
+            <button class="btn btn-danger" type="button" id="FormButton" (click)="onDelete()" *ngIf="editMode">Delete</button>
+            <div class="divider"></div>
+            <button class="btn btn-primary" type="button" id="FormButton" (click)="onClear()">Clear</button>
+            <div class="divider"></div>
+            <button class="btn btn-danger" type="button" id="FormButton" (click)="onCancel()">Cancel</button>
+          </div>
+        </div>
+      </form>
+</div>

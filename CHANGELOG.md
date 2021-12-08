@@ -1,6 +1,52 @@
 # CHANGELOG
 
-### PR #53 (Development starts at this PR)
+## Sprint 2 
+
+### PR #63 (Development of Sprint 2 starts at this PR)
+* Added: PR comments in CHANGELOG.
+
+### PR #64
+* Fixed: Make development and main branches even, as there were some commits made that were merged directly into main.
+
+### PR #65
+* Added: user profile view
+* Added: sell item form, where user can add a new item or update an existing one
+* Added: view of items that have been posted
+* Added: home page drop down, to access the profile page
+
+### PR #66
+* Added: Once user logs in, a token is placed in Session Storage. Since Session Storage is read-only, it is great for basic authentication. JWT will be used for auth later.
+* Added: Profile route is protected from unauthenticated users and will redirect to sign in page.
+* Added: Sign In & Sign Up buttons appear for unauthenticated users and the Manage dropdown will appear for authenticated users, allowing access to Profile and logging out.
+* Added: Logging out simply clears Session Storage.
+
+### PR #67
+* Added: The main website page now displays all listings made by all users
+* Fixed: The profile page displays a specific user's listings
+* Added: The profile page allows for adding a new item/listing, modifying an existing one and deleting
+* Added: Listing allows for a single image to be uploaded (for now), Imgur does the hosting for us for free
+
+### PR #68
+* Added: A GitHub actions workflow to deploy dev branch to a test application on Heroku; the endpoint API is broken; WIP!
+
+### PR #70
+* Added: allow multiple images to be uploaded
+* Fixed: price issue
+
+### PR #72
+* Fixed: Overhaul of app background to match palette
+* Changed: Header background color change
+* Changed: Several style changes to market item lists
+* Fixed: Position adjustments
+
+### PR #73
+* Added: comments from this sprint's PR into CHANGELOG.md
+* Fixed: updating of item listing in backend
+* Fixed: Did a bit of front end polishing
+
+## Sprint 1
+
+### PR #53 (Development of Sprint 1 starts at this PR)
 * Added: create main.yml in .github directory that will deploy the main branch to heroku
 
 ### PR #54

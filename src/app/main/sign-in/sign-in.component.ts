@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TokenStorageService } from 'src/app/token-storage.service';
 import { UserService } from 'src/app/user.service';
+import { User } from 'src/app/User';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,33 +13,53 @@ import { UserService } from 'src/app/user.service';
   providers: [UserService]
 })
 export class SignInComponent implements OnInit {
+  user: User;
   isLoading!: boolean;
   isLoginMode: any;
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required,),
     password: new FormControl('', Validators.minLength(8)),
   });
+  isLoggedIn = false;
+  isLoginFailed = false;
 
-  constructor(private service: UserService) { }
+  constructor(private service: UserService,
+    private router: Router, private tokenStorage: TokenStorageService) {
+      this.user = new User();
+     } 
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken() != "") {
+      this.isLoggedIn = true;
+    }
   }
+
   onSubmit() {
-    // if (!form.valid) {
-    //   return;
-    // }
-    this.service.getUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) =>
-    {
-      if (res.message == "SUCCESS") {
-        //User found
-        alert("Login Succesful");
+    this.user.email = this.loginForm.value.email;
+    this.user.password = this.loginForm.value.password;
+    this.service.loginUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) => {
+      if (res.message === "SUCCESS") {
+        console.log(res);
+        this.tokenStorage.saveToken(res.data._id);
+
+        this.user._id = res.data._id;
+        this.user.password = res.data.password;
+        this.user.firstName = res.data.firstName;
+        this.user.lastName = res.data.lastName;
+        this.tokenStorage.saveUser(this.user);
+        this.service.isLoggedIn = true;     
+        window.location.replace("/main");
       }
-      else{
-        alert("Username or password incorrect.")
+      else {
+        alert("Username or password incorrect.");
       }
     });
-    
+
+
     this.isLoading = true;
   }
-    
+
+  reloadPage(): void {
+    window.location.reload();
+  }
 }

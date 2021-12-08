@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { User } from 'src/app/User';
 
 const httpOptions = {
     headers: new HttpHeaders(
@@ -15,23 +18,21 @@ const httpOptions = {
 })
 export class UserService {
     CMS_API: string;
+    isLoggedIn = false;
 
-    constructor(private http: HttpClient) { 
+    constructor(private http: HttpClient, private router: Router) { 
         this.CMS_API = ENV.CMS_API;
     }
 
-    getUser(email: any, password: any): Observable<any> {
+    loginUser(email: any, password: any): Observable<any> {
       return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
-        .pipe(
-          catchError(this.handleError('get user', []))
-      ); 
+        .pipe(catchError(this.handleError('get user', [])));
     }
-
-    addUser(firstName: any, lastName: any, email: any, password: any) {
-      const userObj = {firstName: firstName, lastName: lastName, email: email, password: password};
+    //firstName: any, lastName: any, email: any, password: any
+    addUser(user: User): Observable<any> {
+      const userObj = {firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password};
       return this.http.post(this.CMS_API + 'sign-up', userObj)
-        .pipe(
-          catchError(this.handleError('get user', []))
+        .pipe(catchError(this.handleError('get user', []))
       ); 
     }
 
