@@ -4,7 +4,7 @@
 class="list-group-item"
 id="marketItem"
 *ngFor="let sellItem of sellItems; let i = index">
-<div style="display: flex;">
+<div style="display: flex;"  (click)="setId(sellItem.title)" >
     <div>
         <img height="200px" width="250px" style="border: 1px solid #e98074;"  src={{sellItem.images}} alt="hi">
     </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as ENV } from '../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
@@ -22,12 +22,25 @@ export class ItemsService {
     this.imgurKey = ENV.imgurKey;
   }
 
+  private _curretId! : any;
+  set currentId(value){
+    this._curretId = value;
+  }
+  get currentId(){
+    return this._curretId;
+  }
+
   getItems(): Observable<any> {
     return this.http.get(this.CMS_API + "items");
   }
 
   getItem(item: Item): Observable<any> {
     return this.http.post(this.CMS_API + "user-item", { item: item });
+  }
+  getOneItem(title: any): Observable<any> {
+    return this.http.get(this.CMS_API + "item" , {
+      params: new HttpParams().set('title', title)
+  });
   }
 
   getUserItems(user: User): Observable<any> { 

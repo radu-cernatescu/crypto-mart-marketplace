@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ItemsService } from '../items.service';
 
@@ -11,7 +12,8 @@ export class MainComponent implements OnInit {
   sellItems: any[];
   subscription!: Subscription;
 
-  constructor(private itemsService: ItemsService) {
+  constructor(private itemsService: ItemsService,
+    private router: Router) {
     this.sellItems = [];
    }
 
@@ -25,6 +27,12 @@ export class MainComponent implements OnInit {
         this.sellItems = sellItems;
       }
     );
+  }
+  setId(title:any){
+    console.log(title);
+    this.itemsService.currentId = title;
+    let url = "product/" + title;
+    this.router.navigate([url]);
   }
 
 }

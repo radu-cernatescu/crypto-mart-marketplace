@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { SellEditComponent } from './user-profile/sell-edit/sell-edit.component'
 import { DropdownDirective } from './dropdown.directive';
 import { HeaderComponent } from './header/header.component';
 import { UserService } from './user.service';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,15 @@ import { UserService } from './user.service';
     ProfileComponent,
     SellEditComponent,
     DropdownDirective,
-    HeaderComponent
+    HeaderComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent] 

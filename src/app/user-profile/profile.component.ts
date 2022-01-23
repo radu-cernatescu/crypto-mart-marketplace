@@ -32,6 +32,9 @@ export class ProfileComponent implements OnInit {
           item.description = element.description;
           item.price = element.price;
           item.images = element.images;
+          item.parameters = element.parameters;
+          item.colors = element.colors;
+          item.sizes = element.sizes;
 
           this.sellItems.push(item);
         }

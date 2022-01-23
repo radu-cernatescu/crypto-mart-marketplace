@@ -83,6 +83,28 @@ app.get("/api/items", async (req, res) => {
     client.close();
 });
 
+app.get("/api/item", async (req, res) => {
+    console.log(req.query.title);
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        
+        const item = await collection.findOne({
+            title: {$eq: req.query.title}
+        });
+        console.log(item);
+        if (item) {
+            res.send({ message: "SUCCESS", data: item });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        //
+        
+        //
+    });
+    client.close();
+});
+
 app.post("/api/add-item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
