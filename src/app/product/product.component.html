@@ -1,51 +1,46 @@
-<div style="display: flex; justify-content: space-around; margin-top: 50px;">
-    <div style="display: flex; justify-content: space-around;">
-        <div *ngIf="item && item.title">
-            <div *ngFor="let img of images; let i = index" style="border: 1px solid rosybrown; margin: 10px;">
-                <img src={{img}} alt="hi" width="76px" height="100px" style="padding: 1px 6px;"
-                (click)="onImageChange(img)">
+<div id="ProductContainer">
+    <div *ngIf="item && item.title" id="ImagesSideMenu">
+        <h4 id="SideMenuTitle">Product Images</h4>
+        <div *ngFor="let img of images; let i = index">
+            <img src={{img}} alt="MISSING IMAGE" width="140px" height="100px" id="SideMenuImage" (click)="onImageChange(img)">
+        </div>
+    </div>
+    <div *ngIf="item && item.title" id="SelectedImageContainer">
+        <img src="{{bigImgSrc}}" alt="MISSING IMAGE" width="800px" height="500px" id="SelectedImage">
+    </div>
+    <div *ngIf="item && item.title" id="detailContainer">
+        <div>
+            <h2>{{item.title}}</h2>
+        </div>
+        <div id="PriceContainer">
+            <p> Price: ${{item.price}}</p> 
+        </div>
+        <hr>
+        <div>
+            <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
+            <div id="ColorRange">
+                <div *ngFor="let color of item.colors;" id="ColorSelection">
+                    <p id="Color" (click)="changeColor(color)">{{color | uppercase}}</p>
+                </div>
             </div>
         </div>
-        <div *ngIf="item && item.title" style="margin: 0px 80px;" >
-            <img src="{{bigImgSrc}}" alt="" width="800px" height="500px" style="max-width: 100%;">
+        <div>
+            <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
+            <div> <!-- Extra div? (Author: Eduard)-->
+                <div *ngFor="let size of item.sizes;" id="SizeSelection">
+                    <p id="Size" (click)="changeSize(size)">{{size | uppercase}}</p>
+                </div>
+            </div>
         </div>
-        <div *ngIf="item && item.title">
-            <div>
-                <h2>{{item.title}}</h2>
-            </div>
-            <div style="display: flex; flex-direction: row;">
-                <p style="font: size 14px; font-weight: bold;">Price: </p> 
-                <p style="font: size 24px;"> ${{item.price}} </p>
-            </div>
-            <hr>
-            <div>
-                <p><span style="font-weight: bold;">Color:</span> {{selectedColor}} </p>
-                <div style="display: flex;">
-                    <div *ngFor="let color of item.colors;" style="margin: 3px;">
-                        <p style="border: 1px solid red; padding: 3px; background-color: rgb(222, 224, 63);"
-                        (click)="changeColor(color)">{{color | uppercase}}</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p><span style="font-weight: bold;">Size:</span> {{selectedSize}} </p>
-                <div style="display: flex;">
-                    <div *ngFor="let size of item.sizes;" style="margin: 3px;">
-                        <p style="border: 1px solid red; padding: 3px; background-color: rgb(222, 224, 63);"
-                        (click)="changeSize(size)">{{size | uppercase}}</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div *ngFor="let parm of item.parameters;" style="margin: 3px;">
-                    <p><span style="font-weight: bold;">{{parm.name}}:</span> {{parm.value}}</p>
-                </div>
+        <div>
+            <div *ngFor="let parm of item.parameters;" id="Placeholder"> <!-- What element does this correspond to? (Author: Eduard)-->
+                <p><span>{{parm.name}}:</span> {{parm.value}}</p>
             </div>
         </div>
     </div>
-    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <button style="padding: 3px 8px; margin: 10px 0px; width: 300px; background-color: palegoldenrod; border-radius: 10%;">Add to Cart</button>
-        <button style="padding: 3px 8px; margin: 10px 0px; width: 300px; background-color: palegoldenrod; border-radius: 10%;">Buy Now</button>
-
-    </div>    
-</div>
+    <div *ngIf="item && item.title" id="CheckoutButtons">
+        <h4 id="CheckoutButtonsTitle">Product Options</h4>
+        <button class="btn btn-success">ADD TO CARD</button>
+        <button class="btn btn-success">BUY NOW</button>
+    </div>  
+</div>  

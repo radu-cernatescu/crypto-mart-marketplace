@@ -12,12 +12,12 @@ button.btn-success {
 }
 
 button.btn-success:hover {
-    animation-name: colorhover;
-    animation-duration: 500ms;
-    background-color: #d8c3a5
+    animation-name: colorhoverheader;
+    animation-duration: 600ms;
+    background-color: #d8c3a5;
 }
 
-@keyframes colorhover {
+@keyframes colorhoverheader {
     from {background-color: #e9e3cf}
     to {background-color: #d8c3a5}
 }

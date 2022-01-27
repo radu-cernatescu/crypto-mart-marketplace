@@ -1,0 +1,155 @@
+#ProductContainer {
+    display: flex; 
+    justify-content: space-around; 
+    margin-top: 2%;
+    background-color: #D8C3A4;
+    border: 5px inset #F8EECA;
+    padding: 10px 5px;
+}
+
+#SideMenuTitle {
+    white-space: nowrap;
+    font-weight: bold;
+    border-bottom: solid #f8eeca;
+    padding-bottom: 5%;
+    margin-left: 1%;
+}
+
+#ImagesSideMenu {
+    border: 5px ridge #f8eecac0;
+    overflow-y: scroll;
+    padding: 5px 20px;
+}
+
+#SideMenuImage {
+    border: 1px solid #e98074;
+    border-radius: 10px;
+    padding: 2px 2px;
+}
+
+#SelectedImage {
+    max-width: 100%;
+    border: 2px solid #F8EECA;
+    padding: 4px 4px;
+    border-radius: 10px;
+}
+
+#SelectedImageContainer {
+    margin: 0px 40px;
+}
+
+#detailContainer {
+    border: 5px ridge #f8eecac0;
+    overflow-y: scroll;
+    padding: 5px;
+    padding-left: 30px;
+    padding-right: 200px;
+}
+
+#PriceContainer {
+    display: flex; 
+    flex-direction: row;
+    font-size: 20px; 
+    font-weight: bold;
+}
+
+#ColorContainer {
+    font-weight: bold;
+}
+
+#ColorRange {
+    display: flex;
+}
+
+#ColorSelection {
+    margin: 3px;
+}
+
+#Color {
+    border: 1px solid red; 
+    padding: 3px; 
+    background-color: rgb(222, 224, 63);
+}
+
+#SizeContainer {
+    font-weight: bold;
+}
+
+#SizeSelection {
+    margin: 3px;
+}
+
+#Size {
+    border: 1px solid red; 
+    padding: 3px; 
+    background-color: rgb(222, 224, 63);
+}
+
+#Placeholder {
+    margin: 3px;
+    font-weight: bold;
+}
+
+#CheckoutButtons {
+    display: flex; 
+    flex-direction: column; 
+    justify-content:right; 
+    align-items: center;
+    border: 5px ridge #f8eecac0;
+    padding: 5px 20px;
+}
+
+#CheckoutButtonsTitle {
+    white-space: nowrap;
+    font-weight: bold;
+    border-bottom: solid #f8eeca;
+    padding-bottom: 5%;
+    margin-left: 1%;
+}
+
+button {
+    padding: 10px 5px;
+    width: 200px;
+    background-color:#f8eeca;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+button.btn-success {
+    background-color: #f8eeca;
+    color: black;
+    border-color: #d8c3a5;
+    font-weight: bold;
+}
+
+button.btn-success:hover {
+    animation-name: colorhoverProduct;
+    animation-duration: 400ms;
+    background-color: #EAEFDC;
+}
+
+@keyframes colorhoverProduct {
+    from {background-color: #f8eeca}
+    to {background-color: #EAEFDC}
+}
+
+/*CUSTOM SCROLLBAR*/
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e98074; 
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #E85A4F; 
+}
