@@ -1,23 +1,36 @@
-#MarketPage {
+#divTitle {
+    white-space: nowrap;
+    font-weight: bold;
+    padding: 2px 0px;
+    margin-left: 1%;
+}
+
+#allItemsContainer {
     width:1850px;
     height:600px;
     overflow-y: scroll;
-    border-radius: 10px;
+    margin-left: 1%;
+    background-color: #D8C3A4;
+    border: 5px inset #F8EECA;
+    padding: 2px 2px;
 }
 
-#inLine {
-    position:relative;
-    left: 5px;
-    top: -5px;
+#ItemContainer {
+    cursor: pointer;
+    background-color: #f7f3e9;
+    border: 2px solid #D8C3A4;
 }
 
 #marketItem { 
-    cursor: pointer; 
-    background-color: #f7f3e9;
-
+    display: flex;
 }
 
-#marketItem:hover {
+#ItemImage {
+    border: 1px solid #e98074;
+    border-radius: 5px;
+}
+
+#ItemContainer:hover {
     animation-name: colorhover;
     animation-duration: 300ms;
     background-color: #e9e3cf
@@ -45,4 +58,25 @@
 
 .badge {
     font-size: large;
+}
+
+/*CUSTOM SCROLLBAR*/
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    border-radius: 15px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #e98074; 
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #E85A4F; 
 }

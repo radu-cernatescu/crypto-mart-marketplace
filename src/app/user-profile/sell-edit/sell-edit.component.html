@@ -47,6 +47,100 @@
             </div>
         </div>
         <div class="row">
+          <form [formGroup]="paramForm">
+          <div class="col-sm-5 form-group">
+            <label for="Pname">Parameter Name</label>
+            <input
+              type="text"
+              id="Pname"
+              class="form-control"
+              name="Pname"
+              formControlName="Pname"
+            >
+          </div>
+          <div class="col-sm-5 form-group">
+            <label for="pValue">Parameter Value</label>
+            <input
+              type="text"
+              id="pValue"
+              class="form-control"
+              name="pValue"
+              formControlName="pValue"
+            >
+          </div>
+          <div class="col-sm-2 form-group">
+            <button (click)="addParam()">Add Parameter</button>
+          </div>
+        </form>
+        </div>
+        <div class="row">
+          <form [formGroup]="sizeForm">
+          <div class="col-sm-5 form-group">
+            <label for="size">Size</label>
+            <input
+              type="text"
+              id="size"
+              class="form-control"
+              name="size"
+              formControlName="size"
+            >
+          </div>
+          <div class="col-sm-2 form-group">
+            <button (click)="addSize()">Add Size</button>
+          </div>
+        </form>
+        </div>
+        <div class="row">
+          <form [formGroup]="colorForm">
+          <div class="col-sm-5 form-group">
+            <label for="color">Color</label>
+            <input
+              type="text"
+              id="color"
+              class="form-control"
+              name="color"
+              formControlName="color"
+            >
+          </div>
+          <div class="col-sm-2 form-group">
+            <button (click)="addColor()">Add Color</button>
+          </div>
+        </form>
+        </div>
+        <div class="param-container mt-2">
+          <ul class="flex flex-wrap list-group list-group-horizontal">
+            <ng-container *ngFor="let item of parameters">
+              <li class="list-group-item">
+                <span>
+                  {{item.name}} : {{item.value}}
+                </span>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="size-container mt-2">
+          <ul class="flex flex-wrap list-group list-group-horizontal">
+            <ng-container *ngFor="let item of sizes">
+              <li class="list-group-item">
+                <span>
+                  {{item}}
+                </span>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="color-container mt-2">
+          <ul class="flex flex-wrap list-group list-group-horizontal">
+            <ng-container *ngFor="let item of colors">
+              <li class="list-group-item">
+                <span>
+                  {{item}}
+                </span>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+        <div class="row">
           <div class="col-xs-12">
             <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
             <div class="divider"></div>

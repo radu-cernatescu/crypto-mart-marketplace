@@ -1,0 +1,46 @@
+<div id="ProductContainer">
+    <div *ngIf="item && item.title" id="ImagesSideMenu">
+        <h4 id="SideMenuTitle">Product Images</h4>
+        <div *ngFor="let img of images; let i = index">
+            <img src={{img}} alt="MISSING IMAGE" width="140px" height="100px" id="SideMenuImage" (click)="onImageChange(img)">
+        </div>
+    </div>
+    <div *ngIf="item && item.title" id="SelectedImageContainer">
+        <img src="{{bigImgSrc}}" alt="MISSING IMAGE" width="800px" height="500px" id="SelectedImage">
+    </div>
+    <div *ngIf="item && item.title" id="detailContainer">
+        <div>
+            <h2>{{item.title}}</h2>
+        </div>
+        <div id="PriceContainer">
+            <p> Price: ${{item.price}}</p> 
+        </div>
+        <hr>
+        <div>
+            <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
+            <div id="ColorRange">
+                <div *ngFor="let color of item.colors;" id="ColorSelection">
+                    <p id="Color" (click)="changeColor(color)">{{color | uppercase}}</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
+            <div> <!-- Extra div? (Author: Eduard)-->
+                <div *ngFor="let size of item.sizes;" id="SizeSelection">
+                    <p id="Size" (click)="changeSize(size)">{{size | uppercase}}</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div *ngFor="let parm of item.parameters;" id="Placeholder"> <!-- What element does this correspond to? (Author: Eduard)-->
+                <p><span>{{parm.name}}:</span> {{parm.value}}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="item && item.title" id="CheckoutButtons">
+        <h4 id="CheckoutButtonsTitle">Product Options</h4>
+        <button class="btn btn-success">ADD TO CARD</button>
+        <button class="btn btn-success">BUY NOW</button>
+    </div>  
+</div>  

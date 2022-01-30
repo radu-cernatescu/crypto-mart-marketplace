@@ -20,6 +20,16 @@ export class SellEditComponent implements OnInit{
     amount: new FormControl('', Validators.required),
     imageInput: new FormControl('', Validators.required),
   });
+  sizeForm = new FormGroup({
+    size: new FormControl('', Validators.required,)
+  })
+  colorForm = new FormGroup({
+    color: new FormControl('', Validators.required,)
+  })
+  paramForm = new FormGroup({
+    Pname: new FormControl('', Validators.required,),
+    pValue: new FormControl('', Validators.required,),
+  })
   selectedFile!: File[];
   subscription!: Subscription;
   editedItemIndex!: number;
@@ -27,6 +37,9 @@ export class SellEditComponent implements OnInit{
   user: User;
   initialItem: Item;
   newItem: Item;
+  parameters: {name:string, value:string}[] = [];
+  sizes: string[] = [];
+  colors: string[] = [];
 
   constructor(private ItemsService: ItemsService, private tokenStorageService: TokenStorageService) {
     this.editedItem = new Item();
@@ -47,7 +60,10 @@ export class SellEditComponent implements OnInit{
         this.itemForm.controls['name'].setValue(this.editedItem.title);
         this.itemForm.controls['amount'].setValue(this.editedItem.price);
         this.itemForm.controls['description'].setValue(this.editedItem.description);
-        this.newItem.images = item.images; 
+        this.newItem.images = item.images;
+        this.sizes = item.sizes;
+        this.colors = item.colors;
+        this.parameters = item.parameters;
         // this.itemForm.controls['imageInput'].clearValidators;
         // this.itemForm.controls['imageInput'].updateValueAndValidity;
       }
@@ -80,6 +96,9 @@ export class SellEditComponent implements OnInit{
     this.newItem.description = this.itemForm.value['description'];
     this.newItem.price = this.itemForm.value['amount'];
     this.newItem.userId = this.user._id;
+    this.newItem.colors = this.colors;
+    this.newItem.sizes = this.sizes;
+    this.newItem.parameters = this.parameters;
 
     if (this.selectedFile) {
       this.newItem.images = [];
@@ -185,5 +204,23 @@ export class SellEditComponent implements OnInit{
         }
       }
     );
+  }
+
+  // add color
+  addColor(){
+    console.log(this.colorForm.controls['color'].value);
+    this.colors.push(this.colorForm.controls['color'].value);
+  }
+  // add size
+  addSize(){
+    console.log(this.sizeForm.controls['size'].value);
+    this.sizes.push(this.sizeForm.controls['size'].value);
+  }
+  // add size
+  addParam(){
+    const name = this.paramForm.controls['Pname'].value;
+    const value = this.paramForm.controls['pValue'].value;
+    const item = {name, value};
+    this.parameters.push(item);
   }
 }

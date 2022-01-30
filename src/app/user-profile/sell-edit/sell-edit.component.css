@@ -49,6 +49,40 @@
     background-color: #d8c3a5
 }
 
+.param-container{
+    height: 100px;
+    width: 700px;
+    border: 1px solid #b9951d;
+    background-color: aqua;
+    overflow: auto;
+    padding: 5px;
+}
+.param-container li{
+    background-color: beige;
+}
+.size-container{
+    height: 100px;
+    width: 700px;
+    border: 1px solid #b9951d;
+    background-color: rgb(0, 255, 55);
+    overflow: auto;
+    padding: 5px;
+}
+.size-container li{
+    background-color: beige;
+}
+.color-container{
+    height: 100px;
+    width: 700px;
+    border: 1px solid #b9951d;
+    background-color: rgb(229, 255, 0);
+    overflow: auto;
+    padding: 5px;
+}
+.color-container li{
+    background-color: beige;
+}
+
 @keyframes colorhover {
     from {background-color: #e9e3cf}
     to {background-color: #d8c3a5}
