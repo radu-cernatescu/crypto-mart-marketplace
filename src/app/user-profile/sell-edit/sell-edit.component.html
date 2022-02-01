@@ -88,7 +88,7 @@
           <div class="col-sm-2 form-group">
             <button (click)="addSize()">Add Size</button>
           </div>
-        </form>
+          </form>
         </div>
         <div class="row">
           <form [formGroup]="colorForm">
@@ -107,6 +107,7 @@
           </div>
         </form>
         </div>
+        <label>Parameters</label>
         <div class="param-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of parameters">
@@ -118,6 +119,8 @@
             </ng-container>
           </ul>
         </div>
+        <br/>
+        <label>Sizes</label>
         <div class="size-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of sizes">
@@ -129,6 +132,8 @@
             </ng-container>
           </ul>
         </div>
+        <br/>
+        <label>Colors</label>
         <div class="color-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of colors">
@@ -140,6 +145,7 @@
             </ng-container>
           </ul>
         </div>
+        <br />
         <div class="row">
           <div class="col-xs-12">
             <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>

@@ -16,31 +16,44 @@
             <p> Price: ${{item.price}}</p> 
         </div>
         <hr>
-        <div>
+        <div *ngIf="item.colors.length > 0">
             <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
             <div id="ColorRange">
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
-                    <p id="Color" (click)="changeColor(color)">{{color | uppercase}}</p>
+                    <button id="Color" (click)="changeColor(color)">{{color | uppercase}}</button>
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="item.sizes.length > 0">
             <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
-            <div> <!-- Extra div? (Author: Eduard)-->
+            <div>
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
-                    <p id="Size" (click)="changeSize(size)">{{size | uppercase}}</p>
+                    <button id="Size" (click)="changeSize(size)">{{size | uppercase}}</button>
                 </div>
             </div>
         </div>
-        <div>
-            <div *ngFor="let parm of item.parameters;" id="Placeholder"> <!-- What element does this correspond to? (Author: Eduard)-->
+        <div *ngIf="item.parameters.length > 0">
+            <div *ngFor="let parm of item.parameters;" id="Placeholder">
                 <p><span>{{parm.name}}:</span> {{parm.value}}</p>
             </div>
+        </div>
+        <br/>
+        <div>
+            <p><span id="SizeContainer">Description:  </span>{{item.description}}</p>
+        </div>
+        <div>
+            <p><span id="SizeContainer">Delivery details:  </span>{{item.description}}</p>
         </div>
     </div>
     <div *ngIf="item && item.title" id="CheckoutButtons">
         <h4 id="CheckoutButtonsTitle">Product Options</h4>
-        <button class="btn btn-success">ADD TO CARD</button>
+        <button class="btn btn-success">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
-    </div>  
+        <br/><br/>
+
+        <h4 id="CheckoutButtonsTitle">Seller Info</h4>
+        <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/>
+        <br />
+        <p>{{item.firstName}}</p>
+    </div> 
 </div>  

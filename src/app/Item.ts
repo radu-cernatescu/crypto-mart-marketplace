@@ -1,5 +1,6 @@
 export class Item {
     userId: string = "";
+    firstName: string = "";
     title: string = "";
     price: number = 0;
     description: string = "";

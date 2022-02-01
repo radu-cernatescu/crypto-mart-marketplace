@@ -19,7 +19,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemsService.getItems().subscribe(items => {
-      //console.log(items.data);
       this.sellItems = items.data;
     });
     this.subscription = this.itemsService.sellItemsChanged.subscribe(
@@ -28,11 +27,4 @@ export class MainComponent implements OnInit {
       }
     );
   }
-  setId(title:any){
-    console.log(title);
-    this.itemsService.currentId = title;
-    let url = "product/" + title;
-    this.router.navigate([url]);
-  }
-
 }

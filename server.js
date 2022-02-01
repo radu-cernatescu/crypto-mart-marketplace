@@ -84,24 +84,19 @@ app.get("/api/items", async (req, res) => {
 });
 
 app.get("/api/item", async (req, res) => {
-    console.log(req.query.title);
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
         
         const item = await collection.findOne({
             title: {$eq: req.query.title}
         });
-        console.log(item);
         if (item) {
             res.send({ message: "SUCCESS", data: item });
         }
         else {
             res.send({ message: "FAILED" });
         }
-        //
-        
-        //
-    });
+    }).catch(err => {console.log(err)});
     client.close();
 });
 
@@ -172,4 +167,4 @@ app.get('/*', function(req, res) {
     res.sendFile('index.html', {root: 'dist/Group15'});
 });
 
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080, "192.168.50.40");
