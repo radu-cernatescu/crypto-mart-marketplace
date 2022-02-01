@@ -10,13 +10,13 @@
     </div>
     <div id="detailContainer">
         <div>
-            <h2>{{item.title}}</h2>
+            <h2>{{item?.title}}</h2>
         </div>
         <div id="PriceContainer">
-            <p> Price: ${{item.price}}</p> 
+            <p> Price: ${{item?.price}}</p> 
         </div>
         <hr>
-        <div *ngIf="item.colors.length > 0">
+        <div *ngIf="item?.colors.length > 0">
             <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
             <div id="ColorRange"> <!-- Lists all colours as buttons and allows selection of one -->
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="item.sizes.length > 0">
+        <div *ngIf="item?.sizes.length > 0">
             <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
             <div> <!-- Lists all sizes as buttons and allows selection of one -->
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="item.parameters.length > 0">
+        <div *ngIf="item?.parameters.length > 0">
             <div *ngFor="let parm of item.parameters;" id="Placeholder">
                 <!-- Custom parameters input by seller -->
                 <p><span>{{parm.name}}:</span> {{parm.value}}</p>
@@ -40,15 +40,20 @@
         </div>
         <br/>
         <div>
-            <p><span id="SizeContainer">Description:  </span>{{item.description}}</p>
+            <p><span id="SizeContainer">Description:  </span>{{item?.description}}</p>
         </div>
         <div>
-            <!-- TO DO (Radu) -->
             <p>
                 <span id="SizeContainer">
                     Delivery details:
                 </span>
-                
+                <br/><b>FREE</b> Expedited shipping
+            </p>
+            <p *ngIf="userLocation?.length > 0">
+                Delivery to: {{userLocation}}
+            </p>
+            <p *ngIf="userLocation?.length <= 0">
+                Delivery to: Unknown location. Please allow access for estimate.
             </p>
         </div>
     </div>

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   CMS_API: 'http://localhost:80/api/',
   imgurAPI: "https://api.imgur.com/3/image",
-  imgurKey: 'f757d69ed390de7'
+  imgurKey: 'f757d69ed390de7',
+  Geo_API: "http://api.geonames.org/countryCodeJSON?&username=capstoneg15"
 };
 
 /*
