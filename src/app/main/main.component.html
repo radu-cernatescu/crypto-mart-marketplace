@@ -8,15 +8,16 @@
             </div>
             <div id="itemDesc">
                 <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+                <!-- Cut off descriptions longer than 400 characters -->
                 <p *ngIf="sellItem.description.length > 400">
                     <b>Description:</b><br> 
                     {{ sellItem.description.substring(0,150) }}...
                 </p>
-                <p *ngIf="sellItem.description.length < 400">
+                <p *ngIf="sellItem.description.length <= 400">
                     {{ sellItem.description }}
                 </p>
             </div>
-            <div class="verticalDivisor"></div>
+            <div class="verticalDivisor"></div> <!-- What is this? -->
             <div>
                 <span class="badge">${{ sellItem.price }}</span>
             </div>

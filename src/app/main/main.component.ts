@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ItemsService } from '../items.service';
 
@@ -12,8 +11,7 @@ export class MainComponent implements OnInit {
   sellItems: any[];
   subscription!: Subscription;
 
-  constructor(private itemsService: ItemsService,
-    private router: Router) {
+  constructor(private itemsService: ItemsService) {
     this.sellItems = [];
    }
 

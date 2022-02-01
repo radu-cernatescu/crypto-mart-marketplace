@@ -1,7 +1,5 @@
-import { query } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ItemsService } from '../items.service';
-import { TokenStorageService } from '../token-storage.service';
 
 @Component({
   selector: 'app-product',
@@ -15,15 +13,14 @@ export class ProductComponent implements OnInit {
   bigImgSrc: any;
   selectedColor: any;
   selectedSize: any;
-  productName: any;
+  itemTitle: any;
   description: any;
-  user: any;
 
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit(): void {
-    this.productName = decodeURI(window.location.pathname.split("/")[2]);
-    this.itemsService.getOneItem(this.productName).subscribe(item => {
+    this.itemTitle = decodeURI(window.location.pathname.split("/")[2]);
+    this.itemsService.getOneItem(this.itemTitle).subscribe(item => {
       this.item = item.data;
       this.images = this.item.images;
       this.bigImgSrc = this.item.images[0];

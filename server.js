@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const argon2 = require('argon2');
-const { APP_BASE_HREF } = require('@angular/common');
 const bodyParser = require('body-parser');
 
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
@@ -167,4 +166,4 @@ app.get('/*', function(req, res) {
     res.sendFile('index.html', {root: 'dist/Group15'});
 });
 
-app.listen(process.env.PORT || 8080, "192.168.50.40");
+app.listen(process.env.PORT || 80);

@@ -10,7 +10,7 @@
               type="text" id="name" class="form-control"
               name="name" required formControlName="name"
             >
-          </div> 
+          </div>
           <div class="col-sm-2 form-group">
             <label for="amount">Price</label>
             <input
@@ -70,6 +70,8 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addParam()">Add Parameter</button>
+            <!-- Adds the custom parameter to the box below so the user
+            can see what they've selected -->
           </div>
         </form>
         </div>
@@ -87,6 +89,8 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addSize()">Add Size</button>
+            <!-- Adds the size to the box below so the user
+            can see what they've selected -->
           </div>
           </form>
         </div>
@@ -104,6 +108,8 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addColor()">Add Color</button>
+            <!-- Adds the colour to the box below so the user
+            can see what they've selected -->
           </div>
         </form>
         </div>
@@ -115,6 +121,7 @@
                 <span>
                   {{item.name}} : {{item.value}}
                 </span>
+                <!-- Implement deletion here (Radu) -->
               </li>
             </ng-container>
           </ul>
@@ -128,6 +135,7 @@
                 <span>
                   {{item}}
                 </span>
+                <!-- Implement deletion here (Radu) -->
               </li>
             </ng-container>
           </ul>
@@ -141,6 +149,7 @@
                 <span>
                   {{item}}
                 </span>
+                <!-- Implement deletion here (Radu) -->
               </li>
             </ng-container>
           </ul>
