@@ -121,7 +121,9 @@
                 <span>
                   {{item.name}} : {{item.value}}
                 </span>
-                <!-- Implement deletion here (Radu) -->
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteParam(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>
@@ -135,7 +137,9 @@
                 <span>
                   {{item}}
                 </span>
-                <!-- Implement deletion here (Radu) -->
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteSize(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>
@@ -149,7 +153,9 @@
                 <span>
                   {{item}}
                 </span>
-                <!-- Implement deletion here (Radu) -->
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteColor(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>

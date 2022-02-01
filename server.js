@@ -7,11 +7,15 @@ const bodyParser = require('body-parser');
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+/* Initialize Express backend
+*/
 const app = express();
 app.use(cors())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*
+*/
 app.post("/api/user-login", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
@@ -33,10 +37,12 @@ app.post("/api/user-login", async (req, res) => {
             res.send({message:"FAILED"});
         });
         
-    });
+    }).catch(err => {/*console.log(err)*/});
     client.close();
 });
 
+/*
+*/
 app.post("/api/sign-up", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
@@ -62,10 +68,12 @@ app.post("/api/sign-up", async (req, res) => {
         }).catch(() => {
             res.send({message:"FAILED"});
         });
-    });
+    }).catch(err => {/*console.log(err)*/});
     client.close();
 });
 
+/*
+*/
 app.get("/api/items", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
@@ -78,10 +86,12 @@ app.get("/api/items", async (req, res) => {
             res.send({ message: "FAILED" });
         }
         
-    });
+    }).catch(err => {/*console.log(err)*/});
     client.close();
 });
 
+/*
+*/
 app.get("/api/item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
@@ -95,10 +105,12 @@ app.get("/api/item", async (req, res) => {
         else {
             res.send({ message: "FAILED" });
         }
-    }).catch(err => {console.log(err)});
+    }).catch(err => {/*console.log(err)*/});
     client.close();
 });
 
+/*
+*/
 app.post("/api/add-item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
@@ -118,10 +130,12 @@ app.post("/api/add-item", async (req, res) => {
         }).catch(() => {
             res.send({message:"FAILED"});
         });
-    });
+    }).catch(err => {/*console.log(err)*/});
     client.close();
 });
 
+/*
+*/
 app.post("/api/update-item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
@@ -134,21 +148,32 @@ app.post("/api/update-item", async (req, res) => {
         }
         else {
             let myquery = { userId: req.body.user._id, title: req.body.olditem.title };
-            let newvalues;
-            if (req.body.olditem.images[0] == req.body.newitem.images[0]) {
-                newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price } };
+            let newvalues = { $set: {} };
+            if (req.body.olditem.images[0] != req.body.newitem.images[0]) {
+                newvalues.$set['images'] = req.body.newitem.images;
             }
-            else {
-                newvalues = { $set: { title: req.body.newitem.title, description: req.body.newitem.description, price: req.body.newitem.price, images: req.body.newitem.images } };
+            if (req.body.olditem.title != req.body.newitem.title) {
+                newvalues.$set['title'] = req.body.newitem.title
             }
+            if (req.body.olditem.description != req.body.newitem.description) {
+                newvalues.$set['description'] = req.body.newitem.description;
+            }
+            if (req.body.olditem.price != req.body.newitem.price) {
+                newvalues.$set['price'] = req.body.newitem.price;
+            }
+            newvalues.$set['parameters'] = req.body.newitem.parameters;
+            newvalues.$set['colors'] = req.body.newitem.colors;
+            newvalues.$set['sizes'] = req.body.newitem.sizes;
             
             await collection.updateOne(myquery, newvalues).then(() => {
                 res.send({message: "SUCCESS"});
             }).catch(() => {res.send({message: "FAILED"})});
         }        
-    });
+    }).catch(err => {/*console.log(err)*/});
 });
 
+/*
+*/
 app.post("/api/remove-item", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("items");
@@ -160,10 +185,17 @@ app.post("/api/remove-item", async (req, res) => {
     client.close();
 });
 
+/* Allows express to serve files from this directory
+*/
 app.use(express.static('dist/Group15'));
 
+/* We are using the express backend to serve the index.html
+   for our Angular app
+*/
 app.get('/*', function(req, res) {
     res.sendFile('index.html', {root: 'dist/Group15'});
 });
 
+/*
+*/
 app.listen(process.env.PORT || 80);
