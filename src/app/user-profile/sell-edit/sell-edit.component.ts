@@ -88,9 +88,13 @@ export class SellEditComponent implements OnInit{
     //   }
     // );
   }
+
+  //
   sellItem(){
     this.sellMode = true;
   }
+
+  //
   onAdd(){
     this.newItem.title = this.itemForm.value['name'];
     this.newItem.description = this.itemForm.value['description'];
@@ -138,6 +142,12 @@ export class SellEditComponent implements OnInit{
   //
   onClear() {
     this.itemForm.reset();
+    this.paramForm.reset();
+    this.sizeForm.reset();
+    this.colorForm.reset();
+    this.parameters = [];
+    this.sizes = [];
+    this.colors = [];
     this.editMode = false;
   }
 
