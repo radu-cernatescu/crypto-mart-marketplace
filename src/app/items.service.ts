@@ -22,14 +22,6 @@ export class ItemsService {
     this.imgurKey = ENV.imgurKey;
   }
 
-  private _curretId! : any;
-  set currentId(value){
-    this._curretId = value;
-  }
-  get currentId(){
-    return this._curretId;
-  }
-
   getItems(): Observable<any> {
     return this.http.get(this.CMS_API + "items");
   }
@@ -43,12 +35,13 @@ export class ItemsService {
   });
   }
 
-  getUserItems(user: User): Observable<any> { 
+  getUserItems(user: User): Observable<any> {
     return this.http.post(this.CMS_API + "user-items", user);
   }
  
   addUserItem(user: User, item: Item): Observable<any> {
     item.userId = user._id;
+    item.firstName = user.firstName;
     return this.http.post(this.CMS_API + "add-item", {user: user, item: item});
   }
 

@@ -1,14 +1,14 @@
 <div id="ProductContainer">
-    <div *ngIf="item && item.title" id="ImagesSideMenu">
+    <div id="ImagesSideMenu">
         <h4 id="SideMenuTitle">Product Images</h4>
         <div *ngFor="let img of images; let i = index">
-            <img src={{img}} alt="MISSING IMAGE" width="140px" height="100px" id="SideMenuImage" (click)="onImageChange(img)">
+            <img src={{img}} alt="image #{{i + 1}} from carousel" width="140px" height="100px" id="SideMenuImage" (click)="onImageChange(img)">
         </div>
     </div>
-    <div *ngIf="item && item.title" id="SelectedImageContainer">
-        <img src="{{bigImgSrc}}" alt="MISSING IMAGE" width="800px" height="500px" id="SelectedImage">
+    <div id="SelectedImageContainer">
+        <img src="{{bigImgSrc}}" alt="Central selected image" width="800px" height="500px" id="SelectedImage">
     </div>
-    <div *ngIf="item && item.title" id="detailContainer">
+    <div id="detailContainer">
         <div>
             <h2>{{item.title}}</h2>
         </div>
@@ -16,31 +16,51 @@
             <p> Price: ${{item.price}}</p> 
         </div>
         <hr>
-        <div>
+        <div *ngIf="item.colors.length > 0">
             <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
-            <div id="ColorRange">
+            <div id="ColorRange"> <!-- Lists all colours as buttons and allows selection of one -->
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
-                    <p id="Color" (click)="changeColor(color)">{{color | uppercase}}</p>
+                    <button id="Color" (click)="changeColor(color)">{{color | uppercase}}</button>
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="item.sizes.length > 0">
             <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
-            <div> <!-- Extra div? (Author: Eduard)-->
+            <div> <!-- Lists all sizes as buttons and allows selection of one -->
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
-                    <p id="Size" (click)="changeSize(size)">{{size | uppercase}}</p>
+                    <button id="Size" (click)="changeSize(size)">{{size | uppercase}}</button>
                 </div>
             </div>
         </div>
-        <div>
-            <div *ngFor="let parm of item.parameters;" id="Placeholder"> <!-- What element does this correspond to? (Author: Eduard)-->
+        <div *ngIf="item.parameters.length > 0">
+            <div *ngFor="let parm of item.parameters;" id="Placeholder">
+                <!-- Custom parameters input by seller -->
                 <p><span>{{parm.name}}:</span> {{parm.value}}</p>
             </div>
+        </div>
+        <br/>
+        <div>
+            <p><span id="SizeContainer">Description:  </span>{{item.description}}</p>
+        </div>
+        <div>
+            <!-- TO DO (Radu) -->
+            <p>
+                <span id="SizeContainer">
+                    Delivery details:
+                </span>
+                
+            </p>
         </div>
     </div>
     <div *ngIf="item && item.title" id="CheckoutButtons">
         <h4 id="CheckoutButtonsTitle">Product Options</h4>
-        <button class="btn btn-success">ADD TO CARD</button>
+        <button class="btn btn-success">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
-    </div>  
+        <br/><br/>
+
+        <h4 id="CheckoutButtonsTitle">Seller Info</h4>
+        <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->
+        <br />
+        <p>{{item.firstName}}</p> <!-- First name of the seller -->
+    </div> 
 </div>  

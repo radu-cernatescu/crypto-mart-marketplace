@@ -9,29 +9,28 @@ import { ItemsService } from '../items.service';
 export class ProductComponent implements OnInit {
 
   item: any;
-  curretId:any;
   images: any;
   bigImgSrc: any;
-  selectedColor:any;
-  selectedSize:any;
-  constructor(private itemsService: ItemsService) {
-    this.curretId = this.itemsService.currentId;
-   }
+  selectedColor: any;
+  selectedSize: any;
+  itemTitle: any;
+  description: any;
+
+  constructor(private itemsService: ItemsService) { }
 
   ngOnInit(): void {
-    console.log(this.curretId);
-    this.itemsService.getOneItem(this.curretId).subscribe(item => {
-      //console.log(items.data);
+    this.itemTitle = decodeURI(window.location.pathname.split("/")[2]);
+    this.itemsService.getOneItem(this.itemTitle).subscribe(item => {
       this.item = item.data;
       this.images = this.item.images;
       this.bigImgSrc = this.item.images[0];
       this.selectedColor = this.item.colors[0];
       this.selectedSize = this.item.sizes[0];
+      this.description = this.item.description;
     });
   }
   
   onImageChange(event:any){
-    console.log("bb");
     this.bigImgSrc = event;
   }
   changeColor(event:any){
@@ -40,5 +39,4 @@ export class ProductComponent implements OnInit {
   changeSize(event:any){
     this.selectedSize = event;
   }
-
 }

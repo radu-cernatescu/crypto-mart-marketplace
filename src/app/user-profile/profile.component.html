@@ -15,7 +15,15 @@
             </div>
             <div id="itemDesc">
                 <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
-                <p><b>Description:</b><br> {{ sellItem.description }}</p>
+                <!-- Cut off descriptions longer than 150 characters -->
+                <p *ngIf="sellItem.description.length > 150">
+                  <b>Description:</b><br>
+                  {{ sellItem.description.substring(0, 150) }}...
+                </p>
+                <p *ngIf="sellItem.description.length < 150">
+                  <b>Description:</b><br>
+                  {{ sellItem.description }}
+                </p>
             </div>
             <div class="verticalDivisor"></div>
             <div>

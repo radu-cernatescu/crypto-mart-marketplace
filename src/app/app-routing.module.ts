@@ -6,6 +6,7 @@ import { SignInComponent } from './main/sign-in/sign-in.component';
 import { SignUpComponent } from './main/sign-up/sign-up.component';
 import { AuthGuard } from './auth.guard';
 import { ProductComponent } from './product/product.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -20,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), BrowserAnimationsModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { } 

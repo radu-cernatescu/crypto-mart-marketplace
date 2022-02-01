@@ -10,7 +10,7 @@
               type="text" id="name" class="form-control"
               name="name" required formControlName="name"
             >
-          </div> 
+          </div>
           <div class="col-sm-2 form-group">
             <label for="amount">Price</label>
             <input
@@ -70,6 +70,8 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addParam()">Add Parameter</button>
+            <!-- Adds the custom parameter to the box below so the user
+            can see what they've selected -->
           </div>
         </form>
         </div>
@@ -87,8 +89,10 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addSize()">Add Size</button>
+            <!-- Adds the size to the box below so the user
+            can see what they've selected -->
           </div>
-        </form>
+          </form>
         </div>
         <div class="row">
           <form [formGroup]="colorForm">
@@ -104,9 +108,12 @@
           </div>
           <div class="col-sm-2 form-group">
             <button (click)="addColor()">Add Color</button>
+            <!-- Adds the colour to the box below so the user
+            can see what they've selected -->
           </div>
         </form>
         </div>
+        <label>Parameters</label>
         <div class="param-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of parameters">
@@ -114,10 +121,15 @@
                 <span>
                   {{item.name}} : {{item.value}}
                 </span>
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteParam(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>
         </div>
+        <br/>
+        <label>Sizes</label>
         <div class="size-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of sizes">
@@ -125,10 +137,15 @@
                 <span>
                   {{item}}
                 </span>
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteSize(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>
         </div>
+        <br/>
+        <label>Colors</label>
         <div class="color-container mt-2">
           <ul class="flex flex-wrap list-group list-group-horizontal">
             <ng-container *ngFor="let item of colors">
@@ -136,10 +153,14 @@
                 <span>
                   {{item}}
                 </span>
+                &nbsp;
+                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+                <img (click)="deleteColor(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
               </li>
             </ng-container>
           </ul>
         </div>
+        <br />
         <div class="row">
           <div class="col-xs-12">
             <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
