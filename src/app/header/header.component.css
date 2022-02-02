@@ -4,6 +4,7 @@
     display: flex; 
     justify-content: space-around;
     background-color: #f8eeca;
+    border: 5px ridge #d8c3a5;
 }
 
 #NavButtonContainer {

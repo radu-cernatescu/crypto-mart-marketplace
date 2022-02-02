@@ -3,15 +3,15 @@
         <app-sell-edit></app-sell-edit>
       <div class="spacer"></div>
       <h3 id="inLine">Current active market listings: </h3>
-      <ul class="list-group" id="userActiveListings">
+      <ul class="list-group" id="userActiveListingsContainer">
         <a
         class="list-group-item"
         id="listItem"
         *ngFor="let sellItem of sellItems; let i = index"
         (click)="onEditItem(sellItem)">
-        <div style="display: flex;">
+        <div style="display: flex;"  id="userActiveListings">
             <div>
-                <img height="200px" width="250px" style="border: 1px solid #e98074;"  src={{sellItem.images}} alt="hi">
+                <img id="ItemImage" height="200px" width="250px" src={{sellItem.images}} alt="hi">
             </div>
             <div id="itemDesc">
                 <span><b>Item Title:</b><br> {{ sellItem.title }}</span>

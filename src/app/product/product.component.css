@@ -1,6 +1,7 @@
 /* REVISED INTO RELATIVE RESIZING*/
 
 #ProductContainer {
+    overflow-x: scroll;
     display: flex; 
     justify-content: space-around; 
     margin-top: 2%;

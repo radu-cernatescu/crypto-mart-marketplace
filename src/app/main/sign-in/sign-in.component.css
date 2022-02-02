@@ -1,3 +1,10 @@
+.divider{
+    width: 5px;
+    height:auto;
+    display:inline-block;
+}
+
+/* CUSTOM BUTTONS */
 button.btn-success {
     background-color: #eae7dc;
     color: black;
@@ -27,10 +34,4 @@ button.btn-primary:hover {
 @keyframes colorhover {
     from {background-color: #eae7dc} 
     to {background-color: #d8c3a5}
-}
-
-.divider{
-    width:5px;
-    height:auto;
-    display:inline-block;
 }
