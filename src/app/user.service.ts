@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/User';
 
@@ -20,7 +19,7 @@ export class UserService {
     CMS_API: string;
     isLoggedIn = false;
 
-    constructor(private http: HttpClient, private router: Router) { 
+    constructor(private http: HttpClient) { 
         this.CMS_API = ENV.CMS_API;
     }
 
@@ -34,6 +33,12 @@ export class UserService {
       return this.http.post(this.CMS_API + 'sign-up', userObj)
         .pipe(catchError(this.handleError('get user', []))
       ); 
+    }
+
+    getUserCountry(lat: number, lon: number): Observable<any> {
+      return this.http.get(ENV.Geo_API + `&lat=${lat}&lng=${lon}`)
+      .pipe(catchError(this.handleError('get country', []))
+      );
     }
 
     /**

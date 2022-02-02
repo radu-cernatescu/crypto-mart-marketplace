@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemsService } from '../items.service';
+import {GeolocationService} from '@ng-web-apis/geolocation';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-product',
@@ -15,8 +17,14 @@ export class ProductComponent implements OnInit {
   selectedSize: any;
   itemTitle: any;
   description: any;
+  userLocation: any;
 
-  constructor(private itemsService: ItemsService) { }
+
+  constructor(private itemsService: ItemsService, 
+    private readonly geolocation$: GeolocationService,
+    private readonly userService: UserService) { 
+      
+    }
 
   ngOnInit(): void {
     this.itemTitle = decodeURI(window.location.pathname.split("/")[2]);
@@ -28,6 +36,17 @@ export class ProductComponent implements OnInit {
       this.selectedSize = this.item.sizes[0];
       this.description = this.item.description;
     });
+
+    this.geolocation$.subscribe(position => {
+
+      this.userService.getUserCountry(position.coords.latitude, position.coords.longitude).subscribe((details) => {
+        this.userLocation = details.countryName;
+      });
+    });
+  }
+
+  ngOnDestroy() : void {
+    // memory cleanup TODO
   }
   
   onImageChange(event:any){
