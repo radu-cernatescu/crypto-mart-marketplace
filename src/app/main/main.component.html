@@ -1,6 +1,6 @@
 <h3 id="divTitle">Market Listings:</h3>
-<ul class="list-group" id="MarketPage">
-<div id="allItemsContainer">
+<ul class="list-group">
+<div id="MarketItemsContainer">
     <div class="list-group-item" id="ItemContainer" *ngFor="let sellItem of sellItems; let i = index">
         <div id="marketItem" routerLink="/product/{{sellItem.title}}">
             <div>
