@@ -1,21 +1,21 @@
-.btn-bwm {
-    background-color: #f2f0f8;
-    color: rgb(12, 12, 12);
-    /* padding: 15px 30px; */
-    font-size: 20px;
-}
-
-.image-upload-container {
-    cursor: pointer;
-}
-
 #SellButton {
     position: relative;
-    transform: translate(5px, 10px);
+    margin: 1% 55%;
+    padding: 1% 1%;
     background-color: #e9e3cf;
     color: black;
     border-color: #d8c3a5;
     font-weight: bold;
+}
+
+#SellForm {
+    width: 100%;
+    height: 100%;
+    margin-left: 10%;
+    margin-top: 1%;
+    position:relative;
+    border: 4px ridge #b9951d;
+    padding: 1% 1%;
 }
 
 #SellButton:hover {
@@ -24,22 +24,30 @@
     background-color: #d8c3a5
 }
 
-#SellForm {
-    position:relative;
-    top: 10px;
-    left: 10px;
+#InputField{
+    height: 100%;
+    width: 100%;
+    border: 3px ridge #b9951d;
+    background-color: rgb(255, 255, 255); /* Choose appropriate colour */
+    overflow: auto;
+    padding: 5px;
 }
 
-.divider {
-    width:5px;
-    height:auto;
-    display:inline-block;
+#InputButton {
+    background-color: #e9e3cf;
+    margin-top: 12%;
+}
+
+#InputButton:hover {
+    animation-name: colorhover;
+    animation-duration: 200ms;
+    background-color: #d8c3a5
 }
 
 #FormButton {
     background-color: #e9e3cf;
     color: black;
-    border-color: #d8c3a5;
+    border-color: #080808;
     font-weight: bold;
 }
 
@@ -49,8 +57,17 @@
     background-color: #d8c3a5
 }
 
+.image-upload-container {
+    cursor: pointer;
+}
+
 @keyframes colorhover {
     from {background-color: #e9e3cf}
     to {background-color: #d8c3a5}
 }
 
+.divider {
+    width:5px;
+    height:auto;
+    display:inline-block;
+}

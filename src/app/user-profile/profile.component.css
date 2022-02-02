@@ -1,15 +1,27 @@
-#userActiveListings {
-    width:1850px;
-    height:400px;
-    overflow-y:scroll;
-    border-radius: 10px;
-}
+/* REVISED INTO RELATIVE RESIZING*/
 
 #inLine {
-    position: relative;
-    left: 5px;
-    top: -20px;
-    width: 400px;
+    white-space: nowrap;
+    font-weight: bold;
+    padding: 1% 0%;
+    margin-left: 1%;
+}
+
+#userActiveListingsContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    margin-left: 1%;
+    background-color: #D8C3A4;
+    border: 5px inset #F8EECA;
+    border-radius: 15px;
+    padding: 0.4% 0.2%;
+}
+
+#userActiveListings {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }
 
 #listItem {
@@ -17,10 +29,23 @@
     background-color: #f7f3e9;
 }
 
+#ItemImage {
+    border: 1px solid #e98074;
+    border-radius: 15px;
+}
+
 #listItem:hover {
     animation-name: colorh;
     animation-duration: 300ms;
-    background-color: #e9e3cf
+    background-color: #e9e3cf;
+}
+
+#itemDesc {
+    position: relative;
+    padding-top: 1%;
+    left: 3%;
+    font-size: large;
+	width: 100%;
 }
 
 @keyframes colorh {
@@ -29,26 +54,34 @@
 }
 
 .verticalDivisor {
-    width: 2000px;
+    width: 100%;
     height: auto;
     display:inline-block;
 }
 
-#itemDesc {
-    position: relative;
-    top: -30px;
-    left: 20px;
-    font-size: large;
-	width: 1250px;
-	margin: auto;
-}
-
 .spacer {
     width: auto;
-    height: 30px;
     display:inline-block;
 }
 
 .badge {
     font-size: large;
+}
+
+/*CUSTOM SCROLLBAR*/
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track { /* Track */
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb { /* Handle */
+    background: #e98074; 
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
+    background: #E85A4F; 
 }

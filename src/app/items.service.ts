@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as ENV } from '../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
@@ -29,13 +29,19 @@ export class ItemsService {
   getItem(item: Item): Observable<any> {
     return this.http.post(this.CMS_API + "user-item", { item: item });
   }
+  getOneItem(title: any): Observable<any> {
+    return this.http.get(this.CMS_API + "item" , {
+      params: new HttpParams().set('title', title)
+  });
+  }
 
-  getUserItems(user: User): Observable<any> { 
+  getUserItems(user: User): Observable<any> {
     return this.http.post(this.CMS_API + "user-items", user);
   }
  
   addUserItem(user: User, item: Item): Observable<any> {
     item.userId = user._id;
+    item.firstName = user.firstName;
     return this.http.post(this.CMS_API + "add-item", {user: user, item: item});
   }
 

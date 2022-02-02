@@ -1,9 +1,59 @@
+/* REVISED INTO RELATIVE RESIZING*/
+
 #head {
-    position: sticky;
+    display: flex; 
+    justify-content: space-around;
     background-color: #f8eeca;
-    z-index: 1;
+    border: 5px ridge #d8c3a5;
 }
 
+#NavButtonContainer {
+    /*background-image: url("\src\assets\img\logo.png");*/
+    background-size: cover;
+    background-position-y: 45%;
+    border: 5px ridge #d8c3a5;
+    text-align: center;
+    height: 100%;
+    width: 90%;
+}
+
+#NavButton {
+    position:relative;
+    padding: 1% 1%;
+    margin-right: 0.5%;
+    margin-top: 10%;
+}
+
+#AccountContainer {
+    margin-right: 2%;
+    margin-top: 1%;
+    height: 100%;
+    width: 20%;
+}
+
+#AuthentificationContainer {
+    width: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#AuthentificationButton {
+    margin-top: 5%;
+}
+
+#AccountSettingsContainer {
+    text-align: center;
+    padding-left: 30%;
+    width: 100%;
+}
+
+#WelcomeMessage {
+    font-weight: bold;
+    font-size: large;
+}
+
+/* CUSTOM BUTTONS */
 button.btn-success {
     background-color: #e9e3cf;
     color: black;
@@ -12,58 +62,30 @@ button.btn-success {
 }
 
 button.btn-success:hover {
-    animation-name: colorhover;
-    animation-duration: 500ms;
-    background-color: #d8c3a5
+    animation-name: colorhoverheader;
+    animation-duration: 600ms;
+    background-color: #d8c3a5;
 }
 
-@keyframes colorhover {
-    from {background-color: #e9e3cf}
-    to {background-color: #d8c3a5}
-}
-
-.divider {
-    width:5px;
-    height:auto;
-    display:inline-block;
-}
-
-.mininavbar {
-    float: right;
-    margin-top: 5%;
-    margin-right: 10%;
-}
-
-#UserButtons {
-    position: relative;
-    top: 20px;
-    left: 1050px;
-}
-
-#MenuButton {
-    position:relative;
-    transform: translate(0px, 60px);
-}
-
-#WelcomeMessage {
-    font-size: large;
-    position: relative;
-    top: 20px;
-    left: 1050px;
-}
-
+/* CUSTOM ACCORDION*/
 .dropdown-toggle {
     position: relative;
-    right: 25px;
-    top: 50px;
     color: black;
     border-color: #d8c3a5;
     font-weight: bold;
-    width: 160px;
 }
 
 .dropdown-menu {
     position: relative;
-    right: 25px;
-    top: 50px;
+}
+
+#DropDownMenu {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes colorhoverheader {
+    from {background-color: #e9e3cf}
+    to {background-color: #d8c3a5}
 }
