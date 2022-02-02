@@ -1,5 +1,37 @@
 # CHANGELOG
 
+## Sprint 3
+
+### PR #76 (Development of Sprint 2 starts at this PR)
+
+* Added: Get route to backend for item retrieval for the product page
+* Added: Dields to Item class for color, size and parameters
+* Added: Routing for the product view
+* Fixed: Sell-edit component to allow adding of colors, size and parameters
+* Added: product component
+
+### PR #77
+
+* Fixed: Refactor backend database query for updating an item
+* Added: Comments
+* Added: Fade animation for routerLinks
+* Fixed: Item service
+* Fixed: Clear button in sell-edit to allow clearing the full form
+* Fixed: Allow deleting/updating of size, colour, parameters
+
+### PR #78
+
+* Fixed: HTML reworked to better single out individual elements.
+* FIxed: CSS reworked to use relative values rather than static.
+* Fixed: Typescript was changed to allow an overall application background.
+
+### PR #79
+
+* Allow to show the country which the user is located in for shipping purposes to be implemented in shopping cart later
+* Refactor a bit
+* Solve merge conflict in product front end template
+
+
 ## Sprint 2 
 
 ### PR #63 (Development of Sprint 2 starts at this PR)
