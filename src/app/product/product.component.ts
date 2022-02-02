@@ -33,10 +33,18 @@ export class ProductComponent implements OnInit {
   onImageChange(event:any){
     this.bigImgSrc = event;
   }
-  changeColor(event:any){
+  changeColor(event:any){ // Change selected color & style of respective button
     this.selectedColor = event;
+    
+    /* ABANDONED IDEA (STYLE CHANGE IN TS)
+    const cButton: HTMLElement | null = document.getElementById(event)!;
+    cButton.style.background = "#e5e5e5";
+    */
+
   }
-  changeSize(event:any){
+  changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
+
+
   }
 }

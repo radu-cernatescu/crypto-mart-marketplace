@@ -1,49 +1,62 @@
+/* REVISED INTO RELATIVE RESIZING*/
+
 #ProductContainer {
     display: flex; 
     justify-content: space-around; 
     margin-top: 2%;
     background-color: #D8C3A4;
     border: 5px inset #F8EECA;
-    padding: 10px 5px;
+    border-radius: 15px;
+    padding: 1% 1%;
+}
+
+#ImagesSideMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px ridge #f8eecac0;
+    border-radius: 15px;
+    overflow-y: auto;
+    width: 10%;
 }
 
 #SideMenuTitle {
     white-space: nowrap;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 5px solid #f8eecac0;
+    font-size: 15px;
     font-weight: bold;
-    border-bottom: solid #f8eeca;
-    padding-bottom: 5%;
-    margin-left: 1%;
 }
 
-#ImagesSideMenu {
-    border: 5px ridge #f8eecac0;
-    overflow-y: scroll;
-    padding: 5px 20px;
+#SideMenuImageContainer {
+    padding: 1% 0%;
 }
 
 #SideMenuImage {
     border: 1px solid #e98074;
-    border-radius: 10px;
-    padding: 2px 2px;
+    border-radius: 15px;
+}
+
+#SelectedImageContainer {
+    padding: 1% 1%;
 }
 
 #SelectedImage {
     max-width: 100%;
     border: 2px solid #F8EECA;
-    padding: 4px 4px;
-    border-radius: 10px;
-}
-
-#SelectedImageContainer {
-    margin: 0px 40px;
+    padding: 1% 1%;
+    border-radius: 15px;
 }
 
 #detailContainer {
     border: 5px ridge #f8eecac0;
-    overflow-y: scroll;
-    padding: 5px;
-    padding-left: 30px;
-    padding-right: 200px;
+    border-radius: 15px;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-width: 35%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 #PriceContainer {
@@ -53,7 +66,7 @@
     font-weight: bold;
 }
 
-#ColorContainer {
+#ColorTitle {
     font-weight: bold;
 }
 
@@ -62,44 +75,74 @@
 }
 
 #ColorSelection {
-    margin: 3px;
+    padding: 0% 1%;
 }
 
-#Color {
-    border: 1px solid red; 
-    padding: 3px; 
-    background-color: rgb(222, 224, 63);
+#ColorButtons {
+    border: 5px #f8eecac0;
+    background-color:#f8eeca;
+    border-radius: 15px;
 }
 
 #SizeContainer {
+    padding-top: 2%;
+    padding-bottom: 1%;
+}
+
+#SizeTitle  {
     font-weight: bold;
+}
+
+#SizeRange {
+    display: flex;
 }
 
 #SizeSelection {
-    margin: 3px;
+    padding: 0% 1%;
 }
 
-#Size {
-    border: 1px solid red; 
-    padding: 3px; 
-    background-color: rgb(222, 224, 63);
+#SizeButtons {
+    border: 5px #f8eecac0;
+    background-color:#f8eeca;
+    border-radius: 5px;
 }
 
-#Placeholder {
-    margin: 3px;
+#LocationContainer {
+    padding-top: 2%;
+    max-width: 100%;
+}
+
+#LocationTitle {
     font-weight: bold;
 }
 
-#CheckoutButtons {
-    display: flex; 
-    flex-direction: column; 
-    justify-content:right; 
-    align-items: center;
-    border: 5px ridge #f8eecac0;
-    padding: 5px 20px;
+#DescriptionContainer {
+    max-width: 100%;
 }
 
-#CheckoutButtonsTitle {
+#DescriptionTitle {
+    font-weight: bold;
+}
+
+#CheckoutOptionsContainer{
+    overflow-x: auto;
+    display: flex; 
+    width: 15%;
+    flex-direction: column; 
+    align-items: center;
+    border: 5px ridge #f8eecac0;
+    border-radius: 15px;
+}
+
+#CheckoutOptionsTitle {
+    white-space: nowrap;
+    font-weight: bold;
+    border-bottom: solid #f8eeca;
+    padding-bottom: 5%;
+    margin-left: 1%;
+}
+
+#SellerTitle {
     white-space: nowrap;
     font-weight: bold;
     border-bottom: solid #f8eeca;
@@ -108,8 +151,7 @@
 }
 
 button {
-    padding: 10px 5px;
-    width: 200px;
+    width: 85%;
     background-color:#f8eeca;
     border-radius: 5px;
     margin: 5px;
@@ -131,6 +173,16 @@ button.btn-success:hover {
 @keyframes colorhoverProduct {
     from {background-color: #f8eeca}
     to {background-color: #EAEFDC}
+}
+
+/*Custom Radio Buttons*/
+.option {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color:#f8eeca;
+    border-radius: 15px;
+    margin: 5px;
+    white-space: nowrap;
 }
 
 /*CUSTOM SCROLLBAR*/
