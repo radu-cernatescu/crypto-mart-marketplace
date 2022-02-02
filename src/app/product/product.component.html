@@ -1,7 +1,7 @@
 <div id="ProductContainer">
     <div id="ImagesSideMenu">
-        <h4 id="SideMenuTitle">Product Images</h4>
-        <div *ngFor="let img of images; let i = index">
+        <p id="SideMenuTitle">Product Images</p>
+        <div *ngFor="let img of images; let i = index" id="SideMenuImageContainer">
             <img src={{img}} alt="image #{{i + 1}} from carousel" width="140px" height="100px" id="SideMenuImage" (click)="onImageChange(img)">
         </div>
     </div>
@@ -17,34 +17,36 @@
         </div>
         <hr>
         <div *ngIf="item?.colors.length > 0">
-            <p><span id="ColorContainer">Color:</span> {{selectedColor}} </p>
+            <p><span id="ColorTitle">Color:</span> {{selectedColor}} </p>
             <div id="ColorRange"> <!-- Lists all colours as buttons and allows selection of one -->
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
-                    <button id="Color" (click)="changeColor(color)">{{color | uppercase}}</button>
+                    <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio">
+                    <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
                 </div>
             </div>
         </div>
         <div *ngIf="item?.sizes.length > 0">
-            <p><span id="SizeContainer">Size:</span> {{selectedSize}} </p>
-            <div> <!-- Lists all sizes as buttons and allows selection of one -->
+            <p><span id="SizeTitle">Size:</span> {{selectedSize}} </p>
+            <div id="SizeRange"> <!-- Lists all sizes as buttons and allows selection of one -->
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
-                    <button id="Size" (click)="changeSize(size)">{{size | uppercase}}</button>
+                    <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio">
+                    <label for="{{size}}" class="option">{{size | uppercase}}</label>
                 </div>
             </div>
         </div>
         <div *ngIf="item?.parameters.length > 0">
-            <div *ngFor="let parm of item.parameters;" id="Placeholder">
+            <div *ngFor="let parm of item.parameters;" id="LocationContainer">
                 <!-- Custom parameters input by seller -->
-                <p><span>{{parm.name}}:</span> {{parm.value}}</p>
+                <p><span id="LocationTitle">{{parm.name}}:</span> {{parm.value}}</p>
             </div>
         </div>
         <br/>
-        <div>
-            <p><span id="SizeContainer">Description:  </span>{{item?.description}}</p>
+        <div id="DescriptionContainer">
+            <p><span id="DescriptionTitle">Description:  </span>{{item?.description}}</p>
         </div>
         <div>
             <p>
-                <span id="SizeContainer">
+                <span id="placeholder">
                     Delivery details:
                 </span>
                 <br/><b>FREE</b> Expedited shipping
@@ -57,13 +59,13 @@
             </p>
         </div>
     </div>
-    <div *ngIf="item && item.title" id="CheckoutButtons">
-        <h4 id="CheckoutButtonsTitle">Product Options</h4>
+    <div *ngIf="item && item.title" id="CheckoutOptionsContainer">
+        <h4 id="CheckoutOptionsTitle">Product Options</h4>
         <button class="btn btn-success">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
         <br/><br/>
 
-        <h4 id="CheckoutButtonsTitle">Seller Info</h4>
+        <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->
         <br />
         <p>{{item.firstName}}</p> <!-- First name of the seller -->

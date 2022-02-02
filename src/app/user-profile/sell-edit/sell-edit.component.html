@@ -1,176 +1,180 @@
 <div *ngIf="!sellMode">
-    <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
+  <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
 </div>
 <div *ngIf="sellMode" id="SellForm">
-    <form [formGroup]="itemForm">
-        <div class="row">
-          <div class="col-sm-5 form-group"> 
-            <label for="name">Name</label>
-            <input
-              type="text" id="name" class="form-control"
-              name="name" required formControlName="name"
-            >
-          </div>
-          <div class="col-sm-2 form-group">
-            <label for="amount">Price</label>
-            <input
+  <form [formGroup]="itemForm">
+     <div class="row">
+        <div class="col-sm-5 form-group"> 
+           <label for="name">Name</label>
+           <input
+              type="text" 
+              id="InputField"
+              class="form-control"
+              name="name" 
+              required 
+              formControlName="name"
+              >
+        </div>
+        <div class="col-sm-2 form-group">
+           <label for="amount">Price</label>
+           <input
               type="number"
-              id="amount"
+              id="InputField"
               class="form-control"
               name="amount"
               required
               formControlName="amount"
-            >
-          </div>
+              >
         </div>
-        <div class="row">
-            <div class="col-sm-5 form-group">
-                <label for="description">Description</label>
-                <textarea
-                  type="text"
-                  id="description"
-                  class="form-control"
-                  formControlName="description"
-                  rows="3"></textarea>
-            </div>
-            <div class="col-sm-5 form-group">
-                <label for="imageInput">Select Image</label>
-                <input 
-                    type="file" 
-                    id="imageInput"
-                    multiple
-                    formControlName="imageInput"
-                    class="form-control"
-                    accept="image/*"
-                    (change)="processFile($event)"
-                >
-            </div>
-        </div>
-        <div class="row">
-          <form [formGroup]="paramForm">
-          <div class="col-sm-5 form-group">
-            <label for="Pname">Parameter Name</label>
-            <input
+     </div>
+     <div class="row">
+        <div class="col-sm-5 form-group">
+           <label for="description">Description</label>
+           <textarea
               type="text"
-              id="Pname"
+              id="InputField"
               class="form-control"
-              name="Pname"
-              formControlName="Pname"
-            >
-          </div>
-          <div class="col-sm-5 form-group">
-            <label for="pValue">Parameter Value</label>
-            <input
-              type="text"
-              id="pValue"
-              class="form-control"
-              name="pValue"
-              formControlName="pValue"
-            >
-          </div>
-          <div class="col-sm-2 form-group">
-            <button (click)="addParam()">Add Parameter</button>
-            <!-- Adds the custom parameter to the box below so the user
-            can see what they've selected -->
-          </div>
-        </form>
+              formControlName="description"
+              rows="3"></textarea>
         </div>
-        <div class="row">
-          <form [formGroup]="sizeForm">
-          <div class="col-sm-5 form-group">
-            <label for="size">Size</label>
-            <input
+        <div class="col-sm-5 form-group">
+           <label for="imageInput">Select Image</label>
+           <input 
+              type="file" 
+              id="InputField"
+              multiple
+              formControlName="imageInput"
+              class="form-control"
+              accept="image/*"
+              (change)="processFile($event)"
+              >
+        </div>
+     </div>
+     <div class="row">
+  <form [formGroup]="paramForm">
+  <div class="col-sm-5 form-group">
+  <label for="Pname">Parameter Name</label>
+  <input
+     type="text"
+     id="InputField"
+     class="form-control"
+     name="Pname"
+     formControlName="Pname"
+     >
+  </div>
+  <div class="col-sm-5 form-group">
+  <label for="pValue">Parameter Value</label>
+  <input
+     type="text"
+     id="InputField"
+     class="form-control"
+     name="pValue"
+     formControlName="pValue"
+     >
+  </div>
+  <div class="col-sm-2 form-group">
+  <button id="InputButton" (click)="addParam()">Add Parameter</button>
+  <!-- Adds the custom parameter to the box below so the user
+     can see what they've selected -->
+  </div>
+  </form>
+  </div>
+  <div class="row">
+     <form [formGroup]="sizeForm">
+        <div class="col-sm-5 form-group">
+           <label for="size">Size</label>
+           <input
               type="text"
-              id="size"
+              id="InputField"
               class="form-control"
               name="size"
               formControlName="size"
-            >
-          </div>
-          <div class="col-sm-2 form-group">
-            <button (click)="addSize()">Add Size</button>
-            <!-- Adds the size to the box below so the user
-            can see what they've selected -->
-          </div>
-          </form>
+              >
         </div>
-        <div class="row">
-          <form [formGroup]="colorForm">
-          <div class="col-sm-5 form-group">
-            <label for="color">Color</label>
-            <input
+        <div class="col-sm-2 form-group">
+           <button id="InputButton" (click)="addSize()">Add Size</button>
+           <!-- Adds the size to the box below so the user
+              can see what they've selected -->
+        </div>
+     </form>
+  </div>
+  <div class="row">
+     <form [formGroup]="colorForm">
+        <div class="col-sm-5 form-group">
+           <label for="color">Color</label>
+           <input
               type="text"
-              id="color"
+              id="InputField"
               class="form-control"
               name="color"
               formControlName="color"
-            >
-          </div>
-          <div class="col-sm-2 form-group">
-            <button (click)="addColor()">Add Color</button>
-            <!-- Adds the colour to the box below so the user
-            can see what they've selected -->
-          </div>
-        </form>
+              >
         </div>
-        <label>Parameters</label>
-        <div class="param-container mt-2">
-          <ul class="flex flex-wrap list-group list-group-horizontal">
-            <ng-container *ngFor="let item of parameters">
-              <li class="list-group-item">
-                <span>
-                  {{item.name}} : {{item.value}}
-                </span>
-                &nbsp;
-                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
-                <img (click)="deleteParam(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
-              </li>
-            </ng-container>
-          </ul>
+        <div class="col-sm-2 form-group">
+           <button id="InputButton" (click)="addColor()">Add Color</button>
+           <!-- Adds the colour to the box below so the user
+              can see what they've selected -->
         </div>
-        <br/>
-        <label>Sizes</label>
-        <div class="size-container mt-2">
-          <ul class="flex flex-wrap list-group list-group-horizontal">
-            <ng-container *ngFor="let item of sizes">
-              <li class="list-group-item">
-                <span>
-                  {{item}}
-                </span>
-                &nbsp;
-                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
-                <img (click)="deleteSize(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
-              </li>
-            </ng-container>
-          </ul>
-        </div>
-        <br/>
-        <label>Colors</label>
-        <div class="color-container mt-2">
-          <ul class="flex flex-wrap list-group list-group-horizontal">
-            <ng-container *ngFor="let item of colors">
-              <li class="list-group-item">
-                <span>
-                  {{item}}
-                </span>
-                &nbsp;
-                <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
-                <img (click)="deleteColor(item)" class="garbage-can" src="../../../assets/img/trash.png" width="3%" height="3%" />
-              </li>
-            </ng-container>
-          </ul>
-        </div>
-        <br />
-        <div class="row">
-          <div class="col-xs-12">
-            <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
-            <div class="divider"></div>
-            <button class="btn btn-danger" type="button" id="FormButton" (click)="onDelete()" *ngIf="editMode">Delete</button>
-            <div class="divider"></div>
-            <button class="btn btn-primary" type="button" id="FormButton" (click)="onClear()">Clear</button>
-            <div class="divider"></div>
-            <button class="btn btn-danger" type="button" id="FormButton" (click)="onCancel()">Cancel</button>
-          </div>
-        </div>
-      </form>
+     </form>
+  </div>
+  <label>Parameters</label>
+  <div class="param-container mt-2">
+     <ul class="flex flex-wrap list-group list-group-horizontal">
+        <ng-container *ngFor="let item of parameters">
+           <li class="list-group-item">
+              <span>
+              {{item.name}} : {{item.value}}
+              </span>
+              &nbsp;
+              <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+              <img (click)="deleteParam(item)" class="garbage-can" src="../../../assets/img/trash.png" width="1.5%" height="1.5%" />
+           </li>
+        </ng-container>
+     </ul>
+  </div>
+  <br/>
+  <label>Sizes</label>
+  <div class="size-container mt-2">
+     <ul class="flex flex-wrap list-group list-group-horizontal">
+        <ng-container *ngFor="let item of sizes">
+           <li class="list-group-item">
+              <span>
+              {{item}}
+              </span>
+              &nbsp;
+              <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+              <img (click)="deleteSize(item)" class="garbage-can" src="../../../assets/img/trash.png" width="1.5%" height="1.5%" />
+           </li>
+        </ng-container>
+     </ul>
+  </div>
+  <br/>
+  <label>Colors</label>
+  <div class="color-container mt-2">
+     <ul class="flex flex-wrap list-group list-group-horizontal">
+        <ng-container *ngFor="let item of colors">
+           <li class="list-group-item">
+              <span>
+              {{item}}
+              </span>
+              &nbsp;
+              <!-- Garbage can icon author: https://www.flaticon.com/authors/herikus -->
+              <img (click)="deleteColor(item)" class="garbage-can" src="../../../assets/img/trash.png" width="1.5%" height="1.5%" />
+           </li>
+        </ng-container>
+     </ul>
+  </div>
+  <br />
+  <div class="row">
+     <div class="col-xs-12">
+        <button class="btn btn-success" type="button" id="FormButton" (click)= "onAdd()" [disabled]="!itemForm.valid">{{ editMode ? 'Update' : 'Add' }} </button>
+        <div class="divider"></div>
+        <button class="btn btn-danger" type="button" id="FormButton" (click)="onDelete()" *ngIf="editMode">Delete</button>
+        <div class="divider"></div>
+        <button class="btn btn-primary" type="button" id="FormButton" (click)="onClear()">Clear</button>
+        <div class="divider"></div>
+        <button class="btn btn-danger" type="button" id="FormButton" (click)="onCancel()">Cancel</button>
+     </div>
+  </div>
+  </form>
 </div>

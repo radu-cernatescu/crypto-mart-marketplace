@@ -1,33 +1,27 @@
+/* REVISED INTO RELATIVE RESIZING*/
+
 #divTitle {
     white-space: nowrap;
     font-weight: bold;
-    padding: 2px 0px;
+    padding: 1% 0%;
     margin-left: 1%;
 }
 
-#allItemsContainer {
-    width:1850px;
-    height:600px;
+#MarketItemsContainer {
+    width: 98%;
+    height: 100%;
     overflow-y: scroll;
     margin-left: 1%;
     background-color: #D8C3A4;
     border: 5px inset #F8EECA;
-    padding: 2px 2px;
+    border-radius: 15px;
+    padding: 0.4% 0.2%;
 }
 
 #ItemContainer {
     cursor: pointer;
     background-color: #f7f3e9;
     border: 2px solid #D8C3A4;
-}
-
-#marketItem { 
-    display: flex;
-}
-
-#ItemImage {
-    border: 1px solid #e98074;
-    border-radius: 5px;
 }
 
 #ItemContainer:hover {
@@ -41,19 +35,27 @@
     to {background-color: #e9e3cf}
 }
 
-.verticalDivisor {
-    width: 2000px;
-    height: auto;
-    display:inline-block;
+#marketItem {
+    display: flex;
+}
+
+#ItemImage {
+    border: 1px solid #e98074;
+    border-radius: 15px;
 }
 
 #itemDesc {
     position: relative;
-    top: -30px;
-    left: 20px;
+    padding-top: 1%;
+    left: 3%;
     font-size: large;
-	width: 1500px;
-	margin: auto;
+	width: 100%;
+}
+
+.verticalDivisor {
+    width: 100%;
+    height: auto;
+    display:inline-block;
 }
 
 .badge {
@@ -65,18 +67,15 @@
     width: 15px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track { /* Track */
     border-radius: 15px;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb { /* Handle */
     background: #e98074; 
     border-radius: 15px;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
     background: #E85A4F; 
 }
