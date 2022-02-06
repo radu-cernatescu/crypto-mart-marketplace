@@ -1,3 +1,10 @@
+/* REVISED INTO RELATIVE RESIZING*/
+/* REVISED COLOR PALETTE*/
+
+#Label {
+    color: white;
+}
+
 .divider{
     width: 5px;
     height:auto;
@@ -6,32 +13,46 @@
 
 /* CUSTOM BUTTONS */
 button.btn-success {
-    background-color: #eae7dc;
-    color: black;
-    border-color: #d8c3a5;
+    background-color: #45B0AE;
+    color: #3A506B;
+    border-color: #1C2541;
     font-weight: bold;
+}
+
+button.btn-success:focus {
+    background-color: #6FFFE9;
+    color: #1D2835
 }
 
 button.btn-success:hover {
-    animation-name: colorhover;
-    animation-duration: 500ms;
-    background-color: #d8c3a5
+    animation-name: colorhoverSI;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
 }
 
 button.btn-primary {
-    background-color: #eae7dc;
-    color: black;
-    border-color: #d8c3a5;
+    background-color: #45B0AE;
+    color: #3A506B;
+    border-color: #1C2541;
     font-weight: bold;
 }
 
-button.btn-primary:hover {
-    animation-name: colorhover;
-    animation-duration: 500ms;
-    background-color: #d8c3a5
+button.btn-primary:focus {
+    background-color: #6FFFE9;
+    color: #1D2835
 }
 
-@keyframes colorhover {
-    from {background-color: #eae7dc} 
-    to {background-color: #d8c3a5}
+button.btn-primary:hover {
+    animation-name: colorhoverSI;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835
+}
+
+@keyframes colorhoverSI {
+    from {background-color: #45B0AE}
+    to {background-color: #6FFFE9}
+    from {color: #3A506B}
+    to {color: #1D2835}
 }

@@ -1,12 +1,20 @@
 /* REVISED INTO RELATIVE RESIZING*/
+/* REVISED COLOR PALETTE*/
+
+hr {
+    border-width: 2px;
+    border-color: #1C2541;
+}
 
 #ProductContainer {
     overflow-x: scroll;
     display: flex; 
     justify-content: space-around; 
-    margin-top: 2%;
-    background-color: #D8C3A4;
-    border: 5px inset #F8EECA;
+    margin-top: 6%;
+    margin-left: 1%;
+    margin-right: 1%;
+    background-color: #7A96B8;
+    border: 4px solid #1C2541;
     border-radius: 15px;
     padding: 1% 1%;
 }
@@ -15,17 +23,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 5px ridge #f8eecac0;
+    border: 4px solid #1C2541;
     border-radius: 15px;
     overflow-y: auto;
     width: 10%;
 }
 
 #SideMenuTitle {
+    color: #0B132B;
     white-space: nowrap;
     padding-top: 2%;
     padding-bottom: 2%;
-    border-bottom: 5px solid #f8eecac0;
+    border-bottom: 4px solid #1C2541;
     font-size: 15px;
     font-weight: bold;
 }
@@ -35,7 +44,7 @@
 }
 
 #SideMenuImage {
-    border: 1px solid #e98074;
+    border: 2px solid #1C2541;
     border-radius: 15px;
 }
 
@@ -45,16 +54,17 @@
 
 #SelectedImage {
     max-width: 100%;
-    border: 2px solid #F8EECA;
+    border: 4px solid #1C2541;
     padding: 1% 1%;
     border-radius: 15px;
 }
 
 #detailContainer {
-    border: 5px ridge #f8eecac0;
+    border: 4px solid #1C2541;
     border-radius: 15px;
     overflow-y: auto;
     overflow-x: auto;
+    color: #0B132B;
     max-width: 35%;
     padding-left: 2%;
     padding-right: 2%;
@@ -79,12 +89,6 @@
     padding: 0% 1%;
 }
 
-#ColorButtons {
-    border: 5px #f8eecac0;
-    background-color:#f8eeca;
-    border-radius: 15px;
-}
-
 #SizeContainer {
     padding-top: 2%;
     padding-bottom: 1%;
@@ -100,12 +104,6 @@
 
 #SizeSelection {
     padding: 0% 1%;
-}
-
-#SizeButtons {
-    border: 5px #f8eecac0;
-    background-color:#f8eeca;
-    border-radius: 5px;
 }
 
 #LocationContainer {
@@ -126,61 +124,63 @@
 }
 
 #CheckoutOptionsContainer{
+    margin-left: 1%;
     overflow-x: auto;
     display: flex; 
     width: 15%;
     flex-direction: column; 
     align-items: center;
-    border: 5px ridge #f8eecac0;
+    border: 4px solid #1C2541;
     border-radius: 15px;
 }
 
 #CheckoutOptionsTitle {
+    margin-top: 10%;
+    color: #0B132B;
     white-space: nowrap;
     font-weight: bold;
-    border-bottom: solid #f8eeca;
+    border-bottom: 4px solid #1C2541;
     padding-bottom: 5%;
-    margin-left: 1%;
 }
 
 #SellerTitle {
+    margin-top: 12%;
+    color: #0B132B;
     white-space: nowrap;
     font-weight: bold;
-    border-bottom: solid #f8eeca;
+    border-bottom: 4px solid #1C2541;
     padding-bottom: 5%;
-    margin-left: 1%;
 }
 
-button {
-    width: 85%;
-    background-color:#f8eeca;
-    border-radius: 5px;
-    margin: 5px;
-}
-
+/* CUSTOM BUTTONS */
 button.btn-success {
-    background-color: #f8eeca;
-    color: black;
-    border-color: #d8c3a5;
+    width: 63%;
+    margin-bottom: 2%;
+    background-color: #45B0AE;
+    color: #3A506B;
+    border-color: #1C2541;
     font-weight: bold;
 }
 
 button.btn-success:hover {
-    animation-name: colorhoverProduct;
+    animation-name: colorhoverheader;
     animation-duration: 400ms;
-    background-color: #EAEFDC;
+    background-color: #6FFFE9;
+    color: #1D2835;
 }
 
-@keyframes colorhoverProduct {
-    from {background-color: #f8eeca}
-    to {background-color: #EAEFDC}
+@keyframes colorhoverheader {
+    from {background-color: #45B0AE}
+    to {background-color: #6FFFE9}
+    from {color: #3A506B}
+    to {color: #1D2835}
 }
 
 /*Custom Radio Buttons*/
 .option {
     cursor: pointer;
     padding: 5px 10px;
-    background-color:#f8eeca;
+    background-color:#6FFFE9;
     border-radius: 15px;
     margin: 5px;
     white-space: nowrap;
@@ -188,21 +188,18 @@ button.btn-success:hover {
 
 /*CUSTOM SCROLLBAR*/
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track { /* Track */
     border-radius: 15px;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #e98074; 
+::-webkit-scrollbar-thumb { /* Handle */
+    background-color: #33FFE0;
     border-radius: 15px;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #E85A4F; 
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
+    background: #6FFFE9; 
 }
