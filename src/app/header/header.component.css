@@ -1,17 +1,23 @@
 /* REVISED INTO RELATIVE RESIZING*/
+/* REVISED COLOR PALETTE*/
 
 #head {
     display: flex; 
     justify-content: space-around;
-    background-color: #f8eeca;
-    border: 5px ridge #d8c3a5;
+    background-color: #0B132B;
+    border: 4px solid #1C2541;
+}
+
+#logoHolder {
+    margin-top: -2%;
+    height: 100%;
 }
 
 #NavButtonContainer {
-    /*background-image: url("\src\assets\img\logo.png");*/
     background-size: cover;
     background-position-y: 45%;
-    border: 5px ridge #d8c3a5;
+    border-left: 4px solid #1C2541;
+    border-right: 4px solid #1C2541;
     text-align: center;
     height: 100%;
     width: 90%;
@@ -25,8 +31,9 @@
 }
 
 #AccountContainer {
-    margin-right: 2%;
-    margin-top: 1%;
+    margin-right: 1%;
+    white-space: nowrap;
+    margin-top: 2%;
     height: 100%;
     width: 20%;
 }
@@ -49,29 +56,43 @@
 }
 
 #WelcomeMessage {
+    color: white;
     font-weight: bold;
     font-size: large;
 }
 
 /* CUSTOM BUTTONS */
 button.btn-success {
-    background-color: #e9e3cf;
-    color: black;
-    border-color: #d8c3a5;
+    background-color: #45B0AE;
+    color: #3A506B;
+    border-color: #1C2541;
     font-weight: bold;
+}
+
+button.btn-success:focus {
+    background-color: #6FFFE9;
+    color: #1D2835
 }
 
 button.btn-success:hover {
     animation-name: colorhoverheader;
-    animation-duration: 600ms;
-    background-color: #d8c3a5;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
+}
+
+@keyframes colorhoverheader {
+    from {background-color: #45B0AE}
+    to {background-color: #6FFFE9}
+    from {color: #3A506B}
+    to {color: #1D2835}
 }
 
 /* CUSTOM ACCORDION*/
 .dropdown-toggle {
     position: relative;
-    color: black;
-    border-color: #d8c3a5;
+    color: rgb(255, 255, 255);
+    border-color: #6FFFE9;
     font-weight: bold;
 }
 
@@ -83,9 +104,4 @@ button.btn-success:hover {
     text-align: center;
     width: 100%;
     height: 100%;
-}
-
-@keyframes colorhoverheader {
-    from {background-color: #e9e3cf}
-    to {background-color: #d8c3a5}
 }
