@@ -1,65 +1,74 @@
-<div class="row">
-    <div class="col-xs-10">
-        <app-sell-edit></app-sell-edit>
-      <div class="spacer"></div>
-      <svg id="pmarketAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-        </g>
-      </svg>
-      <ul class="list-group" id="userActiveListingsContainer">
-        <a
-        class="list-group-item"
-        id="listItem"
-        *ngFor="let sellItem of sellItems; let i = index"
-        (click)="onEditItem(sellItem)">
-        <div style="display: flex;"  id="userActiveListings">
-            <div>
-                <img id="ItemImage" height="200px" width="250px" src={{sellItem.images}} alt="hi">
-            </div>
-            <div id="itemDesc">
-                <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
-                <!-- Cut off descriptions longer than 150 characters -->
-                <p *ngIf="sellItem.description.length > 150">
-                  <b>Description:</b><br>
-                  {{ sellItem.description.substring(0, 150) }}...
-                </p>
-                <p *ngIf="sellItem.description.length < 150">
-                  <b>Description:</b><br>
-                  {{ sellItem.description }}
-                </p>
-            </div>
-            <div class="verticalDivisor"></div>
-            <div>
-                <span class="badge">${{ sellItem.price }}</span>
-            </div>
-        </div>
-        </a>
-      </ul> 
-      <svg id="parchiveAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-        </g>
-      </svg>
-      <svg id="psoldAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="psoldAnimatedLines"> <text y="80%"> Sold Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-        </g>
-      </svg>
-    </div>
+<div id="navMenu"> <!--New Nav Menu (Testing)-->
+  <h2> Market Options </h2>
+  <div class="optionContainer">
+    <app-sell-edit></app-sell-edit>
+    <button class="button">Market Listings!</button>
+    <button class="button">Listing Archive!</button>
+    <button class="button">Sold Listings!</button>
   </div>
+</div>
+
+<div id="contentContainer">
+  <div class="col-xs-10">
+    <div class="spacer"></div>
+    <svg id="pmarketAnimatedContainer">
+      <!--CUSTOM TITLE ANIMATION-->
+      <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>
+      <g>
+        <use xlink:href="#pmarketAnimatedLines" class="line"></use>
+        <use xlink:href="#pmarketAnimatedLines" class="line"></use>
+        <use xlink:href="#pmarketAnimatedLines" class="line"></use>
+        <use xlink:href="#pmarketAnimatedLines" class="line"></use>
+        <use xlink:href="#pmarketAnimatedLines" class="line"></use>
+      </g>
+    </svg>
+    <ul class="list-group" id="userActiveListingsContainer">
+      <a class="list-group-item" id="listItem" *ngFor="let sellItem of sellItems; let i = index"
+        (click)="onEditItem(sellItem)">
+        <div style="display: flex;" id="userActiveListings">
+          <div>
+            <img id="ItemImage" height="200px" width="250px" src={{sellItem.images}} alt="hi">
+          </div>
+          <div id="itemDesc">
+            <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+            <!-- Cut off descriptions longer than 150 characters -->
+            <p *ngIf="sellItem.description.length > 150">
+              <b>Description:</b><br>
+              {{ sellItem.description.substring(0, 150) }}...
+            </p>
+            <p *ngIf="sellItem.description.length < 150">
+              <b>Description:</b><br>
+              {{ sellItem.description }}
+            </p>
+          </div>
+          <div class="verticalDivisor"></div>
+          <div>
+            <span class="badge">${{ sellItem.price }}</span>
+          </div>
+        </div>
+      </a>
+    </ul>
+    <svg id="parchiveAnimatedContainer">
+      <!--CUSTOM TITLE ANIMATION-->
+      <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>
+      <g>
+        <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+        <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+        <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+        <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+        <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+      </g>
+    </svg>
+    <svg id="psoldAnimatedContainer">
+      <!--CUSTOM TITLE ANIMATION-->
+      <symbol id="psoldAnimatedLines"> <text y="80%"> Sold Market Listings: </text> </symbol>
+      <g>
+        <use xlink:href="#psoldAnimatedLines" class="line"></use>
+        <use xlink:href="#psoldAnimatedLines" class="line"></use>
+        <use xlink:href="#psoldAnimatedLines" class="line"></use>
+        <use xlink:href="#psoldAnimatedLines" class="line"></use>
+        <use xlink:href="#psoldAnimatedLines" class="line"></use>
+      </g>
+    </svg>
+  </div>
+</div>
