@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemsService } from '../items.service';
 import {GeolocationService} from '@ng-web-apis/geolocation';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -22,7 +23,8 @@ export class ProductComponent implements OnInit {
 
   constructor(private itemsService: ItemsService, 
     private readonly geolocation$: GeolocationService,
-    private readonly userService: UserService) { 
+    private readonly userService: UserService,
+    private router: Router) { 
       
     }
 
@@ -63,7 +65,25 @@ export class ProductComponent implements OnInit {
   }
   changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
-
-
+  }
+  addToCart(){
+    console.log(this.item);
+    const item:any = {}; // creating a object to send to server to save it. you can
+                         // send simply item id and size and color and when visit component
+                         // you can call item by id/title and show it. 
+                         // curretly I am addig whole item and call whole item and showig it.
+    item._id = this.item._id;
+    item.userId = this.item.userId;
+    item.title = this.item.title;
+    item.description = this.item.description;
+    item.price = this.item.price;
+    item.images = this.item.images; // adding all images if needed you can add single images as well.
+    item.color = this.selectedColor;
+    item.size = this.selectedSize;
+    item.quantity = 1; // if you want to add quantity here as well 
+    this.itemsService.addItemInCart(item);
+    alert("Item Sucesfuly Added")
+    // show notification  that item is added. create one service to show otification at this point. highly recomanded.
+    // this.router.navigate(['/shoping-cart']);
   }
 }

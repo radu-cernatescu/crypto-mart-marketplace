@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-7 container">
+        <ul class="list-group">
+            <h3>Shoppig List</h3>
+            <div style="display: flex; justify-content: flex-end;">
+                <p>Price</p>
+            </div>
+            <hr>
+            <ng-container *ngFor="let sellItem of userIems; let i = index">
+                <div style="display: flex; justify-content: space-between;" >
+                    <div style="display: flex; justify-content: space-between;" >
+                        <div routerLink="/product/{{sellItem.title}}">
+                            <img height="200px" width="250px" id="ItemImage" src={{sellItem.images}} alt="MISSING IMAGE">
+                        </div>
+                        <div style="margin-left: 20px;display: flex; flex-direction: column;
+                                    justify-content: space-around;">
+                            <span><b>Item Title:</b> {{ sellItem.title }}</span>
+                            <p> <span> {{sellItem.title}} </span> <span *ngIf="sellItem.color"> | {{sellItem.color}} </span> </p>
+                            <p> <span>Sold by:</span> Cryptomart </p>
+                            <p> {{sellItem.description}} </p>
+                            <p> <span>Shipped by:</span> Fedex </p>
+                            <p> <span>Expected delivey by:</span> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
+                            <div style="display: flex;">
+                                <input type="number" name="quantity" min="1"  [(ngModel)]="userIems[i].quantity"
+                                (input)="quantityChange($event, i)">
+                                <button style="margin-left: 5px;" (click)="deleteItemFromCart(i)"> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge"> {{ sellItem.price * sellItem.quantity}} </span>
+                    </div>
+                </div>
+                <hr style="background: #000;">
+            </ng-container>
+        </ul>
+    </div>
+
+    <div class="col-md-3 container">
+        <p>Subtotal ({{totlItems}} items) : ${{subPrice}}</p>
+        <p>Tax : ${{tax}}</p>
+        <p>Grand Total : ${{finalPrice}}</p>
+        <button class="btn btn-success">CHECK OUT</button>
+    </div>
+</div>
