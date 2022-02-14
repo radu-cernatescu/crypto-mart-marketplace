@@ -2,16 +2,7 @@
     <div class="col-xs-10">
         <app-sell-edit></app-sell-edit>
       <div class="spacer"></div>
-      <svg id="pmarketAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-          <use xlink:href="#pmarketAnimatedLines" class="line"></use>
-        </g>
-      </svg>
+      <h3 id="inLine">Current active market listings: </h3>
       <ul class="list-group" id="userActiveListingsContainer">
         <a
         class="list-group-item"
@@ -41,25 +32,9 @@
         </div>
         </a>
       </ul> 
-      <svg id="parchiveAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-          <use xlink:href="#parchiveAnimatedLines" class="line"></use>
-        </g>
-      </svg>
-      <svg id="psoldAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="psoldAnimatedLines"> <text y="80%"> Sold Market Listings: </text> </symbol>
-        <g>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-          <use xlink:href="#psoldAnimatedLines" class="line"></use>
-        </g>
-      </svg>
+      <div class="spacer"></div>
+      <h3 id="inLine">Archived market listings: </h3>
+      <div class="spacer"></div>
+      <h3 id="inLine">Sold item listings: </h3>
     </div>
   </div>

@@ -1,13 +1,4 @@
-<svg id="marketAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-	<symbol id="marketAnimatedLines"> <text y="90%">Market Listings</text> </symbol>
-	<g>
-		<use xlink:href="#marketAnimatedLines" class="line"></use>
-		<use xlink:href="#marketAnimatedLines" class="line"></use>
-		<use xlink:href="#marketAnimatedLines" class="line"></use>
-		<use xlink:href="#marketAnimatedLines" class="line"></use>
-		<use xlink:href="#marketAnimatedLines" class="line"></use>
-	</g>
-</svg>
+<h3 id="divTitle">Market Listings:</h3>
 <ul class="list-group">
 <div id="MarketItemsContainer">
     <div class="list-group-item" id="ItemContainer" *ngFor="let sellItem of sellItems; let i = index">
@@ -26,6 +17,7 @@
                     {{ sellItem.description }}
                 </p>
             </div>
+            <div class="verticalDivisor"></div> <!-- What is this? -->
             <div>
                 <span class="badge">${{ sellItem.price }}</span>
             </div>
@@ -33,13 +25,4 @@
     </div>
 </div>
 </ul> 
-<svg id="categoryAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-	<symbol id="categoryAnimatedLines"> <text y="80%">Categories</text> </symbol>
-	<g>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-	</g>
-</svg>
+<h3 id="divTitle">Categories:</h3>

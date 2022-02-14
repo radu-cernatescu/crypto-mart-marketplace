@@ -15,6 +15,7 @@ export class ItemsService {
   imgurKey: string;
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
+  userItemsIncart: any[] = [];
 
   constructor(private http: HttpClient) {
     this.CMS_API = ENV.CMS_API;
@@ -57,5 +58,34 @@ export class ItemsService {
     let formData = new FormData();
     formData.append('image', image, image.name);
     return this.http.post(this.imgurAPI, formData, {headers: new HttpHeaders({'Authorization': 'Client-ID ' + this.imgurKey})});
+  }
+  getUserCartItem(){
+    return this.userItemsIncart;
+    // call a API to get items. 
+    // this will be called to get all items and every time you visit
+    // shoppig cart. 
+  }
+  addItemInCart(item:any){
+    //const index = this.userItemsIncart.indexOf(item);
+    const index = this.userItemsIncart.findIndex(e => e.title == item.title && e.size == item.size && e.color == item.color);
+    if(index < 0){
+      this.userItemsIncart.push(item);
+    } else{
+      if(this.userItemsIncart[index].quantity){
+        this.userItemsIncart[index].quantity += 1;
+      } else{
+        this.userItemsIncart[index].quantity = 2;
+      }
+      
+    }
+    // call a API to add it. after add refresh cart compoent
+    // to show remaining items in cart. 
+  }
+  deleteItemFromCart(index:number) {
+    // I am directly passing index but you have to send item and find index. 
+    // but if works with this also while clling API then Great
+    this.userItemsIncart.splice(index, 1);
+    // call a API to delete it. after delete refresh cart compoent
+    // to show remaining items in cart. 
   }
 }

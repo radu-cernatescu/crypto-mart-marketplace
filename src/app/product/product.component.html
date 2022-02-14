@@ -61,8 +61,10 @@
     </div>
     <div *ngIf="item && item.title" id="CheckoutOptionsContainer">
         <h4 id="CheckoutOptionsTitle">Product Options</h4>
-        <button class="btn btn-success">ADD TO CART</button>
+        <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
+        <br/><br/>
+
         <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->
         <br />

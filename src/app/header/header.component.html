@@ -1,11 +1,11 @@
 <header style="display: flex;" id="head">
-    <div id="logoHolder">
-       <h1><a ><img height="160px" width="440px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1> <!--RECOLOR LOGO-->
+    <div>
+       <h1 style="margin-top: -40px;"><a ><img height="180px" width="500px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1>
     </div>
     <div id="NavigationBar" class="row" class="col-md-12">
        <div id="NavButtonContainer">
           <button class="btn btn-success" id="NavButton" routerLink="/main"> HOME</button>
-          <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
+          <button class="btn btn-success" id="NavButton" routerLink="/shoping-cart">CART</button>
           <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
           <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
           <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
@@ -13,10 +13,10 @@
           <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
        </div>
     </div>
-    <div id="AccountContainer"> <!--DOCUMENT / REDO-->
+    <div id="AccountContainer">
        <div *ngIf="!this.isLoggedIn" id="AuthentificationContainer">
           <button class="btn btn-success" id="AuthentificationButton" routerLink="/sign-in"><i class="fa fa-user"></i> SIGN IN </button>
-          <button class="btn btn-success" id="AuthentificationButton" routerLink="/sign-up"><i class="fa fa-key"></i> REGISTER </button>
+          <button class="btn btn-success" id="AuthentificationButton" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP </button>
        </div>
        <div *ngIf="this.isLoggedIn" id="AccountSettingsContainer">
           <h4 id="WelcomeMessage">Welcome {{this.user.firstName}}!</h4>
