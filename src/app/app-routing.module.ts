@@ -7,6 +7,7 @@ import { SignUpComponent } from './main/sign-up/sign-up.component';
 import { AuthGuard } from './auth.guard';
 import { ProductComponent } from './product/product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'shoping-cart', component: ShopingCartComponent },
   { path: 'product', component: ProductComponent,
   children : [
     {path: ':title', component : ProductComponent,}
