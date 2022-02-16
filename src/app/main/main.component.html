@@ -16,13 +16,14 @@
                 <img height="200px" width="250px" id="ItemImage" src={{sellItem.images}} alt="MISSING IMAGE">
             </div>
             <div id="itemDesc">
-                <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+                <span><b>Item Title:</b> {{ sellItem.title }}</span>
+                <br><br>
+                <p> <b>Description:</b> </p>
                 <!-- Cut off descriptions longer than 400 characters -->
                 <p *ngIf="sellItem.description.length > 400">
-                    <b>Description:</b><br> 
                     {{ sellItem.description.substring(0,150) }}...
                 </p>
-                <p *ngIf="sellItem.description.length <= 400">
+                <p *ngIf="400 >= sellItem.description.length">
                     {{ sellItem.description }}
                 </p>
             </div>
