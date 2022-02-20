@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
+import { UserService } from './user.service';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,9 @@ export class ItemsService {
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
   userItemsIncart: any[] = [];
+  itemUserObj: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.CMS_API = ENV.CMS_API;
     this.imgurAPI = ENV.imgurAPI;
     this.imgurKey = ENV.imgurKey;
@@ -59,28 +62,38 @@ export class ItemsService {
     formData.append('image', image, image.name);
     return this.http.post(this.imgurAPI, formData, {headers: new HttpHeaders({'Authorization': 'Client-ID ' + this.imgurKey})});
   }
+
   getUserCartItem(){
     return this.userItemsIncart;
     // call a API to get items. 
     // this will be called to get all items and every time you visit
     // shoppig cart. 
   }
+
   addItemInCart(item:any){
+    this.itemUserObj = { user: this.tokenService.getUser(), item: item };
     //const index = this.userItemsIncart.indexOf(item);
     const index = this.userItemsIncart.findIndex(e => e.title == item.title && e.size == item.size && e.color == item.color);
     if(index < 0){
       this.userItemsIncart.push(item);
+      // add item to cart backend
+      
+      
+      return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
     } else{
       if(this.userItemsIncart[index].quantity){
         this.userItemsIncart[index].quantity += 1;
+        return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
       } else{
         this.userItemsIncart[index].quantity = 2;
+        return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
       }
       
     }
     // call a API to add it. after add refresh cart compoent
     // to show remaining items in cart. 
   }
+
   deleteItemFromCart(index:number) {
     // I am directly passing index but you have to send item and find index. 
     // but if works with this also while clling API then Great

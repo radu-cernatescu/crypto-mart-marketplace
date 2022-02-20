@@ -80,6 +80,7 @@ export class ProductComponent implements OnInit {
     item.images = this.item.images; // adding all images if needed you can add single images as well.
     item.color = this.selectedColor;
     item.size = this.selectedSize;
+    item.firstName = this.item.firstName;
     item.quantity = 1; // if you want to add quantity here as well 
     this.itemsService.addItemInCart(item);
     alert("Item Sucesfuly Added")

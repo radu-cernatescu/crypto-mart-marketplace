@@ -8,17 +8,18 @@
                     <img height="200px" width="250px" id="itemImage" src={{sellItem.images}} alt="MISSING IMAGE">
                 </div>
                 <div id="cartItemInfo">
-                    <span><b>Item Title:</b> {{ sellItem.title }}</span>
-                    <p> <span>{{sellItem.title}}</span> <span *ngIf="sellItem.color"> | {{sellItem.color}}</span>
+                   
+                    <p>
+                        <span> <b>{{sellItem.title}}</b></span> <span *ngIf="sellItem.color">  | {{sellItem.color}}</span> <span *ngIf="sellItem.size"> | {{sellItem.size}}</span>
                     </p>
-                    <p> <span> <b> Sold by: </b></span> Cryptomart </p>
+                    <p> <span> <b> Sold by: </b></span> {{sellItem.firstName}} </p>
                     <p> <b>Description:</b> </p>
                     <p id="cartItemDescrtiption">{{sellItem.description}}</p>
                     <p> <span><b>Shipped by:</b></span> Fedex</p>
                     <p> <span><b>Expected delivey by:</b></span> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
                 </div>
                 <div id="itemOptionsContainer">
-                    <span class="badge"> ${{ sellItem.price * sellItem.quantity}} </span>
+                    <span class="badge"> ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
                     <p id="cartOptionsTitle"> <b>Item Options:</b> </p>
                     <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" id="userIn" [(ngModel)]="userIems[i].quantity" (input)="quantityChange($event, i)"> </p>
                     <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button>

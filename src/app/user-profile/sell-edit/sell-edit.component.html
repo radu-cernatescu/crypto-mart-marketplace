@@ -1,6 +1,3 @@
-<div *ngIf="!sellMode">
-  <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
-</div>
 <div *ngIf="sellMode" id="SellForm">
   <form [formGroup]="itemForm">
      <div class="row">

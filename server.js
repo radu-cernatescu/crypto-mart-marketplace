@@ -7,12 +7,14 @@ const bodyParser = require('body-parser');
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-/* Initialize Express backend
-*/
+/* Initialize Express backend */
 const app = express();
 app.use(cors())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+/* USERS */
 
 /*
 */
@@ -71,6 +73,8 @@ app.post("/api/sign-up", async (req, res) => {
     }).catch(err => {/*console.log(err)*/});
     client.close();
 });
+
+/* ITEMS/LISTINGS */
 
 /*
 */
@@ -183,6 +187,26 @@ app.post("/api/remove-item", async (req, res) => {
         }).catch(() => {res.send({message: "FAILED"})});
     });
     client.close();
+});
+
+/* SHOPPING CART */
+
+/*
+*/
+app.post("/api/add-shopping-item", async (req, res) => {
+
+});
+
+/*
+*/
+app.post("/api/remove-shopping-item", async (req, res) => {
+
+});
+
+/*
+*/
+app.post("/api/clear-shopping-cart", async (req, res) => {
+
 });
 
 /* Allows express to serve files from this directory
