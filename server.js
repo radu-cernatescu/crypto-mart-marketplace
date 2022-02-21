@@ -194,7 +194,28 @@ app.post("/api/remove-item", async (req, res) => {
 /*
 */
 app.post("/api/add-shopping-item", async (req, res) => {
+    console.log(req.body);
 
+    let item = req.body.item;
+    let user = req.body.user;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("cart");
+        await collection.insertOne(req.body);   
+    });
+});
+
+/*
+*/
+app.post("/api/update-shopping-item", async (req, res) => {
+    let item = req.body.item;
+    let user = req.body.user;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("cart");
+        //let myQuery = { item.userId : item.userId };
+        await collection.updateOne();
+    })
 });
 
 /*

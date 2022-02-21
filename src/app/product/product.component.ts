@@ -82,7 +82,9 @@ export class ProductComponent implements OnInit {
     item.size = this.selectedSize;
     item.firstName = this.item.firstName;
     item.quantity = 1; // if you want to add quantity here as well 
-    this.itemsService.addItemInCart(item);
+    this.itemsService.addItemInCart(item).subscribe(itemObj => {
+      console.log(itemObj);
+    });
     alert("Item Sucesfuly Added")
     // show notification  that item is added. create one service to show otification at this point. highly recomanded.
     // this.router.navigate(['/shoping-cart']);

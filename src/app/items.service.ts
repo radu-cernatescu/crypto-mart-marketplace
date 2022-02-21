@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
-import { UserService } from './user.service';
 import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
@@ -70,23 +69,22 @@ export class ItemsService {
     // shoppig cart. 
   }
 
-  addItemInCart(item:any){
+  addItemInCart(item:any) {
+    //console.log(this.tokenService);
     this.itemUserObj = { user: this.tokenService.getUser(), item: item };
     //const index = this.userItemsIncart.indexOf(item);
     const index = this.userItemsIncart.findIndex(e => e.title == item.title && e.size == item.size && e.color == item.color);
     if(index < 0){
       this.userItemsIncart.push(item);
       // add item to cart backend
-      
-      
       return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
     } else{
-      if(this.userItemsIncart[index].quantity){
+      if(this.userItemsIncart[index].quantity) {
         this.userItemsIncart[index].quantity += 1;
-        return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
+        return this.http.post(this.CMS_API + "update-shopping-item", this.itemUserObj);
       } else{
         this.userItemsIncart[index].quantity = 2;
-        return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
+        return this.http.post(this.CMS_API + "update-shopping-item", this.itemUserObj);
       }
       
     }

@@ -4,15 +4,15 @@ import { ItemsService } from '../items.service';
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-shoping-cart',
-  templateUrl: './shoping-cart.component.html',
-  styleUrls: ['./shoping-cart.component.css']
+  selector: 'app-shopping-cart',
+  templateUrl: './shopping-cart.component.html',
+  styleUrls: ['./shopping-cart.component.css']
 })
-export class ShopingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit {
 
   userIems : any;
   subPrice: number = 0;
-  tax =0;
+  tax = 0;
   totlItems: number = 0;
   finalPrice = 0;
   fiveDayLetter!: Date;
@@ -35,7 +35,6 @@ export class ShopingCartComponent implements OnInit {
   }
   loadItems(){
     this.userIems = [];
-    
     this.userIems = this.itemsService.getUserCartItem();
     let items = 0;
     let amount = 0;

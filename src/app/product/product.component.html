@@ -20,8 +20,15 @@
             <p><span id="ColorTitle">Color:</span> {{selectedColor}} </p>
             <div id="ColorRange"> <!-- Lists all colours as buttons and allows selection of one -->
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
-                    <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio">
-                    <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    <!-- ngIf used to select the first radio button -->
+                    <div *ngIf="color === item.colors[0]; else notSelected">
+                        <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio" checked>
+                        <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    </div>
+                    <ng-template #notSelected>
+                        <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio">
+                        <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -29,8 +36,15 @@
             <p><span id="SizeTitle">Size:</span> {{selectedSize}} </p>
             <div id="SizeRange"> <!-- Lists all sizes as buttons and allows selection of one -->
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
-                    <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio">
-                    <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    <!-- ngIf used to select the first radio button -->
+                    <div *ngIf="size === item.sizes[0]; else notSelected">
+                        <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio" checked>
+                        <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    </div>
+                    <ng-template #notSelected>
+                        <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio">
+                        <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    </ng-template>
                 </div>
             </div>
         </div>
