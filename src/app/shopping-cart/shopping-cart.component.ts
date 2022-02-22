@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ItemsService } from '../items.service';
-import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,49 +8,55 @@ import { UserService } from '../user.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  userIems : any;
-  subPrice: number = 0;
-  tax = 0;
-  totlItems: number = 0;
-  finalPrice = 0;
+  userItems : any;
+  subTotal: number = 0;
+  grandTotal: number = 0;
+  tax: number = 0;
+  numOfItems: number = 0;
   fiveDayLetter!: Date;
 
-  constructor(private itemsService: ItemsService,
-    private readonly userService: UserService,
-    private router: Router) { }
+  constructor(private itemsService: ItemsService) {
+
+  }
 
   ngOnInit(): void {
     let today = new Date();
     this.fiveDayLetter = new Date(today);
     this.fiveDayLetter.setDate(today.getDate()+5);
-    this.userIems = [];
-    console.log(this.itemsService.getUserCartItem());
-    this.loadItems();
+    this.userItems = [];
+    this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
+    
   }
+
+
   deleteItemFromCart(i:number){
-    this.itemsService.deleteItemFromCart(i)
+    this.itemsService.deleteItemFromCart(this.userItems[i]).subscribe((message:any) => {/*console.log(message)*/})
     this.loadItems();
+    location.reload();
   }
-  loadItems(){
-    this.userIems = [];
-    this.userIems = this.itemsService.getUserCartItem();
+
+
+  loadItems() {
     let items = 0;
     let amount = 0;
-    for(let i=0; i < this.userIems.length; i++){
-      items +=  this.userIems[i].quantity;
-      amount +=  this.userIems[i].quantity * this.userIems[i].price;
+    for(let i=0; i < this.userItems.length; i++){
+      items +=  this.userItems[i].quantity;
+      amount +=  this.userItems[i].quantity * this.userItems[i].price;
     }
-    this.totlItems = items;
-    this.subPrice = amount;
+    this.numOfItems = items;
+    this.subTotal = amount;
     this.tax = +(amount * 0.13).toFixed(2);
-    this.finalPrice = +(amount + this.tax).toFixed(2);
-
+    this.grandTotal = +(amount + this.tax).toFixed(2);
   }
+
+
   quantityChange(event: any, index: number){
-    console.log(event.target.value);
-    // if(event.target.value < 1){
-    //   this.userIems[index].quantity = 1;
-    // }
+    this.userItems[index].quantity = event.target.value;
+    if(event.target.value < 1){
+      this.userItems[index].quantity = 1;
+    } else {
+      this.itemsService.editItemQuantity(this.userItems[index]).subscribe((message:any) => {/*console.log(message);*/});
+    }
     this.loadItems();
   }
 

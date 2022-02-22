@@ -194,14 +194,32 @@ app.post("/api/remove-item", async (req, res) => {
 /*
 */
 app.post("/api/add-shopping-item", async (req, res) => {
-    console.log(req.body);
-
     let item = req.body.item;
     let user = req.body.user;
 
+    let newShoppingItem = {
+        userId: user._id,
+        itemId: item._id,
+        quantity : item.quantity,
+        images: item.images,
+        title: item.title,
+        description: item.description,
+        price: item.price,
+        firstName: item.firstName
+    };
+
+    if (item.color) {
+        newShoppingItem['color'] = item.color;
+    }
+    if (item.size) {
+        newShoppingItem['size'] = item.size;
+    }
+
     await client.connect().then(async () => {
         const collection = client.db("users").collection("cart");
-        await collection.insertOne(req.body);   
+        await collection.insertOne(newShoppingItem).then(() => {
+            res.send({ message: "SUCCESS "});
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}) });
     });
 });
 
@@ -210,24 +228,50 @@ app.post("/api/add-shopping-item", async (req, res) => {
 app.post("/api/update-shopping-item", async (req, res) => {
     let item = req.body.item;
     let user = req.body.user;
-
+    let newvalues = { $set: { quantity: item.quantity } };
+    let myQuery = { userId : user._id, title: item.title, color: item.color, size: item.size };
     await client.connect().then(async () => {
         const collection = client.db("users").collection("cart");
-        //let myQuery = { item.userId : item.userId };
-        await collection.updateOne();
+        
+        await collection.updateOne(myQuery, newvalues).then(() => {
+            res.send({ message: "SUCCESS"});
+        }).catch((err) => { res.send({ message: "FAILED", reason: err }) });
     })
 });
 
 /*
 */
 app.post("/api/remove-shopping-item", async (req, res) => {
-
+    let item = req.body.item;
+    console.log(req.body)
+    let user = req.body.user;
+    if (item) {
+        let myQuery = { userId : user._id, title: item.title, color: item.color, size: item.size };
+        await client.connect().then(async () => {
+            const collection = client.db("users").collection("cart");
+            
+            await collection.deleteOne(myQuery).then(() => {
+                res.send({ message: "SUCCESS" });
+            }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+        })
+    }
 });
 
 /*
 */
-app.post("/api/clear-shopping-cart", async (req, res) => {
-
+app.post("/api/get-shopping-cart", async (req, res) => {
+    let user = req.body;
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("cart");
+        let myQuery = { userId : user._id };
+        let userCart = await collection.find(myQuery).toArray();        
+        if (userCart.length > 0) {
+            res.send({ message: "SUCCESS", cart: userCart});
+        }
+        else {
+            res.send({message: "FAILED"});
+        }
+    })
 });
 
 /* Allows express to serve files from this directory

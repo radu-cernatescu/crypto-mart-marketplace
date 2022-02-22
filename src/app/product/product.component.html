@@ -77,7 +77,13 @@
         <h4 id="CheckoutOptionsTitle">Product Options</h4>
         <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
+        <div id="postAddCart">
+            <p> Added to cart! </p>
+            <button class="btn btn-success" routerLink="/shoping-cart">Go to cart</button>
+            <button class="btn btn-success" routerLink="/main">Keep shopping</button>
+        </div>
         <br/><br/>
+
 
         <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->

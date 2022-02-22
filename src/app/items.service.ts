@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
 import { TokenStorageService } from './token-storage.service';
+import { ShoppingCartItem } from './ShoppingCartItem';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,6 @@ export class ItemsService {
   imgurKey: string;
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
-  userItemsIncart: any[] = [];
-  itemUserObj: any;
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.CMS_API = ENV.CMS_API;
@@ -62,41 +61,23 @@ export class ItemsService {
     return this.http.post(this.imgurAPI, formData, {headers: new HttpHeaders({'Authorization': 'Client-ID ' + this.imgurKey})});
   }
 
-  getUserCartItem(){
-    return this.userItemsIncart;
-    // call a API to get items. 
-    // this will be called to get all items and every time you visit
-    // shoppig cart. 
+  getUserCartItems(){
+    return this.http.post(this.CMS_API + "get-shopping-cart", this.tokenService.getUser());
   }
 
-  addItemInCart(item:any) {
-    //console.log(this.tokenService);
-    this.itemUserObj = { user: this.tokenService.getUser(), item: item };
-    //const index = this.userItemsIncart.indexOf(item);
-    const index = this.userItemsIncart.findIndex(e => e.title == item.title && e.size == item.size && e.color == item.color);
-    if(index < 0){
-      this.userItemsIncart.push(item);
-      // add item to cart backend
-      return this.http.post(this.CMS_API + "add-shopping-item", this.itemUserObj);
-    } else{
-      if(this.userItemsIncart[index].quantity) {
-        this.userItemsIncart[index].quantity += 1;
-        return this.http.post(this.CMS_API + "update-shopping-item", this.itemUserObj);
-      } else{
-        this.userItemsIncart[index].quantity = 2;
-        return this.http.post(this.CMS_API + "update-shopping-item", this.itemUserObj);
-      }
-      
-    }
-    // call a API to add it. after add refresh cart compoent
-    // to show remaining items in cart. 
+  addItemInCart(item: ShoppingCartItem) { 
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    this.http.post(this.CMS_API + "clear-shopping-cart", itemUserObj);
+    return this.http.post(this.CMS_API + "add-shopping-item", itemUserObj);
   }
 
-  deleteItemFromCart(index:number) {
-    // I am directly passing index but you have to send item and find index. 
-    // but if works with this also while clling API then Great
-    this.userItemsIncart.splice(index, 1);
-    // call a API to delete it. after delete refresh cart compoent
-    // to show remaining items in cart. 
+  editItemQuantity(item: ShoppingCartItem) {
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    return this.http.post(this.CMS_API + "update-shopping-item", itemUserObj);
+  }
+
+  deleteItemFromCart(item: ShoppingCartItem) {
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    return this.http.post(this.CMS_API + "remove-shopping-item", itemUserObj);
   }
 }
