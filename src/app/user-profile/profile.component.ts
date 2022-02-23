@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Output} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from '../token-storage.service';
 import { User } from '../User';
@@ -15,6 +14,7 @@ export class ProfileComponent implements OnInit {
   sellItems: Item[];
   subscription!: Subscription;
   user: User;
+  sellMode: boolean = false;
 
   constructor(private tokenService: TokenStorageService, private itemsService: ItemsService) {
     this.user = this.tokenService.getUser();
@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
           item.parameters = element.parameters;
           item.colors = element.colors;
           item.sizes = element.sizes;
+          item.shippingOption = element.shippingOption;
 
           this.sellItems.push(item);
         }
@@ -48,6 +49,9 @@ export class ProfileComponent implements OnInit {
   }
   onEditItem(item: Item){
     this.itemsService.startedEditing.next(item);
+  }
+  sellItem() {
+    this.sellMode = true;
   }
 }
  

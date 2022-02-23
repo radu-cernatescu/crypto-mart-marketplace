@@ -1,8 +1,34 @@
 # CHANGELOG
 
+## Sprint 4
+
+### PR #82 (Development of Sprint 4 starts at this PR)
+
+* Fixed: Color palette across application.
+* Added: New Title Animations in main and profile.
+* Fixed: Recolored trash and logo images.
+
+### PR #84
+
+* implemented front-end shopping cart button as a placeholder
+* created cart listing page
+    * displays item with titles, desc, price, quantity, estimated arrival date and shipping details
+    * displays subtotal, tax and grand total of all items
+
+### PR #85
+
+* Added: Style to cart page.
+* Added: New navigation menu on profile page.
+
+### PR #86
+
+* Added: 4 routes for adding, removing, updating and fetching the shopping cart.
+* Refactor: Item, Sell-edit component, to incorporate shipping options for seller.
+* Refactor: Some other files, fix spelling mistakes.
+
 ## Sprint 3
 
-### PR #76 (Development of Sprint 2 starts at this PR)
+### PR #76 (Development of Sprint 3 starts at this PR)
 
 * Added: Get route to backend for item retrieval for the product page
 * Added: Dields to Item class for color, size and parameters

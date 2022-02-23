@@ -1,4 +1,13 @@
-<h3 id="divTitle">Market Listings:</h3>
+<svg id="marketAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
+	<symbol id="marketAnimatedLines"> <text y="90%">Market Listings</text> </symbol>
+	<g>
+		<use xlink:href="#marketAnimatedLines" class="line"></use>
+		<use xlink:href="#marketAnimatedLines" class="line"></use>
+		<use xlink:href="#marketAnimatedLines" class="line"></use>
+		<use xlink:href="#marketAnimatedLines" class="line"></use>
+		<use xlink:href="#marketAnimatedLines" class="line"></use>
+	</g>
+</svg>
 <ul class="list-group">
 <div id="MarketItemsContainer">
     <div class="list-group-item" id="ItemContainer" *ngFor="let sellItem of sellItems; let i = index">
@@ -7,17 +16,17 @@
                 <img height="200px" width="250px" id="ItemImage" src={{sellItem.images}} alt="MISSING IMAGE">
             </div>
             <div id="itemDesc">
-                <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+                <span><b>Item Title:</b> {{ sellItem.title }}</span>
+                <br><br>
+                <p> <b>Description:</b> </p>
                 <!-- Cut off descriptions longer than 400 characters -->
                 <p *ngIf="sellItem.description.length > 400">
-                    <b>Description:</b><br> 
                     {{ sellItem.description.substring(0,150) }}...
                 </p>
-                <p *ngIf="sellItem.description.length <= 400">
+                <p *ngIf="400 >= sellItem.description.length">
                     {{ sellItem.description }}
                 </p>
             </div>
-            <div class="verticalDivisor"></div> <!-- What is this? -->
             <div>
                 <span class="badge">${{ sellItem.price }}</span>
             </div>
@@ -25,4 +34,13 @@
     </div>
 </div>
 </ul> 
-<h3 id="divTitle">Categories:</h3>
+<svg id="categoryAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
+	<symbol id="categoryAnimatedLines"> <text y="80%">Categories</text> </symbol>
+	<g>
+		<use xlink:href="#categoryAnimatedLines" class="line"></use>
+		<use xlink:href="#categoryAnimatedLines" class="line"></use>
+		<use xlink:href="#categoryAnimatedLines" class="line"></use>
+		<use xlink:href="#categoryAnimatedLines" class="line"></use>
+		<use xlink:href="#categoryAnimatedLines" class="line"></use>
+	</g>
+</svg>

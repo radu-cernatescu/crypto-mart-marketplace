@@ -14,6 +14,7 @@ import { DropdownDirective } from './dropdown.directive';
 import { HeaderComponent } from './header/header.component';
 import { UserService } from './user.service';
 import { ProductComponent } from './product/product.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ProductComponent } from './product/product.component';
     SellEditComponent,
     DropdownDirective,
     HeaderComponent,
-    ProductComponent
+    ProductComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,

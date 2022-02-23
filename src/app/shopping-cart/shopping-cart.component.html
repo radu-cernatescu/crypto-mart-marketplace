@@ -1,0 +1,42 @@
+<div class="col-md-3 container" id="cartItemsContainer">
+    <ul>
+        <h3>Shopping Cart</h3>
+        <hr>
+        <ng-container *ngFor="let sellItem of userItems; let i = index">
+            <div id="cartItemMainContainer">
+                <div routerLink="/product/{{sellItem.title}}" id="itemImagecontainer">
+                    <img height="200px" width="250px" id="itemImage" src={{sellItem.images}} alt="MISSING IMAGE">
+                </div>
+                <div id="cartItemInfo">
+                    <p>
+                        <span> <b>{{sellItem.title}}</b></span> <span *ngIf="sellItem.color">  | {{sellItem.color}}</span> <span *ngIf="sellItem.size"> | {{sellItem.size}}</span>
+                    </p>
+                    <p> <span> <b> Sold by: </b></span> {{sellItem.firstName}} </p>
+                    <p> <b>Description:</b> </p>
+                    <p id="cartItemDescrtiption">{{sellItem.description}}</p>
+                    <p> <span><b>Shipped by: </b></span>{{sellItem.shippingOption}}</p>
+                    <p> <span><b>Expected delivery by:</b></span> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
+                </div>
+                <div id="itemOptionsContainer">
+                    <span class="badge"> ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
+                    <p id="cartOptionsTitle"> <b>Item Options:</b> </p>
+                    <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
+                    <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button>
+                </div>
+            </div>
+            <hr>
+        </ng-container>
+    </ul>
+</div>
+
+<div class="col-md-3 container" id="checkOutMenu">
+    <h3 id="checkoutTitle"> SUMMARY </h3>
+    <br>
+    <div id="checkoutInfo">
+        <p> <b>Subtotal</b> ({{numOfItems}} items) : ${{subTotal.toFixed(2)}}</p>
+        <p> <b>Tax:</b> ${{tax.toFixed(2)}}</p>
+        <p> <b>Grand Total:</b> ${{grandTotal.toFixed(2)}}</p>
+    </div>
+    <br>
+    <button class="btn btn-success" id="checkoutButton">CHECK OUT</button>
+</div>

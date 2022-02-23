@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <h2>Sign Up</h2>
+      <h2 id="Label">Sign Up</h2>
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <label for="first">First Name</label>
+                <label for="first" id="Label">First Name</label>
                 <input
                   type="strig" id="first" class="form-control"
                   formControlName="first" name="first" required/>
@@ -15,7 +15,7 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="last">Last Name</label>
+                <label for="last" id="Label">Last Name</label>
                 <input
                   type="email" id="last" class="form-control" 
                   formControlName="last" name="last" required/>
@@ -27,7 +27,7 @@
                   </div>
               </div>
             <div class="form-group">
-              <label for="email">E-Mail</label>
+              <label for="email" id="Label">E-Mail</label>
               <input
                 type="email" id="email" class="form-control"
                 formControlName="email" name="email" required email/>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="form-group">
-              <label for="password">Password</label>
+              <label for="password" id="Label">Password</label>
               <input type="password" id="password" class="form-control"
                 formControlName="password" name="password" required/>
                 <div *ngIf="signUpForm.controls.password.invalid && (signUpForm.controls.password.dirty || signUpForm.controls.password.touched)"
@@ -54,19 +54,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="rePassword">Re Enter Password</label>
+                <label for="rePassword" id="Label">Re-Enter Password</label>
                 <input type="password" id="rePassword" class="form-control"
                   formControlName="rePassword" name="rePassword"/>
                   <div *ngIf="this.signUpForm.controls['rePassword'].value ==='' && (signUpForm.controls.rePassword.dirty || signUpForm.controls.rePassword.touched)"
                   class="alert alert-danger">
                   <div>
-                    Field is required.
+                    Password is required.
                   </div>
                   </div>
                   <div class="alert alert-danger" *ngIf="this.signUpForm.controls['rePassword'].value !=='' &&
                   (signUpForm.controls.rePassword.dirty || signUpForm.controls.rePassword.touched) &&
                     signUpForm.controls.password.value !== signUpForm.controls.rePassword.value">
-                    Passwrd didn't match.
+                    Password didn't match.
                   </div>
               </div>
             <div style="float: right;">

@@ -5,6 +5,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { User } from './User';
 import { Item } from './Item';
+import { TokenStorageService } from './token-storage.service';
+import { ShoppingCartItem } from './ShoppingCartItem';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class ItemsService {
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.CMS_API = ENV.CMS_API;
     this.imgurAPI = ENV.imgurAPI;
     this.imgurKey = ENV.imgurKey;
@@ -29,10 +31,11 @@ export class ItemsService {
   getItem(item: Item): Observable<any> {
     return this.http.post(this.CMS_API + "user-item", { item: item });
   }
+
   getOneItem(title: any): Observable<any> {
     return this.http.get(this.CMS_API + "item" , {
       params: new HttpParams().set('title', title)
-  });
+    });
   }
 
   getUserItems(user: User): Observable<any> {
@@ -57,5 +60,24 @@ export class ItemsService {
     let formData = new FormData();
     formData.append('image', image, image.name);
     return this.http.post(this.imgurAPI, formData, {headers: new HttpHeaders({'Authorization': 'Client-ID ' + this.imgurKey})});
+  }
+
+  getUserCartItems(){
+    return this.http.post(this.CMS_API + "get-shopping-cart", this.tokenService.getUser());
+  }
+
+  addItemInCart(item: ShoppingCartItem) { 
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    return this.http.post(this.CMS_API + "add-shopping-item", itemUserObj);
+  }
+
+  editItemQuantity(item: ShoppingCartItem) {
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    return this.http.post(this.CMS_API + "update-shopping-item", itemUserObj);
+  }
+
+  deleteItemFromCart(item: ShoppingCartItem) {
+    let itemUserObj = { user: this.tokenService.getUser(), item: item };
+    return this.http.post(this.CMS_API + "remove-shopping-item", itemUserObj);
   }
 }

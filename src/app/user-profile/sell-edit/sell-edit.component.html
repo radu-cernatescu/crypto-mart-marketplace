@@ -1,6 +1,3 @@
-<div *ngIf="!sellMode">
-  <button class="btn btn-success" id="SellButton" (click)="sellItem()">Create new listing</button>
-</div>
 <div *ngIf="sellMode" id="SellForm">
   <form [formGroup]="itemForm">
      <div class="row">
@@ -26,6 +23,15 @@
               formControlName="amount"
               >
         </div>
+        <div class="col-sm-2 form-group">
+            <label for="shipping">Shipping</label>
+            <select id="InputField" name="shipping" class="form-control" formControlName="shipping">
+               <option value="Self-Shipping">Self-Shipping</option>
+               <option value="Canada Post">Canada Post</option>
+               <option value="Fedex">Fedex</option>
+               <option value="UPS">UPS</option>
+            </select>
+         </div>
      </div>
      <div class="row">
         <div class="col-sm-5 form-group">
