@@ -31,10 +31,11 @@ export class ItemsService {
   getItem(item: Item): Observable<any> {
     return this.http.post(this.CMS_API + "user-item", { item: item });
   }
+
   getOneItem(title: any): Observable<any> {
     return this.http.get(this.CMS_API + "item" , {
       params: new HttpParams().set('title', title)
-  });
+    });
   }
 
   getUserItems(user: User): Observable<any> {
@@ -67,7 +68,6 @@ export class ItemsService {
 
   addItemInCart(item: ShoppingCartItem) { 
     let itemUserObj = { user: this.tokenService.getUser(), item: item };
-    this.http.post(this.CMS_API + "clear-shopping-cart", itemUserObj);
     return this.http.post(this.CMS_API + "add-shopping-item", itemUserObj);
   }
 

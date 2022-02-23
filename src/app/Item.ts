@@ -8,4 +8,5 @@ export class Item {
     colors?: any;
     sizes?:any;
     parameters?:any; // custom parameters to be displayed on product page
+    shippingOption?:any;
 }  

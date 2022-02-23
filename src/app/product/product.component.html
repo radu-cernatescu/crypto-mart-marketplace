@@ -59,18 +59,23 @@
             <p><span id="DescriptionTitle">Description:  </span>{{item?.description}}</p>
         </div>
         <div>
-            <p>
+            <p *ngIf="item?.shippingOption == 'Self-Shipping'; else parcelShip">
                 <span id="placeholder">
-                    Delivery details:
+                    Delivery details: <b>{{item?.shippingOption}}</b> - After purchase, the seller will co-ordinate shipping.
                 </span>
-                <br/><b>FREE</b> Expedited shipping
             </p>
+            <ng-template #parcelShip>
+                <span id="placeholder">
+                    Delivery details: <b>{{item?.shippingOption}}</b> - Expedited shipping
+                </span>
+            </ng-template>
+            <!-- Temporarily commenting out until GPS API is fixed
             <p *ngIf="userLocation?.length > 0">
                 Delivery to: {{userLocation}}
             </p>
             <p *ngIf="userLocation?.length <= 0">
                 Delivery to: Unknown location. Please allow access for estimate.
-            </p>
+            </p> -->
         </div>
     </div>
     <div *ngIf="item && item.title" id="CheckoutOptionsContainer">

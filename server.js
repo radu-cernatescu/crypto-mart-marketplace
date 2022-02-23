@@ -14,7 +14,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+
 /* USERS */
+
 
 /*
 */
@@ -73,6 +75,7 @@ app.post("/api/sign-up", async (req, res) => {
     }).catch(err => {/*console.log(err)*/});
     client.close();
 });
+
 
 /* ITEMS/LISTINGS */
 
@@ -165,6 +168,9 @@ app.post("/api/update-item", async (req, res) => {
             if (req.body.olditem.price != req.body.newitem.price) {
                 newvalues.$set['price'] = req.body.newitem.price;
             }
+            if (req.body.olditem.shippingOption != req.body.newitem.shippingOption) {
+                newvalues.$set['shippingOption'] = req.body.newitem.shippingOption;
+            }
             newvalues.$set['parameters'] = req.body.newitem.parameters;
             newvalues.$set['colors'] = req.body.newitem.colors;
             newvalues.$set['sizes'] = req.body.newitem.sizes;
@@ -197,30 +203,55 @@ app.post("/api/add-shopping-item", async (req, res) => {
     let item = req.body.item;
     let user = req.body.user;
 
-    let newShoppingItem = {
-        userId: user._id,
-        itemId: item._id,
-        quantity : item.quantity,
-        images: item.images,
-        title: item.title,
-        description: item.description,
-        price: item.price,
-        firstName: item.firstName
-    };
-
-    if (item.color) {
-        newShoppingItem['color'] = item.color;
-    }
-    if (item.size) {
-        newShoppingItem['size'] = item.size;
-    }
-
     await client.connect().then(async () => {
-        const collection = client.db("users").collection("cart");
-        await collection.insertOne(newShoppingItem).then(() => {
-            res.send({ message: "SUCCESS "});
-        }).catch((err) => { res.send({ message: "FAILED", reason: err}) });
-    });
+        
+        if (user._id) {
+            const collection = client.db("users").collection("cart");
+            let myQuery = { userId: user._id, itemId: item.itemId }
+            if (item.color) {
+                myQuery['color'] = item.color;
+            }
+            if (item.size) {
+                myQuery['size'] = item.size;
+            }
+            let existingObject = await collection.findOne(myQuery);
+            if (!existingObject) {
+                let newShoppingItem = {
+                    userId: user._id,
+                    itemId: item.itemId,
+                    quantity : item.quantity,
+                    images: item.images,
+                    title: item.title,
+                    description: item.description,
+                    price: item.price,
+                    firstName: item.firstName,
+                    shippingOption: item.shippingOption
+                };
+            
+                if (item.color) {
+                    newShoppingItem['color'] = item.color;
+                }
+                if (item.size) {
+                    newShoppingItem['size'] = item.size;
+                }
+            
+                await client.connect().then(async () => {
+                    await collection.insertOne(newShoppingItem).then(() => {
+                        res.send({ message: "SUCCESS "});
+                    }).catch((err) => { res.send({ message: "FAILED", reason: err}) });
+                });
+            }
+            else {
+                let newvalues = { $set: { quantity: existingObject.quantity + 1 } };
+                collection.updateOne(myQuery, newvalues).then(() => {
+                    res.send({ message: "SUCCESS "});
+                }).catch((err) => { res.send({ message: "FAILED", reason: err}) });
+                existingObject.quantity+=1;
+                
+            }
+        }
+        
+    }).then((message) => {/*console.log(message)*/}).catch((err) => {/*console.log(err)*/});
 });
 
 /*
@@ -243,7 +274,6 @@ app.post("/api/update-shopping-item", async (req, res) => {
 */
 app.post("/api/remove-shopping-item", async (req, res) => {
     let item = req.body.item;
-    console.log(req.body)
     let user = req.body.user;
     if (item) {
         let myQuery = { userId : user._id, title: item.title, color: item.color, size: item.size };

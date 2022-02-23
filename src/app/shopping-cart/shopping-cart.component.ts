@@ -15,9 +15,7 @@ export class ShoppingCartComponent implements OnInit {
   numOfItems: number = 0;
   fiveDayLetter!: Date;
 
-  constructor(private itemsService: ItemsService) {
-
-  }
+  constructor(private itemsService: ItemsService) {}
 
   ngOnInit(): void {
     let today = new Date();
@@ -25,7 +23,6 @@ export class ShoppingCartComponent implements OnInit {
     this.fiveDayLetter.setDate(today.getDate()+5);
     this.userItems = [];
     this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
-    
   }
 
 
@@ -39,10 +36,13 @@ export class ShoppingCartComponent implements OnInit {
   loadItems() {
     let items = 0;
     let amount = 0;
-    for(let i=0; i < this.userItems.length; i++){
-      items +=  this.userItems[i].quantity;
-      amount +=  this.userItems[i].quantity * this.userItems[i].price;
+    if (this.userItems) {
+      for(let i=0; i < this.userItems.length; i++){
+        items +=  this.userItems[i].quantity;
+        amount +=  this.userItems[i].quantity * this.userItems[i].price;
+      }
     }
+
     this.numOfItems = items;
     this.subTotal = amount;
     this.tax = +(amount * 0.13).toFixed(2);
@@ -51,7 +51,7 @@ export class ShoppingCartComponent implements OnInit {
 
 
   quantityChange(event: any, index: number){
-    this.userItems[index].quantity = event.target.value;
+    this.userItems[index].quantity = Number(event.target.value);
     if(event.target.value < 1){
       this.userItems[index].quantity = 1;
     } else {

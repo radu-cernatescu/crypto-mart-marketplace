@@ -40,12 +40,14 @@ export class ProductComponent implements OnInit {
       this.description = this.item.description;
     });
 
+    /* Comment out until GPS API is fixed
     this.geolocation$.subscribe(position => {
 
       this.userService.getUserCountry(position.coords.latitude, position.coords.longitude).subscribe((details) => {
         this.userLocation = details.countryName;
       });
     });
+    */
   }
 
   ngOnDestroy() : void {
@@ -57,12 +59,6 @@ export class ProductComponent implements OnInit {
   }
   changeColor(event:any){ // Change selected color & style of respective button
     this.selectedColor = event;
-    
-    /* ABANDONED IDEA (STYLE CHANGE IN TS)
-    const cButton: HTMLElement | null = document.getElementById(event)!;
-    cButton.style.background = "#e5e5e5";
-    */
-
   }
   changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
@@ -72,15 +68,13 @@ export class ProductComponent implements OnInit {
     if (userChoices) {
       userChoices.style.visibility = "visible";
     }
-    setTimeout(fade_out, 10000);
+    setTimeout(fade_out, 5000);
     function fade_out() {
       if (userChoices) {
         userChoices.style.visibility = "hidden";
       }
     }
-
-    console.log(this.item);
-
+    
     const item: ShoppingCartItem = {
       userId : this.item.userId,
       title : this.item.title,
@@ -90,11 +84,10 @@ export class ProductComponent implements OnInit {
       color : this.selectedColor,
       size : this.selectedSize,
       firstName : this.item.firstName,
-      quantity : 1 // if you want to add quantity here as well 
-    }; // creating a object to send to server to save it. you can
-      // send simply item id and size and color and when visit component
-      // you can call item by id/title and show it. 
-      // curretly I am addig whole item and call whole item and showig it.
+      shippingOption: this.item.shippingOption,
+      itemId: this.item._id,
+      quantity : 1
+    };
     
     this.itemsService.addItemInCart(item).subscribe((message:any) => {/*console.log(message)*/});
     

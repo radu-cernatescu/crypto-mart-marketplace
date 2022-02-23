@@ -1,5 +1,6 @@
 export class ShoppingCartItem {
     userId: string = ""; // userId of seller in database
+    itemId: string = "";
     firstName: string = ""; // Seller's first name
     title: string = "";
     price: number = 0;
@@ -8,4 +9,5 @@ export class ShoppingCartItem {
     color?: any;
     size?:any;
     quantity: number = 1;
+    shippingOption:any;
 }  

@@ -20,6 +20,7 @@ export class SellEditComponent implements OnInit{
     description: new FormControl('', Validators.required,),
     amount: new FormControl('', Validators.required),
     imageInput: new FormControl('', Validators.required),
+    shipping: new FormControl('', Validators.required)
   });
   sizeForm = new FormGroup({
     size: new FormControl('', Validators.required,)
@@ -63,6 +64,7 @@ export class SellEditComponent implements OnInit{
         this.itemForm.controls['name'].setValue(this.editedItem.title);
         this.itemForm.controls['amount'].setValue(this.editedItem.price);
         this.itemForm.controls['description'].setValue(this.editedItem.description);
+        this.itemForm.controls['shipping'].setValue(this.editedItem.shippingOption);
         this.newItem.images = item.images;
         this.sizes = Object.assign([], item.sizes);
         this.colors = Object.assign([], item.colors);
@@ -86,6 +88,7 @@ export class SellEditComponent implements OnInit{
     this.newItem.colors = this.colors;
     this.newItem.sizes = this.sizes;
     this.newItem.parameters = this.parameters;
+    this.newItem.shippingOption = this.itemForm.value['shipping'];
 
     if (this.selectedFile) {
       this.newItem.images = [];
@@ -136,7 +139,6 @@ export class SellEditComponent implements OnInit{
 
   //
   onCancel(){
-    this.itemForm.reset();
     this.itemForm.reset();
     this.paramForm.reset();
     this.sizeForm.reset();

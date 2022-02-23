@@ -1,5 +1,4 @@
 import { Component, OnInit, Output} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { TokenStorageService } from '../token-storage.service';
 import { User } from '../User';
@@ -36,6 +35,7 @@ export class ProfileComponent implements OnInit {
           item.parameters = element.parameters;
           item.colors = element.colors;
           item.sizes = element.sizes;
+          item.shippingOption = element.shippingOption;
 
           this.sellItems.push(item);
         }
