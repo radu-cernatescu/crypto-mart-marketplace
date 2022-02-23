@@ -20,8 +20,15 @@
             <p><span id="ColorTitle">Color:</span> {{selectedColor}} </p>
             <div id="ColorRange"> <!-- Lists all colours as buttons and allows selection of one -->
                 <div *ngFor="let color of item.colors;" id="ColorSelection">
-                    <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio">
-                    <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    <!-- ngIf used to select the first radio button -->
+                    <div *ngIf="color === item.colors[0]; else notSelected">
+                        <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio" checked>
+                        <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    </div>
+                    <ng-template #notSelected>
+                        <input type="radio" id="{{color}}" (click)="changeColor(color)" name="colorRadio">
+                        <label for="{{color}}" class="option">{{color | uppercase}}</label><br>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -29,8 +36,15 @@
             <p><span id="SizeTitle">Size:</span> {{selectedSize}} </p>
             <div id="SizeRange"> <!-- Lists all sizes as buttons and allows selection of one -->
                 <div *ngFor="let size of item.sizes;" id="SizeSelection">
-                    <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio">
-                    <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    <!-- ngIf used to select the first radio button -->
+                    <div *ngIf="size === item.sizes[0]; else notSelected">
+                        <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio" checked>
+                        <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    </div>
+                    <ng-template #notSelected>
+                        <input type="radio" id="{{size}}" (click)="changeSize(size)" name="sizeRadio">
+                        <label for="{{size}}" class="option">{{size | uppercase}}</label>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -45,25 +59,36 @@
             <p><span id="DescriptionTitle">Description:  </span>{{item?.description}}</p>
         </div>
         <div>
-            <p>
+            <p *ngIf="item?.shippingOption == 'Self-Shipping'; else parcelShip">
                 <span id="placeholder">
-                    Delivery details:
+                    Delivery details: <b>{{item?.shippingOption}}</b> - After purchase, the seller will co-ordinate shipping.
                 </span>
-                <br/><b>FREE</b> Expedited shipping
             </p>
+            <ng-template #parcelShip>
+                <span id="placeholder">
+                    Delivery details: <b>{{item?.shippingOption}}</b> - Expedited shipping
+                </span>
+            </ng-template>
+            <!-- Temporarily commenting out until GPS API is fixed
             <p *ngIf="userLocation?.length > 0">
                 Delivery to: {{userLocation}}
             </p>
             <p *ngIf="userLocation?.length <= 0">
                 Delivery to: Unknown location. Please allow access for estimate.
-            </p>
+            </p> -->
         </div>
     </div>
     <div *ngIf="item && item.title" id="CheckoutOptionsContainer">
         <h4 id="CheckoutOptionsTitle">Product Options</h4>
         <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
         <button class="btn btn-success">BUY NOW</button>
+        <div id="postAddCart">
+            <p> Added to cart! </p>
+            <button class="btn btn-success" routerLink="/shoping-cart">Go to cart</button>
+            <button class="btn btn-success" routerLink="/main">Keep shopping</button>
+        </div>
         <br/><br/>
+
 
         <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->

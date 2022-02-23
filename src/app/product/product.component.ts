@@ -3,6 +3,7 @@ import { ItemsService } from '../items.service';
 import {GeolocationService} from '@ng-web-apis/geolocation';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { ShoppingCartItem } from '../ShoppingCartItem';
 
 @Component({
   selector: 'app-product',
@@ -39,12 +40,14 @@ export class ProductComponent implements OnInit {
       this.description = this.item.description;
     });
 
+    /* Comment out until GPS API is fixed
     this.geolocation$.subscribe(position => {
 
       this.userService.getUserCountry(position.coords.latitude, position.coords.longitude).subscribe((details) => {
         this.userLocation = details.countryName;
       });
     });
+    */
   }
 
   ngOnDestroy() : void {
@@ -56,33 +59,38 @@ export class ProductComponent implements OnInit {
   }
   changeColor(event:any){ // Change selected color & style of respective button
     this.selectedColor = event;
-    
-    /* ABANDONED IDEA (STYLE CHANGE IN TS)
-    const cButton: HTMLElement | null = document.getElementById(event)!;
-    cButton.style.background = "#e5e5e5";
-    */
-
   }
   changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
   }
   addToCart(){
-    console.log(this.item);
-    const item:any = {}; // creating a object to send to server to save it. you can
-                         // send simply item id and size and color and when visit component
-                         // you can call item by id/title and show it. 
-                         // curretly I am addig whole item and call whole item and showig it.
-    item._id = this.item._id;
-    item.userId = this.item.userId;
-    item.title = this.item.title;
-    item.description = this.item.description;
-    item.price = this.item.price;
-    item.images = this.item.images; // adding all images if needed you can add single images as well.
-    item.color = this.selectedColor;
-    item.size = this.selectedSize;
-    item.quantity = 1; // if you want to add quantity here as well 
-    this.itemsService.addItemInCart(item);
-    alert("Item Sucesfuly Added")
+    let userChoices = document.getElementById("postAddCart");
+    if (userChoices) {
+      userChoices.style.visibility = "visible";
+    }
+    setTimeout(fade_out, 5000);
+    function fade_out() {
+      if (userChoices) {
+        userChoices.style.visibility = "hidden";
+      }
+    }
+    
+    const item: ShoppingCartItem = {
+      userId : this.item.userId,
+      title : this.item.title,
+      description : this.item.description,
+      price : this.item.price,
+      images : this.item.images, // adding all images if needed you can add single images as well.
+      color : this.selectedColor,
+      size : this.selectedSize,
+      firstName : this.item.firstName,
+      shippingOption: this.item.shippingOption,
+      itemId: this.item._id,
+      quantity : 1
+    };
+    
+    this.itemsService.addItemInCart(item).subscribe((message:any) => {/*console.log(message)*/});
+    
     // show notification  that item is added. create one service to show otification at this point. highly recomanded.
     // this.router.navigate(['/shoping-cart']);
   }

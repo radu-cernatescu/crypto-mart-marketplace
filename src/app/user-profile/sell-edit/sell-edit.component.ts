@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ItemsService } from 'src/app/items.service';
@@ -12,13 +12,15 @@ import { TokenStorageService } from 'src/app/token-storage.service';
   styleUrls: ['./sell-edit.component.css']
 })
 export class SellEditComponent implements OnInit{
-  sellMode: boolean = false;
+  @Input() sellMode: boolean = false;
+  @Output() sellModeChange = new EventEmitter<boolean>();
   editMode!: boolean; 
   itemForm = new FormGroup({
     name: new FormControl('', Validators.required,),
     description: new FormControl('', Validators.required,),
     amount: new FormControl('', Validators.required),
     imageInput: new FormControl('', Validators.required),
+    shipping: new FormControl('', Validators.required)
   });
   sizeForm = new FormGroup({
     size: new FormControl('', Validators.required,)
@@ -47,51 +49,34 @@ export class SellEditComponent implements OnInit{
     this.newItem = new Item();
     this.user = tokenStorageService.getUser();
    }
-   ngAfterViewInit(){ 
+   
+  ngAfterViewInit(){ 
     this.subscription = this.ItemsService.startedEditing
     .subscribe(
       (item: Item) => {
+        this.editedItem = Object.assign(new Item(), item);
+        this.initialItem = Object.assign(new Item(), item);
         this.itemForm.controls['imageInput'].clearValidators();
         this.itemForm.controls['imageInput'].updateValueAndValidity();
-        this.editMode = true;
         this.sellMode = true;
-        this.editedItem = item;
-        this.initialItem = item;
+        this.editMode = true;
+        this.sellModeChange.emit(this.sellMode);
         this.itemForm.controls['name'].setValue(this.editedItem.title);
         this.itemForm.controls['amount'].setValue(this.editedItem.price);
         this.itemForm.controls['description'].setValue(this.editedItem.description);
+        this.itemForm.controls['shipping'].setValue(this.editedItem.shippingOption);
         this.newItem.images = item.images;
-        this.sizes = item.sizes;
-        this.colors = item.colors;
-        this.parameters = item.parameters;
+        this.sizes = Object.assign([], item.sizes);
+        this.colors = Object.assign([], item.colors);
+        this.parameters = Object.assign([], item.parameters);
         // this.itemForm.controls['imageInput'].clearValidators;
         // this.itemForm.controls['imageInput'].updateValueAndValidity;
       }
     );
 
    }
-  ngOnInit(): void {
-    // this.subscription = this.ItemsService.startedEditing
-    // .subscribe(
-    //   (item: Item) => {
-    //     this.itemForm.controls['imageInput'].clearValidators;
-    //     this.itemForm.controls['imageInput'].updateValueAndValidity;
-    //     this.editMode = true;
-    //     this.sellMode = true;
-    //     this.editedItem = item;
-    //     this.initialItem = item;
-    //     this.itemForm.controls['name'].setValue(this.editedItem.title);
-    //     this.itemForm.controls['amount'].setValue(this.editedItem.price);
-    //     this.itemForm.controls['description'].setValue(this.editedItem.description);
-    //     // this.itemForm.controls['imageInput'].clearValidators;
-    //     // this.itemForm.controls['imageInput'].updateValueAndValidity;
-    //   }
-    // );
-  }
 
-  //
-  sellItem(){
-    this.sellMode = true;
+  ngOnInit(): void {
   }
 
   //
@@ -103,6 +88,7 @@ export class SellEditComponent implements OnInit{
     this.newItem.colors = this.colors;
     this.newItem.sizes = this.sizes;
     this.newItem.parameters = this.parameters;
+    this.newItem.shippingOption = this.itemForm.value['shipping'];
 
     if (this.selectedFile) {
       this.newItem.images = [];
@@ -154,8 +140,15 @@ export class SellEditComponent implements OnInit{
   //
   onCancel(){
     this.itemForm.reset();
+    this.paramForm.reset();
+    this.sizeForm.reset();
+    this.colorForm.reset();
+    this.parameters = [];
+    this.sizes = [];
+    this.colors = [];
     this.editMode = false;
     this.sellMode = false;
+    this.sellModeChange.emit(this.sellMode);
   }
 
   //
@@ -166,6 +159,7 @@ export class SellEditComponent implements OnInit{
           alert("Item deleted successfully");
           this.editMode = false;
           this.sellMode = false;
+          this.sellModeChange.emit(this.sellMode);
           this.itemForm.reset();
           window.location.reload();
         }
@@ -195,6 +189,7 @@ export class SellEditComponent implements OnInit{
           alert("Item updated successfully");
           this.editMode = false;
           this.sellMode = false;
+          this.sellModeChange.emit(this.sellMode);
           this.itemForm.reset();
           window.location.reload();
         }
@@ -213,6 +208,7 @@ export class SellEditComponent implements OnInit{
           alert("Item added successfully");
           this.editMode = false;
           this.sellMode = false;
+          this.sellModeChange.emit(this.sellMode);
           this.itemForm.reset();
           window.location.reload();
         }

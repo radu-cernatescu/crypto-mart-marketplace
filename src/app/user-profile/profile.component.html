@@ -1,7 +1,7 @@
 <div id="navMenu"> <!--New Nav Menu (Testing)-->
   <h2> Market Options </h2>
   <div class="optionContainer">
-    <app-sell-edit></app-sell-edit>
+    <button class="button" id="SellButton" (click)="sellItem()">Create new listing</button>
     <button class="button">Market Listings!</button> <!--TO DO: Change Buttons to routes like the "app-sell-edit"; Ensure that on button click the routes show on the right side div (id: "contentContainer")-->
     <button class="button">Listing Archive!</button>
     <button class="button">Sold Listings!</button>
@@ -9,8 +9,11 @@
 </div>
 
 <div id="contentContainer"> <!--Division responsible for displaying content based on selected option from the "navMenu" (above); Must display content based on user choice from menu.-->
+
   <div class="col-xs-10">
+    
     <div class="spacer"></div>
+    <app-sell-edit [(sellMode)]="sellMode"></app-sell-edit>
     <svg id="pmarketAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>

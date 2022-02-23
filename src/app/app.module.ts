@@ -14,7 +14,7 @@ import { DropdownDirective } from './dropdown.directive';
 import { HeaderComponent } from './header/header.component';
 import { UserService } from './user.service';
 import { ProductComponent } from './product/product.component';
-import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { ShopingCartComponent } from './shoping-cart/shoping-cart.component';
     DropdownDirective,
     HeaderComponent,
     ProductComponent,
-    ShopingCartComponent
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,

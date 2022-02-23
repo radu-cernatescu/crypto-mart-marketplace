@@ -143,6 +143,16 @@ hr {
     padding-bottom: 5%;
 }
 
+#postAddCart {
+    visibility:hidden;
+    padding-bottom: 5%;
+    padding-left: 25%;
+}
+
+#postAddCart button {
+    width: max-content;
+}
+
 #SellerTitle {
     margin-top: 12%;
     color: #0B132B;
