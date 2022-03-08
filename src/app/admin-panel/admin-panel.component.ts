@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { User } from '../User';
 import { UserService } from '../user.service';
 
 @Component({
@@ -9,14 +9,9 @@ import { UserService } from '../user.service';
 })
 export class AdminPanelComponent implements OnInit {
 
-  users : {firstName:string,
-    lastName: string,
-    email: string,
-    isblock : boolean}[] = [
-  ]
-  constructor(private router: Router,
-    private route: ActivatedRoute,
-    private userService: UserService,) { }
+  users: User[] = [];
+
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe((res =>{
@@ -26,14 +21,29 @@ export class AdminPanelComponent implements OnInit {
   /** function to delete user by admin  */
   deleteUser(user:any){
     this.userService.deleteUser(user).subscribe((res =>{
-      alert(res.message);
+      if (res.message == "SUCCESS") {
+        alert("Sucessfully deleted user!");
+      }
+      else {
+        alert("Error deleting user!");
+      }
       window.location.reload();
     }))
   }
   /** function to block/unblock user by admin based on previous status */
   blockUser(user:any){
-    this.userService.blockUser(user).subscribe((res =>{
-      alert(res.message);
+    this.userService.blockUser(user).subscribe(((res: any) =>{
+      if (res.message == "SUCCESS") {
+        if (!user.isBlock) {
+          alert("Sucessfully blocked user!");
+        }
+        else {
+          alert("Sucessfully unblocked user!");
+        }
+      }
+      else {
+        alert("Error blocking/unblocking user!");
+      }
       window.location.reload();
     }))
 

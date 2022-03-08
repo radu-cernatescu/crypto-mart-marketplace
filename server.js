@@ -61,7 +61,9 @@ app.post("/api/sign-up", async (req, res) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
-                    password: await argon2.hash(req.body.password)
+                    password: await argon2.hash(req.body.password),
+                    type: req.body.type,
+                    isBlock: req.body.isBlock
                 }
                 await collection.insertOne(user).then(() => {
                     res.send({message: "SUCCESS"});
@@ -72,6 +74,19 @@ app.post("/api/sign-up", async (req, res) => {
         }).catch(() => {
             res.send({message:"FAILED"});
         });
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+
+/* Gets all valid invite codes from backend. This way we can quickly invalidate codes.
+*/
+app.get("/api/invitecodes/", async (req, res) =>{
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("invite_codes");
+
+        let codes = await collection.find().toArray();
+        res.send({message: "SUCCESS", codes: codes});
+
     }).catch(err => {/*console.log(err)*/});
     client.close();
 });
@@ -106,7 +121,7 @@ app.post("/api/block-user", async (req, res) => {
             lastName: req.body.user.lastName,
             email: req.body.user.email,
             password: req.body.user.password,
-            isblock: !req.body.user.isblock } };
+            isBlock: !req.body.user.isBlock } };
 
         await collection.updateOne(myquery, newvalues).then(() => {
                 res.send({message: "SUCCESS"});
@@ -391,4 +406,4 @@ app.get('/*', function(req, res) {
 
 /*
 */
-app.listen(process.env.PORT || 80, "192.168.51.49");
+app.listen(process.env.PORT || 80);

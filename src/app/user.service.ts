@@ -3,14 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { User } from 'src/app/User';
-
-const httpOptions = {
-    headers: new HttpHeaders(
-      { 'Content-Type': 'application/json' },
-    )
-};
 
 @Injectable({
   providedIn: 'any'
@@ -27,10 +20,10 @@ export class UserService {
       return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
         .pipe(catchError(this.handleError('get user', [])));
     }
+
     //firstName: any, lastName: any, email: any, password: any
     addUser(user: User): Observable<any> {
-      const userObj = {firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password};
-      return this.http.post(this.CMS_API + 'sign-up', userObj)
+      return this.http.post(this.CMS_API + 'sign-up', user)
         .pipe(catchError(this.handleError('get user', []))
       ); 
     }
@@ -60,6 +53,10 @@ export class UserService {
     deleteUser(user:any): Observable<any> {
       return this.http.post(this.CMS_API + 'remove-user', {user: user})
         .pipe(catchError(this.handleError('get user', [])));
+    }
+
+    getInviteCodes() {
+      return this.http.get(this.CMS_API + 'invitecodes');
     }
 
     /**

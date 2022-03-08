@@ -34,7 +34,7 @@
                                     <li>
                                        <a style="cursor: pointer;" routerLink="/profile">Profile</a>
                                     </li>
-                                    <li>
+                                    <li *ngIf="this.user.type == 'admin'">
                                        <a style="cursor: pointer;" routerLink="/admin-panel">Admin Panel</a>
                                     </li>
                                     <li>

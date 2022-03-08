@@ -4,9 +4,6 @@
         <hr>
         <ng-container *ngFor="let user of users; let i = index">
             <div id="cartItemMainContainer">
-                <!-- <div routerLink="/product/{{sellItem.title}}" id="itemImagecontainer">
-                    <img height="200px" width="250px" id="itemImage" src={{sellItem.images}} alt="MISSING IMAGE">
-                </div> -->
                 <div id="cartItemInfo" style="background-color: red;" routerLink="/{{user.email}}">
                     <p>{{user.firstName}}</p>
                     <p>{{user.lastName}}</p>
@@ -14,7 +11,7 @@
 
                 </div>
                 <div id="itemOptionsContainer">
-                    <button class="btn btn-primary" (click)="blockUser(user)">{{user.isblock ? "Unblock" : "block"}}</button>
+                    <button class="btn btn-primary" (click)="blockUser(user)">{{user.isBlock ? "Unblock" : "block"}}</button>
                     <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
                 </div>
             </div>

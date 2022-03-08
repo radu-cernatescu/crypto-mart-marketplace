@@ -4,4 +4,6 @@ export class User{
     email: string = '';
     password: string = '';
     _id: string = '';
+    type: string = '';
+    isBlock: boolean = false;
 }
