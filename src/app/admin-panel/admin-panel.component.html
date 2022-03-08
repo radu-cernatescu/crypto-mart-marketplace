@@ -1,0 +1,24 @@
+<div class="container">
+    <ul>
+        <h3>Users</h3>
+        <hr>
+        <ng-container *ngFor="let user of users; let i = index">
+            <div id="cartItemMainContainer">
+                <!-- <div routerLink="/product/{{sellItem.title}}" id="itemImagecontainer">
+                    <img height="200px" width="250px" id="itemImage" src={{sellItem.images}} alt="MISSING IMAGE">
+                </div> -->
+                <div id="cartItemInfo" style="background-color: red;" routerLink="/{{user.email}}">
+                    <p>{{user.firstName}}</p>
+                    <p>{{user.lastName}}</p>
+                    <p>{{user.email}}</p>
+
+                </div>
+                <div id="itemOptionsContainer">
+                    <button class="btn btn-primary" (click)="blockUser(user)">{{user.isblock ? "Unblock" : "block"}}</button>
+                    <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
+                </div>
+            </div>
+            <hr>
+        </ng-container>
+    </ul>
+</div>

@@ -41,6 +41,27 @@ export class UserService {
       );
     }
 
+    /** API call to get all users by admin  */
+    getAllUsers(): Observable<any> {
+      return this.http.get(this.CMS_API + 'allusers',)
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to get all items with selected user info by admin  */
+    getUserItems(userId:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'user/items', {userId: userId})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to block/unblock user info by admin  */
+    blockUser(user:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'block-user', {user: user})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to delete user info by admin  */
+    deleteUser(user:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'remove-user', {user: user})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+
     /**
      * Handle Http operation that failed.
      * Let the app continue

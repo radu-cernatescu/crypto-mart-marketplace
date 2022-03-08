@@ -97,6 +97,80 @@ app.get("/api/items", async (req, res) => {
     client.close();
 });
 
+/** API  to block/unblock user by admin  */
+app.post("/api/block-user", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("logins");
+        let myquery = { email: req.body.user.email };
+        let newvalues = { $set: {firstName: req.body.user.firstName,
+            lastName: req.body.user.lastName,
+            email: req.body.user.email,
+            password: req.body.user.password,
+            isblock: !req.body.user.isblock } };
+
+        await collection.updateOne(myquery, newvalues).then(() => {
+                res.send({message: "SUCCESS"});
+            }).catch(err => {
+                res.send({message: "FAILED"});
+            });
+        }).catch(() => {
+        res.send({message:"FAILED"});
+    }).catch(err => {/*console.log(err)*/});
+    client.close();        
+});
+
+/** All Users */
+/** API  to get all users by admin  */
+app.get("/api/allusers", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("logins");
+        const users = await collection.find().toArray();
+        if (users) {
+            res.send({ message: "SUCCESS", data: users });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+
+/** users Items with selected user */ 
+app.post("/api/user/items", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        const collection2 = client.db("users").collection("logins");
+        const users = await collection2.findOne({
+            email: {$eq: req.body.userId}
+        })
+        const items = await collection.find().toArray();
+        // const cc = items.filter(x => x.userId == users._id)
+        if (items) {
+            res.send({ message: "SUCCESS", data: items , user : users });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+/** API  to delete user by admin  */
+app.post("/api/remove-user", async (req, res) => {
+    let user = req.body.user;
+    if (user) {
+        let myQuery = {  email: user.email };
+        await client.connect().then(async () => {
+            const collection = client.db("users").collection("logins");
+            
+            await collection.deleteOne(myQuery).then(() => {
+                res.send({ message: "SUCCESS" });
+            }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+        })
+    }
+});
+
 /*
 */
 app.get("/api/item", async (req, res) => {
@@ -317,4 +391,4 @@ app.get('/*', function(req, res) {
 
 /*
 */
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 80, "192.168.51.49");

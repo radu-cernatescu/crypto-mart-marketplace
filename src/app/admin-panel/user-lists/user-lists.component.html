@@ -1,0 +1,21 @@
+<div class="container">
+    <ul>
+        <h3>User Items</h3>
+        <hr>
+        <ng-container *ngFor="let item of userItems; let i = index">
+            <div id="cartItemMainContainer">
+                <div id="itemImagecontainer">
+                    <img height="200px" width="250px" id="itemImage" src={{item.images}} alt="MISSING IMAGE">
+                </div>
+                <div id="cartItemInfo" style="background-color: red;">
+                    <p>{{item.title}}</p>
+                    <p>{{item.description}}</p>
+                </div>
+                <div id="itemOptionsContainer">
+                    <button class="btn btn-danger" (click)="deleteItem(item)">Delete</button>
+                </div>
+            </div>
+            <hr>
+        </ng-container>
+    </ul>
+</div>
