@@ -1,4 +1,4 @@
-<div id="navMenu"> <!--New Nav Menu (Testing)-->
+<div id="navMenu">
   <h2> Market Options </h2>
   <div class="optionContainer">
     <button class="button" id="SellButton" (click)="sellItem()">Create new listing</button>
@@ -13,7 +13,9 @@
   <div class="col-xs-10">
     
     <div class="spacer"></div>
-    <app-sell-edit [(sellMode)]="sellMode"></app-sell-edit>
+    <div id = "newListingContainer">
+      <app-sell-edit [(sellMode)]="sellMode"></app-sell-edit>
+    </div>
     <svg id="pmarketAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>

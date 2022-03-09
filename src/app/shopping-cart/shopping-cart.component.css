@@ -162,13 +162,13 @@ button.btn-success {
 }
 
 button.btn-success:hover {
-    animation-name: colorhoverheader;
+    animation-name: colorhoverCart;
     animation-duration: 400ms;
     background-color: #6FFFE9;
     color: #1D2835;
 }
 
-@keyframes colorhoverheader {
+@keyframes colorhoverCart {
     from {background-color: #45B0AE}
     to {background-color: #6FFFE9}
     from {color: #3A506B}

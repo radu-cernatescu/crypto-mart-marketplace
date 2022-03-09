@@ -6,8 +6,6 @@
     src: url("/assets/TypoRound/Typo_Round_Regular_Demo.otf");
 }
 
-/* TESTING NEW MENU LAYOUT */
-
 h2 {
     color: rgb(201, 201, 201);
     border-bottom: 4px solid #1C2541;
@@ -63,10 +61,12 @@ h2 {
     margin-left: -52%;
 }
 
-/* END OF TEST */
-
 #contentContainer {
     margin-left: 25%;
+}
+
+#newListingContainer {
+    margin-top: 6%;
 }
 
 #inLine {

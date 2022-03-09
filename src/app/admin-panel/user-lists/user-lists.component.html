@@ -1,27 +1,40 @@
+<button class="btn btn-normal" routerLink="/admin-panel">Return</button>
 <div class="container">
     <ul>
-        <h3>User Items</h3>
-        <hr>
+        <h3>User's Items</h3> <!-- Add: functionality for stating the selected account's first name (username)-->
         <div *ngIf="userItems.length > 0; else noItemsBlock">
             <ng-container *ngFor="let item of userItems; let i = index">
-                <div id="cartItemMainContainer">
-                    <div id="itemImagecontainer">
-                        <img height="200px" width="250px" id="itemImage" src={{item.images}} alt="MISSING IMAGE">
+                <hr>
+                <div id="ItemContainer" routerLink="/product/{{item.title}}">
+                    <div>
+                        <img height="200px" width="250px" id="ItemImage" src={{item.images}} alt="MISSING IMAGE">
                     </div>
-                    <div id="cartItemInfo" style="background-color: red;">
-                        <p>{{item.title}}</p>
-                        <p>{{item.description}}</p>
+                    <div id="ItemInfo">
+                        <span><b>Item Title:</b> {{ item.title }}</span>
+                        <br><br>
+                        <p> <b>Description:</b> </p>
+                        <!-- Cut off descriptions longer than 400 characters -->
+                        <p *ngIf="item.description.length > 400">
+                            {{ item.description.substring(0,150) }}...
+                        </p>
+                        <p *ngIf="400 >= item.description.length">
+                            {{ item.description }}
+                        </p>
+                    </div>
+                    <div>
+                        <span class="badge">${{ item.price }}</span>
                     </div>
                     <div id="itemOptionsContainer">
-                        <button class="btn btn-danger" (click)="deleteItem(item)">Delete</button>
+                        <button class="btn btn-danger" (click)="deleteItem(item)"><p id="rotatedText">Delete</p></button> <!-- Add: a confirmation prompt before deletion-->
                     </div>
                 </div>
-                <hr>
             </ng-container>
         </div>
+
         <ng-template #noItemsBlock>
-            <p>This user does not have any listings</p>
+            <hr>
+            <p style="color: white">This user does not have any listings</p>
         </ng-template>
+
     </ul>
-    <button class="btn" routerLink="/admin-panel">Back</button>
 </div>
