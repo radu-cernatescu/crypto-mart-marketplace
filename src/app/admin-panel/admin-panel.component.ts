@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ItemsService } from '../items.service';
 import { User } from '../User';
 import { UserService } from '../user.service';
 
@@ -11,15 +12,32 @@ export class AdminPanelComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService/*, private itemService: ItemsService*/) {}
 
   ngOnInit(): void {
     this.userService.getAllUsers().subscribe((res =>{
-      this.users = res.data;
+      // get only regular users
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].type == 'regular') {
+          this.users.push(res.data[i]);
+        }
+      }
     }))
   }
   /** function to delete user by admin  */
-  deleteUser(user:any){
+  deleteUser(user: User){
+    /* delete all user's items (TO DO)
+    this.userService.getUserItems(user.email).subscribe(res => {
+      console.log(res.data);
+      let items = res.data;
+      
+      for (let i = 0; i < items.length; i++) {
+        this.itemService.deleteUserItem(res.user,items[i]);
+      }
+      
+      
+    });
+    */
     this.userService.deleteUser(user).subscribe((res =>{
       if (res.message == "SUCCESS") {
         alert("Sucessfully deleted user!");

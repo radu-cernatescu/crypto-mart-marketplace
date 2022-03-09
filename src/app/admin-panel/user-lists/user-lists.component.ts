@@ -12,7 +12,8 @@ export class UserListsComponent implements OnInit {
 
   userItems : {title: string,
   description: string,
-  images: []}[] = [];
+  images: []
+  price: string}[] = [];
   user:any;
   constructor(private route: ActivatedRoute,
     private userService: UserService,

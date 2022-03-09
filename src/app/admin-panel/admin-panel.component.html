@@ -1,21 +1,19 @@
 <div class="container">
     <ul>
-        <h3>Users</h3>
-        <hr>
+        <h3>USER ACCOUNTS LIST</h3>
         <ng-container *ngFor="let user of users; let i = index">
+            <hr>
             <div id="cartItemMainContainer">
-                <div id="cartItemInfo" style="background-color: red;" routerLink="/{{user.email}}">
-                    <p>{{user.firstName}}</p>
-                    <p>{{user.lastName}}</p>
-                    <p>{{user.email}}</p>
-
+                <div id="cartItemInfo" routerLink="/{{user.email}}">
+                    <p><b>First Name:</b> {{user.firstName}}</p>
+                    <p><b>Last Name:</b> {{user.lastName}}</p>
+                    <p><b>Email:</b> {{user.email}}</p>
                 </div>
                 <div id="itemOptionsContainer">
-                    <button class="btn btn-primary" (click)="blockUser(user)">{{user.isBlock ? "Unblock" : "block"}}</button>
+                    <button class="btn btn-primary" (click)="blockUser(user)">{{user.isBlock ? "Unblock" : "Block"}}</button>
                     <button class="btn btn-danger" (click)="deleteUser(user)">Delete</button>
                 </div>
             </div>
-            <hr>
         </ng-container>
     </ul>
 </div>

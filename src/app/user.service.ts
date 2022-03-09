@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -28,6 +28,7 @@ export class UserService {
       ); 
     }
 
+    // Deprecated for now...
     getUserCountry(lat: number, lon: number): Observable<any> {
       return this.http.get(ENV.Geo_API + `&lat=${lat}&lng=${lon}`)
       .pipe(catchError(this.handleError('get country', []))
