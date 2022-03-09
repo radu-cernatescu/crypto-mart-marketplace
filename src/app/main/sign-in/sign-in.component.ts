@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { TokenStorageService } from 'src/app/token-storage.service';
 import { UserService } from 'src/app/user.service';
 import { User } from 'src/app/User';
@@ -46,9 +45,18 @@ export class SignInComponent implements OnInit {
         this.user.password = res.data.password;
         this.user.firstName = res.data.firstName;
         this.user.lastName = res.data.lastName;
+        this.user.type = res.data.type;
+        this.user.isBlock = res.data.isBlock;
         this.tokenStorage.saveUser(this.user);
-        this.service.isLoggedIn = true;     
-        window.location.replace("/main");
+
+        if (!this.user.isBlock) {
+          this.service.isLoggedIn = true;     
+          window.location.replace("/main");
+        }
+        else {
+          window.alert("This user has been banned!");
+          this.loginForm.reset();
+        }
       }
       else {
         alert("Username or password incorrect.");

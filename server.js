@@ -61,7 +61,9 @@ app.post("/api/sign-up", async (req, res) => {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
-                    password: await argon2.hash(req.body.password)
+                    password: await argon2.hash(req.body.password),
+                    type: req.body.type,
+                    isBlock: req.body.isBlock
                 }
                 await collection.insertOne(user).then(() => {
                     res.send({message: "SUCCESS"});
@@ -72,6 +74,19 @@ app.post("/api/sign-up", async (req, res) => {
         }).catch(() => {
             res.send({message:"FAILED"});
         });
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+
+/* Gets all valid invite codes from backend. This way we can quickly invalidate codes.
+*/
+app.get("/api/invitecodes/", async (req, res) =>{
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("invite_codes");
+
+        let codes = await collection.find().toArray();
+        res.send({message: "SUCCESS", codes: codes});
+
     }).catch(err => {/*console.log(err)*/});
     client.close();
 });
@@ -95,6 +110,80 @@ app.get("/api/items", async (req, res) => {
         
     }).catch(err => {/*console.log(err)*/});
     client.close();
+});
+
+/** API  to block/unblock user by admin  */
+app.post("/api/block-user", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("logins");
+        let myquery = { email: req.body.user.email };
+        let newvalues = { $set: {firstName: req.body.user.firstName,
+            lastName: req.body.user.lastName,
+            email: req.body.user.email,
+            password: req.body.user.password,
+            isBlock: !req.body.user.isBlock } };
+
+        await collection.updateOne(myquery, newvalues).then(() => {
+                res.send({message: "SUCCESS"});
+            }).catch(err => {
+                res.send({message: "FAILED"});
+            });
+        }).catch(() => {
+        res.send({message:"FAILED"});
+    }).catch(err => {/*console.log(err)*/});
+    client.close();        
+});
+
+/** All Users */
+/** API  to get all users by admin  */
+app.get("/api/allusers", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("logins");
+        const users = await collection.find().toArray();
+        if (users) {
+            res.send({ message: "SUCCESS", data: users });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+
+/** users Items with selected user */ 
+app.post("/api/user/items", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("items");
+        const collection2 = client.db("users").collection("logins");
+        const users = await collection2.findOne({
+            email: {$eq: req.body.userId}
+        })
+        const items = await collection.find().toArray();
+        // const cc = items.filter(x => x.userId == users._id)
+        if (items) {
+            res.send({ message: "SUCCESS", data: items , user : users });
+        }
+        else {
+            res.send({ message: "FAILED" });
+        }
+        
+    }).catch(err => {/*console.log(err)*/});
+    client.close();
+});
+/** API  to delete user by admin  */
+app.post("/api/remove-user", async (req, res) => {
+    let user = req.body.user;
+    if (user) {
+        let myQuery = {  email: user.email };
+        await client.connect().then(async () => {
+            const collection = client.db("users").collection("logins");
+            
+            await collection.deleteOne(myQuery).then(() => {
+                res.send({ message: "SUCCESS" });
+            }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+        })
+    }
 });
 
 /*

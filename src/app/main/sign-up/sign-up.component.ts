@@ -15,12 +15,14 @@ export class SignUpComponent implements OnInit {
   isLoading!: boolean;
   isLoginMode: any;
   passwordMatch= false;
+  inviteCode: string = "";
   signUpForm = new FormGroup({
     first: new FormControl('', Validators.required,),
     last: new FormControl('', Validators.required,),
     email: new FormControl('', Validators.required,),
     password: new FormControl('', Validators.minLength(8)),
     rePassword: new FormControl(''),
+    inviteCode: new FormControl('')
   });
   constructor(private service: UserService,
     private router: Router) {
@@ -43,24 +45,44 @@ export class SignUpComponent implements OnInit {
     this.user.lastName = this.signUpForm.value.last;
     this.user.email = this.signUpForm.value.email;
     this.user.password = this.signUpForm.value.password;
+    this.user.isBlock = false;
+    
+    this.inviteCode = this.signUpForm.value.inviteCode;
+    this.service.getInviteCodes().subscribe((res: any) => {
+      let codes = res.codes;
+      let found = false;
 
-    this.service.addUser(this.user).subscribe((res: any) =>
-    {
-      console.log(res.message)
-      if (res.message == "SUCCESS") {
-        //User found
-        alert("Signup successful!");
-        this.router.navigate(['/main']); 
+      for (let i = 0; i < codes.length; i++) {
+        if (this.inviteCode == codes[i].code) {
+          found = true;
+          break;
+        }
       }
-      else if (res.message == "EXISTING USER"){
-        alert("User already exists");
+
+      if (found) {
+        this.user.type = "admin";
       }
       else {
-        alert("There was an error signing up.");
-        //this.router.navigate(['/main']);
+        this.user.type = "regular";
       }
-    });
 
-    this.isLoading = true;
+      this.service.addUser(this.user).subscribe((res: any) =>
+        {
+          console.log(res.message)
+          if (res.message == "SUCCESS") {
+            //User found
+            alert("Signup successful!");
+            this.router.navigate(['/main']); 
+          }
+          else if (res.message == "EXISTING USER"){
+            alert("User already exists");
+          }
+          else {
+            alert("There was an error signing up.");
+          }
+        });
+
+        this.isLoading = true;
+    });
   }
 }
