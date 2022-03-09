@@ -38,18 +38,16 @@ export class SignInComponent implements OnInit {
     this.user.password = this.loginForm.value.password;
     this.service.loginUser(this.loginForm.value.email, this.loginForm.value.password).subscribe((res: any) => {
       if (res.message === "SUCCESS") {
-        console.log(res);
-        this.tokenStorage.saveToken(res.data._id);
-
         this.user._id = res.data._id;
         this.user.password = res.data.password;
         this.user.firstName = res.data.firstName;
         this.user.lastName = res.data.lastName;
         this.user.type = res.data.type;
         this.user.isBlock = res.data.isBlock;
-        this.tokenStorage.saveUser(this.user);
 
         if (!this.user.isBlock) {
+          this.tokenStorage.saveToken(res.data._id);
+          this.tokenStorage.saveUser(this.user);
           this.service.isLoggedIn = true;     
           window.location.replace("/main");
         }
