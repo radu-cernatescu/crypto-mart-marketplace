@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { User } from 'src/app/User';
-
-const httpOptions = {
-    headers: new HttpHeaders(
-      { 'Content-Type': 'application/json' },
-    )
-};
 
 @Injectable({
   providedIn: 'any'
@@ -27,18 +20,44 @@ export class UserService {
       return this.http.post(this.CMS_API + 'user-login', {email: email, password: password})
         .pipe(catchError(this.handleError('get user', [])));
     }
+
     //firstName: any, lastName: any, email: any, password: any
     addUser(user: User): Observable<any> {
-      const userObj = {firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password};
-      return this.http.post(this.CMS_API + 'sign-up', userObj)
+      return this.http.post(this.CMS_API + 'sign-up', user)
         .pipe(catchError(this.handleError('get user', []))
       ); 
     }
 
+    // Deprecated for now...
     getUserCountry(lat: number, lon: number): Observable<any> {
       return this.http.get(ENV.Geo_API + `&lat=${lat}&lng=${lon}`)
       .pipe(catchError(this.handleError('get country', []))
       );
+    }
+
+    /** API call to get all users by admin  */
+    getAllUsers(): Observable<any> {
+      return this.http.get(this.CMS_API + 'allusers',)
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to get all items with selected user info by admin  */
+    getUserItems(userId:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'user/items', {userId: userId})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to block/unblock user info by admin  */
+    blockUser(user:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'block-user', {user: user})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+    /** API call to delete user info by admin  */
+    deleteUser(user:any): Observable<any> {
+      return this.http.post(this.CMS_API + 'remove-user', {user: user})
+        .pipe(catchError(this.handleError('get user', [])));
+    }
+
+    getInviteCodes() {
+      return this.http.get(this.CMS_API + 'invitecodes');
     }
 
     /**

@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## Reading Week Catchup
+
+### PR #90 (Development of this quasi sprint starts at this PR)
+
+* Added changes from commit 3150df5 since an old branch name was reused which led to changes on an older iteration of the platform.
+    From closed PR #88:
+    * Implemented admin account creation
+    * Created a drop down listing for admin panel
+    * Allowed admin to view all current users and their listings upon clicking the user
+    * Allowed admin to delete or block/unblock a user or delete any listing
+    * Changes are reflected on home page
+
+* Refactor User type to include blocked status and user type (regular or admin).
+* Refactor sign up process to allow invite codes. Invite codes fetched from the backend and correct ones create admin accounts.
+
+### PR #91
+
+* Edited: HTML structures of admin components
+* Added: CSS styling to admin components
+* Fixed: HTML structures of profile component
+    - added new div around the "app-sell-edit" for better placement on page.
+* Added: CSS styling to the profile component
+    - added spacing and sizing to the new implemented div
+* Changed "Profile" option in account settings to "My Market" due to all settings being related to a user's personal market.
+
 ## Sprint 4
 
 ### PR #82 (Development of Sprint 4 starts at this PR)
