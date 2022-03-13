@@ -59,5 +59,25 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.loadItems();
   }
+  buyNow(){
+    this.userItems.forEach((element: { userId: any; title: any; description: any; price: any; images: any; color: any; size: any; firstName: any; shippingOption: any; itemId: any; quantity: any; }) => {
+      const item: any = {
+        userId : element.userId,
+        title : element.title,
+        description : element.description,
+        price : element.price,
+        images : element.images, // adding all images if needed you can add single images as well.
+        color : element.color,
+        size : element.size,
+        firstName : element.firstName,
+        shippingOption: element.shippingOption,
+        itemId: element.itemId,
+        quantity : element.quantity,
+        time: new Date()
+      };
+      this.itemsService.buyItem(item)
+      this.itemsService.deleteItemFromCart(element).subscribe((message:any) => {/*console.log(message)*/})
+    });
+  }
 
 }

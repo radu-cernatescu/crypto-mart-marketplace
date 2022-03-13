@@ -1,0 +1,38 @@
+<div class="container">
+    <ul>
+        <h3>My Oders</h3>
+        <div *ngIf="myOders.length > 0; else noItemsBlock">
+            <ng-container *ngFor="let item of myOders; let i = index">
+                
+                <div id="cartItemMainContainer">
+                    <div routerLink="/product/{{item.title}}" id="itemImagecontainer">
+                        <img height="200px" width="250px" id="itemImage" src={{item.images}} alt="MISSING IMAGE">
+                    </div>
+                    <div id="cartItemInfo">
+                        <p>
+                            <span> <b>{{item.title}}</b></span> <span *ngIf="item.color">  | {{item.color}}</span> <span *ngIf="item.size"> | {{item.size}}</span>
+                        </p>
+                        <p> <span> <b> Sold by: </b></span> {{item.firstName}} </p>
+                        <p> <b>Description:</b> </p>
+                        <p id="cartItemDescrtiption">{{item.description}}</p>
+                        <!-- <p> <span><b>Shipped by: </b></span>{{item.shippingOption}}</p> -->
+                        <p> <span><b>Purchesed on:</b></span> {{item.time | date: 'dd/MM/yyyy'}} </p>
+                    </div>
+                    <div id="itemOptionsContainer">
+                        <span class="badge"> ${{ item.price * item.quantity * 1.13 | number : '1.2-2'}} </span>
+                        <!-- <p id="cartOptionsTitle"> <b>Item Options:</b> </p> -->
+                        <!-- <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
+                        <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button> -->
+                    </div>
+                </div>
+                <hr>
+            </ng-container>
+        </div>
+
+        <ng-template #noItemsBlock>
+            <hr>
+            <p style="color: white">This user does not have any listings</p>
+        </ng-template>
+
+    </ul>
+</div>

@@ -17,6 +17,7 @@ import { ProductComponent } from './product/product.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
+import { MyOdersComponent } from './my-oders/my-oders.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserListsComponent } from './admin-panel/user-lists/user-lists.componen
     ProductComponent,
     ShoppingCartComponent,
     AdminPanelComponent,
-    UserListsComponent
+    UserListsComponent,
+    MyOdersComponent
   ],
   imports: [
     BrowserModule,
