@@ -17,6 +17,7 @@ export class ItemsService {
   imgurKey: string;
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
+  boughtItem: any = [];
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.CMS_API = ENV.CMS_API;
@@ -69,6 +70,10 @@ export class ItemsService {
   addItemInCart(item: ShoppingCartItem) { 
     let itemUserObj = { user: this.tokenService.getUser(), item: item };
     return this.http.post(this.CMS_API + "add-shopping-item", itemUserObj);
+  }
+  buyItem(item: any) { 
+    this.boughtItem.push(item);
+    
   }
 
   editItemQuantity(item: ShoppingCartItem) {

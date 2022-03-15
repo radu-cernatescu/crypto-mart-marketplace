@@ -94,4 +94,21 @@ export class ProductComponent implements OnInit {
     // show notification  that item is added. create one service to show otification at this point. highly recomanded.
     // this.router.navigate(['/shoping-cart']);
   }
+  buyNow(){
+    const item: any = {
+      userId : this.item.userId,
+      title : this.item.title,
+      description : this.item.description,
+      price : this.item.price,
+      images : this.item.images, // adding all images if needed you can add single images as well.
+      color : this.selectedColor,
+      size : this.selectedSize,
+      firstName : this.item.firstName,
+      shippingOption: this.item.shippingOption,
+      itemId: this.item._id,
+      quantity : 1,
+      time: new Date()
+    };
+    this.itemsService.buyItem(item)
+  }
 }
