@@ -2,9 +2,12 @@
   <h2> Market Options </h2>
   <div class="optionContainer">
     <button class="button" id="SellButton" (click)="sellItem()">Create new listing</button>
-    <button class="button">Market Listings!</button> <!--TO DO: Change Buttons to routes like the "app-sell-edit"; Ensure that on button click the routes show on the right side div (id: "contentContainer")-->
-    <button class="button">Listing Archive!</button>
-    <button class="button">Sold Listings!</button>
+    <button class="button">Market Listings</button> <!--TO DO: Change Buttons to routes like the "app-sell-edit"; Ensure that on button click the routes show on the right side div (id: "contentContainer")-->
+    <button class="button">Listing Archive</button>
+    <button class="button">Sold Listings</button>
+    <button class="button" routerLink="/my-orders">My Orders</button>
+    <button class="button" routerLink="/my-offers">My Offers</button>
+
   </div>
 </div>
 
@@ -27,32 +30,38 @@
         <use xlink:href="#pmarketAnimatedLines" class="line"></use>
       </g>
     </svg>
-    <ul class="list-group" id="userActiveListingsContainer">
-      <a class="list-group-item" id="listItem" *ngFor="let sellItem of sellItems; let i = index"
-        (click)="onEditItem(sellItem)">
-        <div style="display: flex;" id="userActiveListings">
-          <div>
-            <img id="ItemImage" height="200px" width="250px" src={{sellItem.images}} alt="hi">
+    <ng-container *ngIf="sellItems.length > 0; else NoItemsBlock">
+      <ul class="list-group" id="userActiveListingsContainer">
+        <a class="list-group-item" id="listItem" *ngFor="let sellItem of sellItems; let i = index"
+          (click)="onEditItem(sellItem)">
+          <div style="display: flex;" id="userActiveListings">
+            <div>
+              <img id="ItemImage" height="200px" width="250px" src={{sellItem.images}} alt="hi">
+            </div>
+            <div id="itemDesc">
+              <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
+              <!-- Cut off descriptions longer than 150 characters -->
+              <p *ngIf="sellItem.description.length > 150">
+                <b>Description:</b><br>
+                {{ sellItem.description.substring(0, 150) }}...
+              </p>
+              <p *ngIf="sellItem.description.length < 150">
+                <b>Description:</b><br>
+                {{ sellItem.description }}
+              </p>
+            </div>
+            <div class="verticalDivisor"></div>
+            <div>
+              <span class="badge">${{ sellItem.price }}</span>
+            </div>
           </div>
-          <div id="itemDesc">
-            <span><b>Item Title:</b><br> {{ sellItem.title }}</span>
-            <!-- Cut off descriptions longer than 150 characters -->
-            <p *ngIf="sellItem.description.length > 150">
-              <b>Description:</b><br>
-              {{ sellItem.description.substring(0, 150) }}...
-            </p>
-            <p *ngIf="sellItem.description.length < 150">
-              <b>Description:</b><br>
-              {{ sellItem.description }}
-            </p>
-          </div>
-          <div class="verticalDivisor"></div>
-          <div>
-            <span class="badge">${{ sellItem.price }}</span>
-          </div>
-        </div>
-      </a>
-    </ul>
+        </a>
+      </ul>
+    </ng-container>
+    <ng-template #NoItemsBlock>
+      <p style="color:white"> No listings! Add one to the left... </p>
+    </ng-template>
+    
     <svg id="parchiveAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>

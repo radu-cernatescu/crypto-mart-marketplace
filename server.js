@@ -9,14 +9,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 /* Initialize Express backend */
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
 /* USERS */
-
 
 /*
 */
@@ -90,6 +88,8 @@ app.get("/api/invitecodes/", async (req, res) =>{
     }).catch(err => {/*console.log(err)*/});
     client.close();
 });
+
+/* TO DO - Adding & Removing Invite codes */
 
 
 /* ITEMS/LISTINGS */
@@ -391,6 +391,77 @@ app.post("/api/get-shopping-cart", async (req, res) => {
             res.send({message: "FAILED"});
         }
     })
+});
+
+/* ORDERS */
+app.post("/api/checkout-cart", async (req, res) => {
+    let cartItems = req.body;
+    for (let i = 0; i < cartItems.length; i++) {
+        cartItems[i]['time'] = new Date();
+        cartItems[i]['confirmed'] = false;
+    }
+    console.log(cartItems);
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        await collection.insertMany(cartItems).then(() => {
+            res.send({message: "SUCCESS"});
+        }).catch((err) => {
+            res.send({message: "FAILED", err: err});
+        })
+
+        
+
+    }).catch(err => {/*console.log(err);*/});
+});
+
+app.post("/api/clear-cart", async (req, res) => {
+    let cartItems = req.body;
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("cart");
+
+        let myQuery = { userId: cartItems[0].userId };
+        await collection.deleteMany(myQuery);
+    }).catch(err => {/*console.log(err);*/});
+
+});
+
+app.post("/api/get-user-orders", async (req, res) => {
+    //console.log(req.body)
+    let user = req.body;
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        let myQuery = { userId: user._id };
+        console.log(user)
+        let orders = await collection.find(myQuery).toArray();
+
+        if (await orders.length > 0) {
+            console.log(orders);
+            res.send({message: "SUCCESS", orders: orders });
+        }
+        else {
+            res.send({message: "FAILED"});
+        }
+
+        
+    }).catch(err => {/*console.log(err);*/})
+});
+
+app.get("/api/get-orders", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        let orders = await collection.find().toArray();
+
+        if (await orders.length > 0) {
+            console.log(orders);
+            res.send({message: "SUCCESS", orders: orders });
+        }
+        else {
+            res.send({message: "FAILED"});
+        }
+    });
 });
 
 /* Allows express to serve files from this directory
