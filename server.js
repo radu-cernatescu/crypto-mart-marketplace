@@ -3,6 +3,7 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const argon2 = require('argon2');
 const bodyParser = require('body-parser');
+const mailchimp = require('@mailchimp/mailchimp_transactional')('8459677842f64c2587b6c5057721c849-us14');
 
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });

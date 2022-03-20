@@ -18,7 +18,6 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
-import { MyOffersComponent } from './user-profile/my-offers/my-offers.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +33,7 @@ import { MyOffersComponent } from './user-profile/my-offers/my-offers.component'
     ShoppingCartComponent,
     AdminPanelComponent,
     UserListsComponent,
-    MyOrdersComponent,
-    MyOffersComponent
+    MyOrdersComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/User';
+import { Item } from './Item';
 
 @Injectable({
   providedIn: 'any'
@@ -56,8 +57,19 @@ export class UserService {
         .pipe(catchError(this.handleError('get user', [])));
     }
 
+    /* API call to fetch all invite codes from database */
     getInviteCodes() {
       return this.http.get(this.CMS_API + 'invitecodes');
+    }
+
+    /* Sends a user an e-mail that they have been blocked. */
+    sendBanUserEmail(user: User, reason: string) {
+      return this.http.post(this.CMS_API + 'ban-user-email', {user: user, reason: reason});
+    }
+
+    /* Send a user an e-mail that an item they've posted has been banned & deleted. */
+    sendBanItemEmail(user: User, item: Item, reason: string) {
+      return this.http.post(this.CMS_API + 'ban-item-email', {user: user, item: item, reason: reason});
     }
 
     /**

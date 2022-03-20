@@ -11,7 +11,6 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
-import { MyOffersComponent } from './user-profile/my-offers/my-offers.component';
 
 
 const routes: Routes = [
@@ -21,7 +20,6 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'shoping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
-  { path: 'my-offers', component: MyOffersComponent, pathMatch: 'full' },
   { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard], pathMatch: 'full' },
   { path: 'product', component: ProductComponent,
   children : [ {path: ':title', component : ProductComponent } ] },
