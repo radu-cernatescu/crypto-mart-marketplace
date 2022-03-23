@@ -63,7 +63,6 @@ export class ShoppingCartComponent implements OnInit {
   buyNow(){
     this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
     this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    window.alert("Offer sent!");
     window.location.reload();
   }
   visibilityToggle(userChoice : any, notUserChoice : any) {
