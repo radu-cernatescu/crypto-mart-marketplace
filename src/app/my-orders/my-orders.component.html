@@ -1,9 +1,9 @@
 <div class="container">
     <ul>
         <h3 style="text-align: center;">MY ACTIVE ORDERS</h3>
+        <hr>
         <div *ngIf="myOrders.length > 0; else noItemsBlock">
-            <ng-container *ngFor="let item of myOrders; let i = index">
-                <hr>
+            <ng-container *ngFor="let item of myOrders; let i = index"> <!--ng-container does not allow for height restrictions-->
                 <div id="orderItemMainContainer">
                     <div routerLink="/product/{{item.title}}" id="itemImagecontainer">
                         <img height="200px" width="250px" id="itemImage" src={{item.images}} alt="MISSING IMAGE">
@@ -21,7 +21,8 @@
                         <p> <b>Full Name:</b> {{item.firstName}} {{item.lastName}} </p>
                         <h3><u>Delivery Info</u></h3>
                         <p> <b>Purchased on:</b> {{item.time | date: 'dd/MM/yyyy'}} </p>
-                        <p> <b>Expected Arrival Date:</b> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p> <!--Required: Adding delivery date estimate-->
+                        <p> <b>Expected Arrival Date:</b> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
+                        <!--Required: Adding delivery date estimate-->
                     </div>
                     <div id="paymentSummaryContainer">
                         <h3 id="paymentSummaryTitle"> PAYMENT SUMMARY </h3>
@@ -36,11 +37,11 @@
                         </span>
                     </div>
                 </div>
+                <hr>
             </ng-container>
         </div>
 
-        <ng-template #noItemsBlock>
-            <hr>
+        <ng-template id="noItems" #noItemsBlock>
             <p id="noOrdersMessage" routerLink="/main">You do not have any orders. :Click here and lets change that!</p>
         </ng-template>
     </ul>

@@ -7,7 +7,14 @@ h3 {
 }
 
 .container {
+    height: 5%;
+    max-height: 20%;
     margin-top: 5%;
+}
+
+#itemListContainer {
+    max-height: 20%;
+    overflow-y: scroll;
 }
 
 #orderItemMainContainer {
@@ -123,6 +130,7 @@ h3 {
 }
 
 #noOrdersMessage {
+    text-align: center;
     font-size: larger;
     color: white;
     cursor: pointer;
