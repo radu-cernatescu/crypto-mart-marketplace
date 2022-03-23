@@ -25,13 +25,11 @@ export class ShoppingCartComponent implements OnInit {
     this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
   }
 
-
   deleteItemFromCart(i:number){
     this.itemsService.deleteItemFromCart(this.userItems[i]).subscribe((message:any) => {/*console.log(message)*/})
     this.loadItems();
     location.reload();
   }
-
 
   loadItems() {
     let items = 0;
@@ -49,7 +47,6 @@ export class ShoppingCartComponent implements OnInit {
     this.grandTotal = +(amount + this.tax).toFixed(2);
   }
 
-
   quantityChange(event: any, index: number){
     this.userItems[index].quantity = Math.round(Number(event.target.value));
     let numberCounter = document.getElementById("userIn");
@@ -64,24 +61,9 @@ export class ShoppingCartComponent implements OnInit {
     this.loadItems();
   }
   buyNow(){
-    this.userItems.forEach((element: { userId: any; title: any; description: any; price: any; images: any; color: any; size: any; firstName: any; shippingOption: any; itemId: any; quantity: any; }) => {
-      const item: any = {
-        userId : element.userId,
-        title : element.title,
-        description : element.description,
-        price : element.price,
-        images : element.images, // adding all images if needed you can add single images as well.
-        color : element.color,
-        size : element.size,
-        firstName : element.firstName,
-        shippingOption: element.shippingOption,
-        itemId: element.itemId,
-        quantity : element.quantity,
-        time: new Date()
-      };
-      this.itemsService.buyItem(item)
-      this.itemsService.deleteItemFromCart(element).subscribe((message:any) => {/*console.log(message)*/})
-    });
+    this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
+    this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
+    window.location.reload();
   }
   visibilityToggle(userChoice : any, notUserChoice : any) {
     if (notUserChoice) {

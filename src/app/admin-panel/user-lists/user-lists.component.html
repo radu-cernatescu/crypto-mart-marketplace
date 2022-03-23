@@ -5,11 +5,11 @@
         <div *ngIf="userItems.length > 0; else noItemsBlock">
             <ng-container *ngFor="let item of userItems; let i = index">
                 <hr>
-                <div id="ItemContainer" routerLink="/product/{{item.title}}">
-                    <div>
+                <div id="ItemContainer" >
+                    <div routerLink="/product/{{item.title}}">
                         <img height="200px" width="250px" id="ItemImage" src={{item.images}} alt="MISSING IMAGE">
                     </div>
-                    <div id="ItemInfo">
+                    <div id="ItemInfo" routerLink="/product/{{item.title}}">
                         <span><b>Item Title:</b> {{ item.title }}</span>
                         <br><br>
                         <p> <b>Description:</b> </p>
@@ -21,7 +21,7 @@
                             {{ item.description }}
                         </p>
                     </div>
-                    <div>
+                    <div routerLink="/product/{{item.title}}">
                         <span class="badge">${{ item.price }}</span>
                     </div>
                     <div id="itemOptionsContainer">

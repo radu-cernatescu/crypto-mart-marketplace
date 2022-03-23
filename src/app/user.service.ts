@@ -4,6 +4,7 @@ import { environment as ENV } from '../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from 'src/app/User';
+import { Item } from './Item';
 
 @Injectable({
   providedIn: 'any'
@@ -14,6 +15,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { 
         this.CMS_API = ENV.CMS_API;
+        
     }
 
     loginUser(email: any, password: any): Observable<any> {
@@ -46,8 +48,8 @@ export class UserService {
         .pipe(catchError(this.handleError('get user', [])));
     }
     /** API call to block/unblock user info by admin  */
-    blockUser(user:any): Observable<any> {
-      return this.http.post(this.CMS_API + 'block-user', {user: user})
+    blockUser(user:any, reason: string): Observable<any> {
+      return this.http.post(this.CMS_API + 'block-user', {user: user, reason: reason})
         .pipe(catchError(this.handleError('get user', [])));
     }
     /** API call to delete user info by admin  */
@@ -56,9 +58,46 @@ export class UserService {
         .pipe(catchError(this.handleError('get user', [])));
     }
 
+    /* API call to fetch all invite codes from database */
     getInviteCodes() {
       return this.http.get(this.CMS_API + 'invitecodes');
     }
+
+    // Check to see if user is banned
+    checkUserBan(user: User) {
+      return this.http.post(this.CMS_API + "is-user-blocked", user);
+    }
+
+    //
+    sendListingDeleteNotif(user: User, item: Item, reason: string) {
+      return this.http.post(this.CMS_API + "send-listing-delete-notif", {user: user, item: item, reason: reason})
+    }
+
+    //
+    getListingDeleteNotif(user: User) {
+      return this.http.post(this.CMS_API + "get-listing-delete-notifs", user);
+    }
+
+    //
+    deleteListingDeleteNotif(user: User, item: Item) {
+      return this.http.post(this.CMS_API + "delete-listing-delete-notifs", {user: user, item: item});
+    }
+
+    markReadListingDeleteNotif(user: User, item: Item) {
+      return this.http.post(this.CMS_API + "mark-read-listing-delete-notifs", {user: user, item: item});
+    }
+
+    /* Deprecated mailchimp APIs
+    // Sends a user an e-mail that they have been blocked.
+    sendBanUserEmail(user: User, reason: string) {
+      return this.http.post(this.CMS_API + 'ban-user-email', {user: user, reason: reason});
+    }
+
+    // Send a user an e-mail that an item they've posted has been banned & deleted.
+    sendBanItemEmail(user: User, item: Item, reason: string) {
+      return this.http.post(this.CMS_API + 'ban-item-email', {user: user, item: item, reason: reason});
+    }
+    */
 
     /**
      * Handle Http operation that failed.

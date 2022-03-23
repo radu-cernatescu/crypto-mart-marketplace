@@ -77,9 +77,15 @@
     </div>
     <div *ngIf="item && item.title" id="CheckoutOptionsContainer">
         <h4 class="CheckoutOptionsTitle">Product Options</h4>
-        <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
-        <button class="btn btn-success" (click)="buyNow()">BUY NOW</button>
-        <br><br>
+        <ng-container *ngIf="this.user._id; else notLoggedInBlock">
+            <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
+            <button class="btn btn-success" (click)="buyNow()">BUY NOW</button>
+        </ng-container>
+        <ng-template #notLoggedInBlock>
+            <button class="btn btn-success" routerLink="/sign-in">ADD TO CART</button>
+            <button class="btn btn-success" routerLink="/sign-in">BUY NOW</button>
+        </ng-template>
+
         <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->
         <br />

@@ -4,6 +4,8 @@ import {GeolocationService} from '@ng-web-apis/geolocation';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { ShoppingCartItem } from '../ShoppingCartItem';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-product',
@@ -20,13 +22,14 @@ export class ProductComponent implements OnInit {
   itemTitle: any;
   description: any;
   userLocation: any;
+  user: User;
 
 
   constructor(private itemsService: ItemsService, 
     private readonly geolocation$: GeolocationService,
     private readonly userService: UserService,
-    private router: Router) { 
-      
+    private router: Router, private tokenStorage: TokenStorageService) {
+      this.user = this.tokenStorage.getUser();
     }
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class ProductComponent implements OnInit {
       this.selectedSize = this.item.sizes[0];
       this.description = this.item.description;
     });
-
+    
     /* Comment out until GPS API is fixed
     this.geolocation$.subscribe(position => {
 
