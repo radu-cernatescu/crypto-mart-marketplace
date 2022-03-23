@@ -4,6 +4,8 @@ import {GeolocationService} from '@ng-web-apis/geolocation';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { ShoppingCartItem } from '../ShoppingCartItem';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-product',
@@ -20,13 +22,14 @@ export class ProductComponent implements OnInit {
   itemTitle: any;
   description: any;
   userLocation: any;
+  user: User;
 
 
   constructor(private itemsService: ItemsService, 
     private readonly geolocation$: GeolocationService,
     private readonly userService: UserService,
-    private router: Router) { 
-      
+    private router: Router, private tokenStorage: TokenStorageService) {
+      this.user = this.tokenStorage.getUser();
     }
 
   ngOnInit(): void {
@@ -39,7 +42,7 @@ export class ProductComponent implements OnInit {
       this.selectedSize = this.item.sizes[0];
       this.description = this.item.description;
     });
-
+    
     /* Comment out until GPS API is fixed
     this.geolocation$.subscribe(position => {
 
@@ -63,18 +66,23 @@ export class ProductComponent implements OnInit {
   changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
   }
+  toggleVisibility(userChoice : any, notUserChoice : any) {
+    if (notUserChoice) {
+      notUserChoice.style.visibility = "hidden";
+      notUserChoice.style.animation = "none";
+      notUserChoice.style.animationDuration = "0ms";
+    }
+    if (userChoice) {
+      userChoice.style.visibility = "visible";
+      userChoice.style.animation = "popupHighlight";
+      userChoice.style.animationDuration = "1500ms";
+    }
+  }
   addToCart(){
-    let userChoices = document.getElementById("postAddCart");
-    if (userChoices) {
-      userChoices.style.visibility = "visible";
-    }
-    setTimeout(fade_out, 5000);
-    function fade_out() {
-      if (userChoices) {
-        userChoices.style.visibility = "hidden";
-      }
-    }
-    
+    let userChoices = document.getElementById("addedToCartPopup");
+    let notUserChoices = document.getElementById("boughtPopup");
+    this.toggleVisibility(userChoices, notUserChoices);
+
     const item: ShoppingCartItem = {
       userId : this.item.userId,
       title : this.item.title,
@@ -93,5 +101,41 @@ export class ProductComponent implements OnInit {
     
     // show notification  that item is added. create one service to show otification at this point. highly recomanded.
     // this.router.navigate(['/shoping-cart']);
+  }
+  buyNow(){
+    let userChoices = document.getElementById("boughtPopup");
+    let notUserChoices = document.getElementById("addedToCartPopup");
+    this.toggleVisibility(userChoices, notUserChoices);
+
+    const item: any = {
+      userId : this.item.userId,
+      title : this.item.title,
+      description : this.item.description,
+      price : this.item.price,
+      images : this.item.images, // adding all images if needed you can add single images as well.
+      color : this.selectedColor,
+      size : this.selectedSize,
+      firstName : this.item.firstName,
+      shippingOption: this.item.shippingOption,
+      itemId: this.item._id,
+      quantity : 1,
+      time: new Date()
+    };
+    this.itemsService.buyItem(item)
+  }
+  continueBrowsing() {
+    let userChoices = document.getElementById("addedToCartPopup");
+    let userChoices2 = document.getElementById("boughtPopup");
+
+    if (userChoices && userChoices.style.visibility == "visible") {
+      userChoices.style.visibility = "hidden";
+      userChoices.style.animation = "none";
+      userChoices.style.animationDuration = "0ms";
+    }
+    else if(userChoices2 && userChoices2.style.visibility == "visible") {
+      userChoices2.style.visibility = "hidden";
+      userChoices2.style.animation = "none";
+      userChoices2.style.animationDuration = "0ms";
+    }
   }
 }

@@ -22,7 +22,7 @@ export class UserListsComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) =>{
       let userId = params.get('email');
-      this.loadUserItem(userId)
+      this.loadUserItem(userId);
     })
   }
   /** function to load items by admin of selected user */
@@ -39,15 +39,23 @@ export class UserListsComponent implements OnInit {
   }
 /** function to delete items by admin of selected user */
   deleteItem(item:any){
-    console.log(item);
-    this.ItemsService.deleteUserItem(this.user, item).subscribe(
-      (res: any) => {
-        if (res.message == "SUCCESS") {
-          alert("Item deleted successfully");
-          window.location.reload();
-        }
+    let reason :any;
+    reason = prompt("What is the reason for removal?", "Breach of TOS.");
+    if (reason == "" || reason == null) {
+      reason = "Breach of TOS.";
+    }
+    this.userService.sendListingDeleteNotif(this.user, item, reason).subscribe((res: any) => {
+      //console.log(res)
+      if (res.message == "SUCCESS") {
+        this.ItemsService.deleteUserItem(this.user, item).subscribe(
+          (res: any) => {
+            if (res.message == "SUCCESS") {
+              alert("Item deleted successfully");
+              window.location.reload();
+            }
+          }
+        );
       }
-    );
-
+    });
   }
 }

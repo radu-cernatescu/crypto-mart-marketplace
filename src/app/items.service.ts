@@ -17,6 +17,7 @@ export class ItemsService {
   imgurKey: string;
   sellItemsChanged = new Subject<any[]>();
   startedEditing = new Subject<Item>();
+  boughtItem: any = [];
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
     this.CMS_API = ENV.CMS_API;
@@ -71,6 +72,19 @@ export class ItemsService {
     return this.http.post(this.CMS_API + "add-shopping-item", itemUserObj);
   }
 
+  buyItem(item: any) { 
+    this.boughtItem.push(item);
+    
+  }
+
+  checkoutCart(items: ShoppingCartItem[]) {
+    return this.http.post(this.CMS_API + "checkout-cart", items);
+  }
+
+  clearCart(items: ShoppingCartItem[]) {
+    return this.http.post(this.CMS_API + "clear-cart", items);
+  }
+
   editItemQuantity(item: ShoppingCartItem) {
     let itemUserObj = { user: this.tokenService.getUser(), item: item };
     return this.http.post(this.CMS_API + "update-shopping-item", itemUserObj);
@@ -79,5 +93,13 @@ export class ItemsService {
   deleteItemFromCart(item: ShoppingCartItem) {
     let itemUserObj = { user: this.tokenService.getUser(), item: item };
     return this.http.post(this.CMS_API + "remove-shopping-item", itemUserObj);
+  }
+
+  getUserOrders(user: User) {
+    return this.http.post(this.CMS_API + "get-user-orders", user);
+  }
+
+  getOrders() {
+    return this.http.get(this.CMS_API + "get-orders");
   }
 }

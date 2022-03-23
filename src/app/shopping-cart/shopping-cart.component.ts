@@ -25,13 +25,11 @@ export class ShoppingCartComponent implements OnInit {
     this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
   }
 
-
   deleteItemFromCart(i:number){
     this.itemsService.deleteItemFromCart(this.userItems[i]).subscribe((message:any) => {/*console.log(message)*/})
     this.loadItems();
     location.reload();
   }
-
 
   loadItems() {
     let items = 0;
@@ -49,9 +47,12 @@ export class ShoppingCartComponent implements OnInit {
     this.grandTotal = +(amount + this.tax).toFixed(2);
   }
 
-
   quantityChange(event: any, index: number){
-    this.userItems[index].quantity = Number(event.target.value);
+    this.userItems[index].quantity = Math.round(Number(event.target.value));
+    let numberCounter = document.getElementById("userIn");
+    if (numberCounter) {
+        numberCounter.innerHTML = "" + this.userItems[index].quantity;
+    }
     if(event.target.value < 1){
       this.userItems[index].quantity = 1;
     } else {
@@ -59,5 +60,31 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.loadItems();
   }
-
+  buyNow(){
+    this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
+    this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
+    window.location.reload();
+  }
+  visibilityToggle(userChoice : any, notUserChoice : any) {
+    if (notUserChoice) {
+      notUserChoice.style.visibility = "hidden";
+      notUserChoice.style.animation = "none";
+      notUserChoice.style.animationDuration = "0ms";
+    }
+    if (userChoice) {
+      userChoice.style.visibility = "visible";
+      userChoice.style.animation = "popupHighlight";
+      userChoice.style.animationDuration = "1500ms";
+    }
+  }
+  checkoutPop() {
+    let userChoices = document.getElementById("checkoutPopup");
+    let notUserChoices = document.getElementById("checkOutMenu");
+    this.visibilityToggle(userChoices, notUserChoices);
+  }
+  cancelCheckout() {
+    let userChoices = document.getElementById("checkOutMenu");
+    let notUserChoices = document.getElementById("checkoutPopup");
+    this.visibilityToggle(userChoices, notUserChoices);
+  }
 }

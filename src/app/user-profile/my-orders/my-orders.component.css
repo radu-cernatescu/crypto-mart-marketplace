@@ -1,44 +1,23 @@
 hr{
-    background: #000;
+    height: 4px;
 }
 
 h3 {
     color: white;
 }
 
-.badge {
-    background-color: #0B132B;
-    font-size: large;
-    padding-right: 5%;
-    margin-top: 4%;
-    margin-left: 35%;
-}
-
-#quantity {
-    padding-left: 6%;
-}
-
-#userIn {
-    pointer-events:visibleFill;
-    width: 60%;
-    background-color: #86a6ce;
-    border: 2px solid #0B132B;
-}
-
-#cartItemsContainer { /*Updated width value for better on-page positioning*/
-    width: 78%;
+.container {
+    height: 5%;
+    max-height: 20%;
     margin-top: 5%;
-    margin-left: 1%;
-    margin-right: 1%;
-    background-color: #0B132B;
-    border: 4px solid #1C2541;
-    border-radius: 15px;
-    padding-top: 0.4%;
-    padding-left: 1%;
-    padding-right: 3%;
 }
 
-#cartItemMainContainer {
+#itemListContainer {
+    max-height: 20%;
+    overflow-y: scroll;
+}
+
+#orderItemMainContainer {
     display: flex; 
     margin-bottom: 0.1%;
     color: rgb(230, 230, 230);
@@ -47,7 +26,7 @@ h3 {
     border-radius: 10px;
 }
 
-#cartItemMainContainer:hover {
+#orderItemMainContainer:hover {
     animation-name: colorhover;
     animation-duration: 300ms;
     background-color: #BDCADB;
@@ -63,9 +42,8 @@ h3 {
 
 #itemImagecontainer {
     width: 25%;
-    padding-top: 1%;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding: 1%;
+    margin-top: 6%;
     cursor: pointer;
 }
 
@@ -74,11 +52,7 @@ h3 {
     border-radius: 15px;
 }
 
-#cartItemInfoContainer {
-    display: flex; 
-}
-
-#cartItemInfo {
+#orderItemInfo {
     white-space: nowrap;
     flex-direction: column; 
     justify-content: space-around;
@@ -87,16 +61,12 @@ h3 {
     left: 1%;
     font-size: large;
 	width: 65%;
-    display: flex;
-    cursor: pointer;
+    display: flex; 
 }
 
-#cartItemDescrtiption {
-    white-space:initial;
-}
-
-#itemOptionsContainer {
+#paymentSummaryContainer {
     justify-content: space-around;
+    text-align: center;
     width: 25%;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -107,7 +77,7 @@ h3 {
     border-right: 2px solid black;
 }
 
-#cartOptionsTitle {
+#orderOptionsTitle {
     font-size: large;
     padding-left: 28%;
     margin-top: 4%;
@@ -124,11 +94,11 @@ h3 {
     padding-right: 0.3%;
 }
 
-#checkOutMenu { /*Updated margin value for better on-page positioning*/
+#checkOutMenu {
     width: 15%;
     height: fit-content;
     margin-top: 5%;
-    margin-left: 82.5%;
+    margin-left: 81%;
     padding-bottom: 1%;
     position: fixed;
     display: flex;
@@ -139,13 +109,9 @@ h3 {
     border-radius: 15px;
 }
 
-.checkoutTitle {
+#checkoutTitle {
     padding-bottom: 1%;
     border-bottom: 2px solid black;
-}
-
-.checkoutQuestion {
-    font-size: larger;
 }
 
 #checkoutInfo {
@@ -153,31 +119,21 @@ h3 {
     color: black;
 }
 
-#checkoutButton {
-    width: 80%;
-}
-
-.popup {
-    position: fixed;
-    margin-top: 5%;
-    margin-left: 82.5%;
-    background-color: #7A96B8;
-    width: 15%;
-    height: 28%;
-    visibility:hidden;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-    border: 4px solid #1C2541;
-    border-radius: 15px;
+#paymentSummaryTitle {
+    font-size: large;
     padding-bottom: 1%;
+    border-bottom: 2px solid black;
 }
 
-@keyframes popupHighlight{
-    from {background-color: #ffffff}
-    to {background-color: #7a98bd}
-    from {color: #000000}
-    to {color: #5e5e5e}
+#paymentDetails {
+    font-size: larger;
+}
+
+#noOrdersMessage {
+    text-align: center;
+    font-size: larger;
+    color: white;
+    cursor: pointer;
 }
 
 /* CUSTOM BUTTONS */
@@ -191,13 +147,13 @@ button.btn-success {
 }
 
 button.btn-success:hover {
-    animation-name: colorhoverCart;
+    animation-name: colorhoverorder;
     animation-duration: 400ms;
     background-color: #6FFFE9;
     color: #1D2835;
 }
 
-@keyframes colorhoverCart {
+@keyframes colorhoverorder {
     from {background-color: #45B0AE}
     to {background-color: #6FFFE9}
     from {color: #3A506B}

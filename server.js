@@ -3,20 +3,19 @@ const cors = require('cors');
 const { MongoClient } = require('mongodb');
 const argon2 = require('argon2');
 const bodyParser = require('body-parser');
+const mailchimp = require('@mailchimp/mailchimp_transactional')('gCNp0sPDBIdbOKvYhikZww');
 
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 /* Initialize Express backend */
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
 /* USERS */
-
 
 /*
 */
@@ -42,7 +41,6 @@ app.post("/api/user-login", async (req, res) => {
         });
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /*
@@ -75,7 +73,6 @@ app.post("/api/sign-up", async (req, res) => {
             res.send({message:"FAILED"});
         });
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /* Gets all valid invite codes from backend. This way we can quickly invalidate codes.
@@ -88,9 +85,33 @@ app.get("/api/invitecodes/", async (req, res) =>{
         res.send({message: "SUCCESS", codes: codes});
 
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
+/* TO DO - Adding & Removing Invite codes */
+
+
+/* Mailchimp deprecated :(
+
+app.post("/api/ban-user-email", async (req, res) => {
+    //console.log(req.body);
+
+    const response = await mailchimp.messages.sendTemplate({
+        template_name: 'Ban User',
+        template_content: [{REASON: req.body.reason}],
+        message: {
+            from_email: 'radu@triaz.dev',
+            from_name: 'Radu',
+            to: [{email: req.body.user.email, name: req.body.user.firstName}]
+        },
+    });
+
+    res.send({message: "SUCCESS", mailchimp_response: response});
+
+    console.log(response);
+});
+
+*/
 
 /* ITEMS/LISTINGS */
 
@@ -109,19 +130,23 @@ app.get("/api/items", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
-/** API  to block/unblock user by admin  */
+/** API to block/unblock user by admin  */
 app.post("/api/block-user", async (req, res) => {
+    let user = req.body.user;
+    let reason = req.body.reason;
     await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
-        let myquery = { email: req.body.user.email };
-        let newvalues = { $set: {firstName: req.body.user.firstName,
-            lastName: req.body.user.lastName,
-            email: req.body.user.email,
-            password: req.body.user.password,
-            isBlock: !req.body.user.isBlock } };
+        let myquery = { email: user.email };
+        let newvalues = { $set: {firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password,
+            isBlock: !user.isBlock,
+            reason: reason
+        } };
 
         await collection.updateOne(myquery, newvalues).then(() => {
                 res.send({message: "SUCCESS"});
@@ -131,7 +156,7 @@ app.post("/api/block-user", async (req, res) => {
         }).catch(() => {
         res.send({message:"FAILED"});
     }).catch(err => {/*console.log(err)*/});
-    client.close();        
+         
 });
 
 /** All Users */
@@ -148,7 +173,7 @@ app.get("/api/allusers", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /** users Items with selected user */ 
@@ -169,8 +194,9 @@ app.post("/api/user/items", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
+
 /** API  to delete user by admin  */
 app.post("/api/remove-user", async (req, res) => {
     let user = req.body.user;
@@ -184,6 +210,93 @@ app.post("/api/remove-user", async (req, res) => {
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
         })
     }
+
+});
+
+/* Check to see if a user is blocked */
+app.post("/api/is-user-blocked", async (req, res) => {
+    let user = req.body;
+    if (user) {
+        let myQuery = { email: user.email };
+        await client.connect().then(async () => {
+            const collection = client.db("users").collection("logins");
+
+            await collection.findOne(myQuery).then((response) => {
+                res.send({message: "SUCCESS", isBlock: response.isBlock, user: response});
+            });
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+    }
+    else {
+        res.send({message: "FAILED", reason: "User not logged in."});
+    }
+});
+
+/* */
+app.post("/api/send-listing-delete-notif", async (req, res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+    let reason = req.body.reason;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let insertObj = { item: item, itemId: item._id, reason: reason, unread: true, email: user.email }
+        await collection.insertOne(insertObj).then(() => {
+            res.send({message: "SUCCESS"})
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+
+});
+
+/* */
+app.post("/api/get-listing-delete-notifs", async (req,res) => {
+    let user = req.body;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let filter = { email: user.email };
+
+        let notifications = await collection.find(filter).toArray();
+
+        res.send({message: "SUCCESS", notifications: notifications});
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
+
+});
+
+/* */
+app.post("/api/delete-listing-delete-notifs", async (req,res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let filter = { email: user.email, itemId: item.item._id };
+
+        await collection.deleteOne(filter).then((response) => {
+            res.send({message: "SUCCESS", response: response});
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
+
+});
+
+app.post("/api/mark-read-listing-delete-notifs", async (req, res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let filter = { email: user.email, itemId: item.item._id };
+
+        let newvalues = { $set: { unread: false } };
+
+        await collection.updateOne(filter, newvalues).then(() => {
+            res.send({message: "SUCCESS"});
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
 });
 
 /*
@@ -202,7 +315,6 @@ app.get("/api/item", async (req, res) => {
             res.send({ message: "FAILED" });
         }
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /*
@@ -227,7 +339,7 @@ app.post("/api/add-item", async (req, res) => {
             res.send({message:"FAILED"});
         });
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /*
@@ -269,6 +381,7 @@ app.post("/api/update-item", async (req, res) => {
             }).catch(() => {res.send({message: "FAILED"})});
         }        
     }).catch(err => {/*console.log(err)*/});
+
 });
 
 /*
@@ -281,7 +394,7 @@ app.post("/api/remove-item", async (req, res) => {
             res.send({message: "SUCCESS"});
         }).catch(() => {res.send({message: "FAILED"})});
     });
-    client.close();
+
 });
 
 /* SHOPPING CART */
@@ -341,6 +454,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
         }
         
     }).then((message) => {/*console.log(message)*/}).catch((err) => {/*console.log(err)*/});
+
 });
 
 /*
@@ -356,7 +470,8 @@ app.post("/api/update-shopping-item", async (req, res) => {
         await collection.updateOne(myQuery, newvalues).then(() => {
             res.send({ message: "SUCCESS"});
         }).catch((err) => { res.send({ message: "FAILED", reason: err }) });
-    })
+    });
+
 });
 
 /*
@@ -372,7 +487,8 @@ app.post("/api/remove-shopping-item", async (req, res) => {
             await collection.deleteOne(myQuery).then(() => {
                 res.send({ message: "SUCCESS" });
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
-        })
+        });
+
     }
 });
 
@@ -390,7 +506,75 @@ app.post("/api/get-shopping-cart", async (req, res) => {
         else {
             res.send({message: "FAILED"});
         }
-    })
+    });
+
+});
+
+/* ORDERS */
+app.post("/api/checkout-cart", async (req, res) => {
+    let cartItems = req.body;
+    for (let i = 0; i < cartItems.length; i++) {
+        cartItems[i]['time'] = new Date();
+    }
+    //console.log(cartItems);
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        await collection.insertMany(cartItems).then(() => {
+            res.send({message: "SUCCESS"});
+        }).catch((err) => {
+            res.send({message: "FAILED", err: err});
+        })
+    }).catch(err => {/*console.log(err);*/});
+});
+
+app.post("/api/clear-cart", async (req, res) => {
+    let cartItems = req.body;
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("cart");
+
+        let myQuery = { userId: cartItems[0].userId };
+        await collection.deleteMany(myQuery);
+    }).catch(err => {/*console.log(err);*/});
+
+});
+
+app.post("/api/get-user-orders", async (req, res) => {
+    //console.log(req.body)
+    let user = req.body;
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        let myQuery = { userId: user._id };
+        //console.log(user)
+        let orders = await collection.find(myQuery).toArray();
+
+        if (await orders.length > 0) {
+            //console.log(orders);
+            res.send({message: "SUCCESS", orders: orders });
+        }
+        else {
+            res.send({message: "FAILED"});
+        }
+
+        
+    }).catch(err => {/*console.log(err);*/})
+});
+
+app.get("/api/get-orders", async (req, res) => {
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("orders");
+
+        let orders = await collection.find().toArray();
+
+        if (await orders.length > 0) {
+            //console.log(orders);
+            res.send({message: "SUCCESS", orders: orders });
+        }
+        else {
+            res.send({message: "FAILED"});
+        }
+    });
 });
 
 /* Allows express to serve files from this directory
