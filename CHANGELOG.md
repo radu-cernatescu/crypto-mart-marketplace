@@ -1,6 +1,49 @@
 # CHANGELOG
 
-## Reading Week Catchup
+## Sprint 5
+
+### PR #93
+
+* Created a place holder where the user can see their past purchases
+* When the user clicks buy now button on product profile page, the item gets added to the orders section
+* When the user clicks checkout button at shopping cart, the items get added to orders section and the cart is emptied
+* Orders component displays the item's title, desc, price, sold by and purchase date
+
+### PR #94
+
+Product pages:
+- Resized and repositioned buttons and a few elements
+- Reworked "popup" divs:
+   - Hidden by default in the middle of the user's page.
+   - Typescript implementation to switch popup visibility.
+   - Each top button takes the user to its mentioned page respectively.
+   - "HOMEPAGE" buttons route to the main (HOME)
+   - "CONTINUE" simply hides the popup allowing the user to resume shopping.
+
+Cart:
+- Checkout button can no longer be clicked when the cart is empty (grand total < $1)
+- Checkout prices do not adjust if user places in decimal value inside the "Quantity" number input type.
+- Created checkout popup for user confirmation:
+   - The "CONFIRM" button will process the order and list it on the "ORDERS" page (also clears out cart)
+   - The "CANCEL" button simply hides the popup to allow the user to make adjustments to their order.
+
+Orders:
+- Reworked styling:
+   - Category titles are implemented.
+   - Fitted elements better onto page.
+- Implemented Payment Summary.
+
+## PR #95
+
+- prevent user from adding to cart & buying now if not logged in, directs to sign in page
+- remove orders button from nav, add it to My Market page
+- deauth blocked users immediately when they are banned with a ban message set by admin
+- prevent blocked users from logging in
+- Included Mailchimp API implementation which does not work. The free trial of the Mailchimp/Mandrill API only allows sending e-mails to the same domain (i.e. sending from radu@triaz.dev to test@triaz.dev but I don't have a mail server setup lol) and it took me a while to implement (and realize this undocumented limitation).
+- include My Inbox to see notifications about deleted postings and reasons
+
+
+### Reading Week Catchup
 
 ### PR #90 (Development of this quasi sprint starts at this PR)
 
