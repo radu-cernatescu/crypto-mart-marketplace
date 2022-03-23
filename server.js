@@ -41,7 +41,6 @@ app.post("/api/user-login", async (req, res) => {
         });
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /*
@@ -74,7 +73,6 @@ app.post("/api/sign-up", async (req, res) => {
             res.send({message:"FAILED"});
         });
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /* Gets all valid invite codes from backend. This way we can quickly invalidate codes.
@@ -87,7 +85,7 @@ app.get("/api/invitecodes/", async (req, res) =>{
         res.send({message: "SUCCESS", codes: codes});
 
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /* TO DO - Adding & Removing Invite codes */
@@ -132,7 +130,7 @@ app.get("/api/items", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /** API to block/unblock user by admin  */
@@ -158,7 +156,7 @@ app.post("/api/block-user", async (req, res) => {
         }).catch(() => {
         res.send({message:"FAILED"});
     }).catch(err => {/*console.log(err)*/});
-    client.close();        
+         
 });
 
 /** All Users */
@@ -175,7 +173,7 @@ app.get("/api/allusers", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /** users Items with selected user */ 
@@ -196,7 +194,7 @@ app.post("/api/user/items", async (req, res) => {
         }
         
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /** API  to delete user by admin  */
@@ -212,7 +210,7 @@ app.post("/api/remove-user", async (req, res) => {
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
         })
     }
-    client.close();
+
 });
 
 /* Check to see if a user is blocked */
@@ -227,7 +225,6 @@ app.post("/api/is-user-blocked", async (req, res) => {
                 res.send({message: "SUCCESS", isBlock: response.isBlock, user: response});
             });
         }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
-        client.close();
     }
     else {
         res.send({message: "FAILED", reason: "User not logged in."});
@@ -249,7 +246,6 @@ app.post("/api/send-listing-delete-notif", async (req, res) => {
         }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
 
-    client.close();
 });
 
 /* */
@@ -266,7 +262,6 @@ app.post("/api/get-listing-delete-notifs", async (req,res) => {
         res.send({message: "SUCCESS", notifications: notifications});
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
 
-    client.close();
 });
 
 /* */
@@ -285,7 +280,6 @@ app.post("/api/delete-listing-delete-notifs", async (req,res) => {
 
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
 
-    client.close();
 });
 
 app.post("/api/mark-read-listing-delete-notifs", async (req, res) => {
@@ -321,7 +315,6 @@ app.get("/api/item", async (req, res) => {
             res.send({ message: "FAILED" });
         }
     }).catch(err => {/*console.log(err)*/});
-    client.close();
 });
 
 /*
@@ -346,7 +339,7 @@ app.post("/api/add-item", async (req, res) => {
             res.send({message:"FAILED"});
         });
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /*
@@ -388,7 +381,7 @@ app.post("/api/update-item", async (req, res) => {
             }).catch(() => {res.send({message: "FAILED"})});
         }        
     }).catch(err => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /*
@@ -401,7 +394,7 @@ app.post("/api/remove-item", async (req, res) => {
             res.send({message: "SUCCESS"});
         }).catch(() => {res.send({message: "FAILED"})});
     });
-    client.close();
+
 });
 
 /* SHOPPING CART */
@@ -461,7 +454,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
         }
         
     }).then((message) => {/*console.log(message)*/}).catch((err) => {/*console.log(err)*/});
-    client.close();
+
 });
 
 /*
@@ -478,7 +471,7 @@ app.post("/api/update-shopping-item", async (req, res) => {
             res.send({ message: "SUCCESS"});
         }).catch((err) => { res.send({ message: "FAILED", reason: err }) });
     });
-    client.close();
+
 });
 
 /*
@@ -495,7 +488,7 @@ app.post("/api/remove-shopping-item", async (req, res) => {
                 res.send({ message: "SUCCESS" });
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
         });
-        client.close();
+
     }
 });
 
@@ -514,7 +507,7 @@ app.post("/api/get-shopping-cart", async (req, res) => {
             res.send({message: "FAILED"});
         }
     });
-    client.close();
+
 });
 
 /* ORDERS */
@@ -523,7 +516,7 @@ app.post("/api/checkout-cart", async (req, res) => {
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i]['time'] = new Date();
     }
-    console.log(cartItems);
+    //console.log(cartItems);
     await client.connect().then(async () => {
         const collection = client.db("users").collection("orders");
 
@@ -553,11 +546,11 @@ app.post("/api/get-user-orders", async (req, res) => {
         const collection = client.db("users").collection("orders");
 
         let myQuery = { userId: user._id };
-        console.log(user)
+        //console.log(user)
         let orders = await collection.find(myQuery).toArray();
 
         if (await orders.length > 0) {
-            console.log(orders);
+            //console.log(orders);
             res.send({message: "SUCCESS", orders: orders });
         }
         else {
@@ -575,7 +568,7 @@ app.get("/api/get-orders", async (req, res) => {
         let orders = await collection.find().toArray();
 
         if (await orders.length > 0) {
-            console.log(orders);
+            //console.log(orders);
             res.send({message: "SUCCESS", orders: orders });
         }
         else {

@@ -12,6 +12,7 @@ export class MyOrdersComponent implements OnInit {
 
   myOrders : any = [];
   user: User;
+  fiveDayLetter!: Date;
 
   constructor(private itemsService: ItemsService, private tokenService: TokenStorageService) {
     this.user = this.tokenService.getUser();
@@ -19,6 +20,9 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemsService.getUserOrders(this.user).subscribe((res: any) => {/*console.log(res);*/ this.myOrders =  res.orders;});
+    let today = new Date();
+    this.fiveDayLetter = new Date(today);
+    this.fiveDayLetter.setDate(today.getDate()+5);
   }
 
 }
