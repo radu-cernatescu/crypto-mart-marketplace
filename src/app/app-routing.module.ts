@@ -11,6 +11,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
+import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
 
 
 const routes: Routes = [
@@ -24,8 +25,8 @@ const routes: Routes = [
   { path: 'product', component: ProductComponent,
   children : [ {path: ':title', component : ProductComponent } ] },
   { path: 'admin-panel', component: AdminPanelComponent },
+  { path: 'inbox', component: MyInboxComponent },
   { path: ':email', component : UserListsComponent },
-
 ];
 
 @NgModule({

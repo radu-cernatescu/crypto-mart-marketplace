@@ -50,7 +50,14 @@ export class AdminPanelComponent implements OnInit {
   }
   /** function to block/unblock user by admin based on previous status */
   blockUser(user:any){
-    this.userService.blockUser(user).subscribe(((res: any) =>{
+    let reason: any = "Breach of TOS.";
+    if (!user.isBlock) {
+      reason = prompt("What is the reason for ban?", "Breach of TOS.");
+    }
+    else {
+      reason = "";
+    }
+    this.userService.blockUser(user, reason).subscribe(((res: any) =>{
       if (res.message == "SUCCESS") {
         if (!user.isBlock) {
           alert("Sucessfully blocked user!");

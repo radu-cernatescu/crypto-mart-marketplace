@@ -33,6 +33,9 @@
                                     <li>
                                        <a style="cursor: pointer;" routerLink="/profile">My Market</a>
                                     </li>
+                                    <li>
+                                       <a style="cursor: pointer;" routerLink="/inbox">My Inbox&nbsp;&nbsp;<img *ngIf="this.unreadNotifs" width="15%" src="..\assets\img\red-1-notif.png"/></a>
+                                    </li>
                                     <li *ngIf="this.user.type == 'admin'">
                                        <a style="cursor: pointer;" routerLink="/admin-panel">Admin Panel</a>
                                     </li>
