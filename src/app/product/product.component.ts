@@ -66,18 +66,23 @@ export class ProductComponent implements OnInit {
   changeSize(event:any){ // Change selected size & style of respective button
     this.selectedSize = event;
   }
+  toggleVisibility(userChoice : any, notUserChoice : any) {
+    if (notUserChoice) {
+      notUserChoice.style.visibility = "hidden";
+      notUserChoice.style.animation = "none";
+      notUserChoice.style.animationDuration = "0ms";
+    }
+    if (userChoice) {
+      userChoice.style.visibility = "visible";
+      userChoice.style.animation = "popupHighlight";
+      userChoice.style.animationDuration = "1500ms";
+    }
+  }
   addToCart(){
-    let userChoices = document.getElementById("postAddCart");
-    if (userChoices) {
-      userChoices.style.visibility = "visible";
-    }
-    setTimeout(fade_out, 5000);
-    function fade_out() {
-      if (userChoices) {
-        userChoices.style.visibility = "hidden";
-      }
-    }
-    
+    let userChoices = document.getElementById("addedToCartPopup");
+    let notUserChoices = document.getElementById("boughtPopup");
+    this.toggleVisibility(userChoices, notUserChoices);
+
     const item: ShoppingCartItem = {
       userId : this.item.userId,
       title : this.item.title,
@@ -98,6 +103,10 @@ export class ProductComponent implements OnInit {
     // this.router.navigate(['/shoping-cart']);
   }
   buyNow(){
+    let userChoices = document.getElementById("boughtPopup");
+    let notUserChoices = document.getElementById("addedToCartPopup");
+    this.toggleVisibility(userChoices, notUserChoices);
+
     const item: any = {
       userId : this.item.userId,
       title : this.item.title,
@@ -113,5 +122,20 @@ export class ProductComponent implements OnInit {
       time: new Date()
     };
     this.itemsService.buyItem(item)
+  }
+  continueBrowsing() {
+    let userChoices = document.getElementById("addedToCartPopup");
+    let userChoices2 = document.getElementById("boughtPopup");
+
+    if (userChoices && userChoices.style.visibility == "visible") {
+      userChoices.style.visibility = "hidden";
+      userChoices.style.animation = "none";
+      userChoices.style.animationDuration = "0ms";
+    }
+    else if(userChoices2 && userChoices2.style.visibility == "visible") {
+      userChoices2.style.visibility = "hidden";
+      userChoices2.style.animation = "none";
+      userChoices2.style.animationDuration = "0ms";
+    }
   }
 }
