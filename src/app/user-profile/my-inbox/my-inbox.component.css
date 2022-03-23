@@ -74,9 +74,9 @@ h3 {
 }
 
 #rotatedText {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-    letter-spacing: 10px;
+    letter-spacing: 5px;
 }
 
 /* CUSTOM BUTTONS */
@@ -84,9 +84,9 @@ h3 {
     text-align: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    transform: translateX(20px) translateY(70px) rotate(90deg);
+    transform: translateX(64px) translateY(67px) rotate(90deg);
     height: 30%;
-    width: 138%;
+    width: 108%;
     background-color: #9b304bd5;
     color: #000000;
     border-color: #1C2541;
@@ -94,7 +94,7 @@ h3 {
 }
 
 .btn-danger:hover {
-    transform: translateY(50px) rotate(90deg);
+    transform: translateY(48px) translateX(45px) rotate(90deg);
     height: 50%;
 }
 
