@@ -56,18 +56,15 @@
         </div>
         <br/>
         <div id="DescriptionContainer">
-            <p><span id="DescriptionTitle">Description:  </span>{{item?.description}}</p>
+            <p><span id="DescriptionTitle"><u><b>Description:</b></u></span></p>
+            <p><span> {{item?.description}} </span></p>
         </div>
+        <br>
         <div>
-            <p *ngIf="item?.shippingOption == 'Self-Shipping'; else parcelShip">
-                <span id="placeholder">
-                    Delivery details: <b>{{item?.shippingOption}}</b> - After purchase, the seller will co-ordinate shipping.
-                </span>
-            </p>
+            <p *ngIf="item?.shippingOption == 'Self-Shipping'; else parcelShip"> <span id="placeholder"> <b><u>Delivery details:</u></b> <br> <b>{{item?.shippingOption}}</b> - After purchase, the seller will co-ordinate shipping.</span></p>
             <ng-template #parcelShip>
-                <span id="placeholder">
-                    Delivery details: <b>{{item?.shippingOption}}</b> - Expedited shipping
-                </span>
+                <p> <span id="placeholder"> Delivery details:</span></p>
+                <p><b>{{item?.shippingOption}}</b> - After purchase, the seller will co-ordinate shipping.</p>
             </ng-template>
             <!-- Temporarily commenting out until GPS API is fixed
             <p *ngIf="userLocation?.length > 0">
@@ -79,20 +76,27 @@
         </div>
     </div>
     <div *ngIf="item && item.title" id="CheckoutOptionsContainer">
-        <h4 id="CheckoutOptionsTitle">Product Options</h4>
+        <h4 class="CheckoutOptionsTitle">Product Options</h4>
         <button class="btn btn-success" (click)="addToCart()">ADD TO CART</button>
         <button class="btn btn-success" (click)="buyNow()">BUY NOW</button>
-        <div id="postAddCart">
-            <p> Added to cart! </p>
-            <button class="btn btn-success" routerLink="/shoping-cart">Go to cart</button>
-            <button class="btn btn-success" routerLink="/main">Keep shopping</button>
-        </div>
-        <br/><br/>
-
-
+        <br><br>
         <h4 id="SellerTitle">Seller Info</h4>
         <img src="../../assets/img/download.jpeg" width="100px" height="75px" style="border-radius: 100px;"/> <!-- Placeholder 'avatar' for seller-->
         <br />
-        <p>{{item.firstName}}</p> <!-- First name of the seller -->
+        <p><b>{{item.firstName}}</b></p> <!-- First name of the seller -->
     </div> 
 </div>  
+
+<div id="addedToCartPopup" class="popup">
+    <h4 class="CheckoutOptionsTitle">Item added to cart!</h4>
+    <button class="btn btn-success" routerLink="/shoping-cart">OPEN CART</button>
+    <button class="btn btn-success" routerLink="/main">HOMEPAGE</button>
+    <button class="btn btn-success" (click)="continueBrowsing()">CONTINUE</button>
+</div>
+
+<div id="boughtPopup" class="popup">
+    <h4 class="CheckoutOptionsTitle">Order Complete!</h4>
+    <button class="btn btn-success" routerLink="/my-oders">SEE ORDERS</button>
+    <button class="btn btn-success" routerLink="/main">HOMEPAGE</button>
+    <button class="btn btn-success" (click)="continueBrowsing()">CONTINUE</button>
+</div>

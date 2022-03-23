@@ -1,38 +1,48 @@
 <div class="container">
     <ul>
-        <h3>My Orders</h3>
+        <h3 style="text-align: center;">MY ACTIVE ORDERS</h3>
+        <hr>
         <div *ngIf="myOrders.length > 0; else noItemsBlock">
-            <ng-container *ngFor="let item of myOrders; let i = index">
-                
-                <div id="cartItemMainContainer">
+            <ng-container *ngFor="let item of myOrders; let i = index"> <!--ng-container does not allow for height restrictions-->
+                <div id="orderItemMainContainer">
                     <div routerLink="/product/{{item.title}}" id="itemImagecontainer">
                         <img height="200px" width="250px" id="itemImage" src={{item.images}} alt="MISSING IMAGE">
                     </div>
-                    <div id="cartItemInfo">
-                        <p>
-                            <span> <b>{{item.title}}</b></span> <span *ngIf="item.color">  | {{item.color}}</span> <span *ngIf="item.size"> | {{item.size}}</span>
-                        </p>
-                        <p> <span> <b> Sold by: </b></span> {{item.firstName}} </p>
-                        <p> <b>Description:</b> </p>
-                        <p id="cartItemDescrtiption">{{item.description}}</p>
-                        <!-- <p> <span><b>Shipped by: </b></span>{{item.shippingOption}}</p> -->
-                        <p> <span><b>Purchased on:</b></span> {{item.time | date: 'dd/MM/yyyy'}} </p>
+                    <div id="orderItemInfo">
+                        <h3><u>Item Info</u></h3>
+                        <p> <b>Item Name: "{{item.title}}"</b>
+                        <p> <b>Quantity sold:</b> {{item.quantity}} </p>
+                        <!--Required: loop through the items parameters array and display them accordingly-->
+                        <!--
+                        <p> <span *ngIf="item.color" class="specialParameter"><b>Item color:</b> {{item.color}}</span></p>
+                        <p> <span *ngIf="item.size"  class="specialParameter"><b>Item size:</b> {{item.size}}</span></p>
+                        -->
+                        <h3><u>Seller Info</u></h3>
+                        <p> <b>Full Name:</b> {{item.firstName}} {{item.lastName}} </p>
+                        <h3><u>Delivery Info</u></h3>
+                        <p> <b>Purchased on:</b> {{item.time | date: 'dd/MM/yyyy'}} </p>
+                        <p> <b>Expected Arrival Date:</b> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
+                        <!--Required: Adding delivery date estimate-->
                     </div>
-                    <div id="itemOptionsContainer">
-                        <span class="badge"> ${{ item.price * item.quantity * 1.13 | number : '1.2-2'}} </span>
-                        <!-- <p id="cartOptionsTitle"> <b>Item Options:</b> </p> -->
-                        <!-- <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
-                        <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button> -->
+                    <div id="paymentSummaryContainer">
+                        <h3 id="paymentSummaryTitle"> PAYMENT SUMMARY </h3>
+                        <br>
+                        <span id="paymentDetails">
+                            <p> <b><u>Subtotal ({{item.quantity}} items):</u></b></p>
+                            <p> ${{(item.quantity * item.price).toFixed(2)}} </p>
+                            <p> <b><u>Tax:</u></b> </p>
+                            <p> ${{((item.quantity * item.price) * 0.13).toFixed(2)}} </p>
+                            <p> <b><u>Order Total:</u></b></p>
+                            <p> ${{(item.price * item.quantity * 1.13).toFixed(2)}} </p>
+                        </span>
                     </div>
                 </div>
                 <hr>
             </ng-container>
         </div>
 
-        <ng-template #noItemsBlock>
-            <hr>
-            <p style="color: white">This user does not have any listings</p>
+        <ng-template id="noItems" #noItemsBlock>
+            <p id="noOrdersMessage" routerLink="/main">You do not have any orders. :Click here and lets change that!</p>
         </ng-template>
-
     </ul>
 </div>

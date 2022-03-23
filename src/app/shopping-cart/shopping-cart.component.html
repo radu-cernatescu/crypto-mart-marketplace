@@ -4,10 +4,10 @@
         <hr>
         <ng-container *ngFor="let sellItem of userItems; let i = index">
             <div id="cartItemMainContainer">
-                <div routerLink="/product/{{sellItem.title}}" id="itemImagecontainer">
+                <div id="itemImagecontainer" routerLink="/product/{{sellItem.title}}">
                     <img height="200px" width="250px" id="itemImage" src={{sellItem.images}} alt="MISSING IMAGE">
                 </div>
-                <div id="cartItemInfo">
+                <div id="cartItemInfo" routerLink="/product/{{sellItem.title}}"> <!--Added additional route on the item description for user's ease of access-->
                     <p>
                         <span> <b>{{sellItem.title}}</b></span> <span *ngIf="sellItem.color">  | {{sellItem.color}}</span> <span *ngIf="sellItem.size"> | {{sellItem.size}}</span>
                     </p>
@@ -20,7 +20,7 @@
                 <div id="itemOptionsContainer">
                     <span class="badge"> ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
                     <p id="cartOptionsTitle"> <b>Item Options:</b> </p>
-                    <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
+                    <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" step="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
                     <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button>
                 </div>
             </div>
@@ -30,13 +30,23 @@
 </div>
 
 <div class="col-md-3 container" id="checkOutMenu">
-    <h3 id="checkoutTitle"> SUMMARY </h3>
+    <h3 class="checkoutTitle"> SUMMARY </h3>
     <br>
     <div id="checkoutInfo">
-        <p> <b>Subtotal</b> ({{numOfItems}} items) : ${{subTotal.toFixed(2)}}</p>
-        <p> <b>Tax:</b> ${{tax.toFixed(2)}}</p>
+        <p> <b>Subtotal ({{numOfItems}} items):</b> ${{subTotal.toFixed(2)}}</p>
+        <p> <b>Tax (HST):</b> ${{tax.toFixed(2)}}</p>
         <p> <b>Grand Total:</b> ${{grandTotal.toFixed(2)}}</p>
     </div>
     <br>
-    <button class="btn btn-success" id="checkoutButton" (click)="buyNow()">CHECK OUT</button>
+    <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="1 > grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
+</div>
+
+<div id="checkoutPopup" class="popup">
+    <h3 class="checkoutTitle"> CONFIRMATION </h3>
+    <br>
+    <p class="checkoutQuestion">Confirm order for a total of</p>
+    <p class="checkoutQuestion"><b>${{grandTotal.toFixed(2)}}?</b></p>
+    <br>
+    <button class="btn btn-success" routerLink="/my-oders" (click)="buyNow()">CONFIRM</button>
+    <button class="btn btn-success" (click)="cancelCheckout()">CANCEL</button>
 </div>

@@ -9,10 +9,14 @@ import { ItemsService } from '../items.service';
 export class MyOrdersComponent implements OnInit {
 
   myOrders : any = []
+  fiveDayLetter!: Date;
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit(): void {
     this.myOrders =  this.itemsService.boughtItem;
+    let today = new Date();
+    this.fiveDayLetter = new Date(today);
+    this.fiveDayLetter.setDate(today.getDate()+5);
     console.log(this.myOrders)
   }
 

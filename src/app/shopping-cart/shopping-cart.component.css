@@ -19,13 +19,14 @@ h3 {
 }
 
 #userIn {
+    pointer-events:visibleFill;
     width: 60%;
     background-color: #86a6ce;
     border: 2px solid #0B132B;
 }
 
-#cartItemsContainer {
-    width: 75%;
+#cartItemsContainer { /*Updated width value for better on-page positioning*/
+    width: 78%;
     margin-top: 5%;
     margin-left: 1%;
     margin-right: 1%;
@@ -40,7 +41,6 @@ h3 {
 #cartItemMainContainer {
     display: flex; 
     margin-bottom: 0.1%;
-    cursor: pointer;
     color: rgb(230, 230, 230);
     background-color: #7A96B8;
     border: 2px solid #3A506B;
@@ -66,6 +66,7 @@ h3 {
     padding-top: 1%;
     padding-left: 1%;
     padding-right: 1%;
+    cursor: pointer;
 }
 
 #itemImage {
@@ -86,7 +87,8 @@ h3 {
     left: 1%;
     font-size: large;
 	width: 65%;
-    display: flex; 
+    display: flex;
+    cursor: pointer;
 }
 
 #cartItemDescrtiption {
@@ -122,11 +124,11 @@ h3 {
     padding-right: 0.3%;
 }
 
-#checkOutMenu {
+#checkOutMenu { /*Updated margin value for better on-page positioning*/
     width: 15%;
     height: fit-content;
     margin-top: 5%;
-    margin-left: 81%;
+    margin-left: 82.5%;
     padding-bottom: 1%;
     position: fixed;
     display: flex;
@@ -137,9 +139,13 @@ h3 {
     border-radius: 15px;
 }
 
-#checkoutTitle {
+.checkoutTitle {
     padding-bottom: 1%;
     border-bottom: 2px solid black;
+}
+
+.checkoutQuestion {
+    font-size: larger;
 }
 
 #checkoutInfo {
@@ -149,6 +155,29 @@ h3 {
 
 #checkoutButton {
     width: 80%;
+}
+
+.popup {
+    position: fixed;
+    margin-top: 5%;
+    margin-left: 82.5%;
+    background-color: #7A96B8;
+    width: 15%;
+    height: 28%;
+    visibility:hidden;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    border: 4px solid #1C2541;
+    border-radius: 15px;
+    padding-bottom: 1%;
+}
+
+@keyframes popupHighlight{
+    from {background-color: #ffffff}
+    to {background-color: #7a98bd}
+    from {color: #000000}
+    to {color: #5e5e5e}
 }
 
 /* CUSTOM BUTTONS */
