@@ -27,6 +27,7 @@
     "bootstrap": "^3.3.7",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "monero-javascript": "^0.6.4",
     "mongodb": "^4.1.4",
     "multer": "^1.4.3",
     "ngx-bootstrap": "^7.1.0",

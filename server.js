@@ -88,9 +88,6 @@ app.get("/api/invitecodes/", async (req, res) =>{
 
 });
 
-/* TO DO - Adding & Removing Invite codes */
-
-
 /* Mailchimp deprecated :(
 
 app.post("/api/ban-user-email", async (req, res) => {
@@ -576,6 +573,45 @@ app.get("/api/get-orders", async (req, res) => {
         }
     });
 });
+
+/* CRYPTO */
+
+// Generates a wallet and assigns it to the user
+app.post("/api/generate-wallet", async (req, res) => {
+    let user = req.body;
+
+    // do this on signup maybe, just remove this altogether
+});
+
+// Accepts a user object and gets the balances (total and unlocked) for that wallet
+app.post("/api/get-wallet-info", async (req, res) => {
+    let user = req.body;
+
+    //open wallet
+
+    //get balance,etc; res.send them
+
+});
+
+// Accepts two users (from and to), and the XMR amount to transact
+app.post("/api/send-transaction", async (req, res) => {
+    let from = req.body.from;
+    let to = req.body.to;
+    let amount = req.body.amount;
+
+    // if from user has unlockable amount right now, proceed with transaction
+
+    // else if from user does not have unlockable amount right now, then estimate their unlockable amount
+    // by fetching the wallet, getting transactions with less than 10 confirmations, subtracting from
+    // total balance, and if that is greater than transaction amount including fees, queue it
+
+      // QUEUING SYSTEM - FIFO array stored in user object, function in server.js running every 5 seconds
+      // to check for outstanding transactions, as soon as unlocked amount is available, pop first transaction out
+
+    // else, res.send that not enough funds
+});
+
+
 
 /* Allows express to serve files from this directory
 */
