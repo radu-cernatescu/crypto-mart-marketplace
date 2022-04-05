@@ -19,6 +19,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
 import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
+import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
     UserListsComponent,
     MyOrdersComponent,
     MyInboxComponent,
+    MyWalletComponent,
   ],
   imports: [
     BrowserModule,
