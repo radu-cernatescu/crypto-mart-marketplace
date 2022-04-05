@@ -63,7 +63,17 @@ export class ShoppingCartComponent implements OnInit {
   buyNow(){
     this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
     this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    window.location.reload();
+   // TO DO 
+   // API for wallet balance prior to order
+   // API For wallet balance after order
+   // API for transaction ID 
+   // OR you can get all these details i the response of checkoutCart API call at line number 64
+    let userChoices = document.getElementById("walletDetailPopup");
+    let notUserChoices = document.getElementById("checkoutPopup");
+    this.visibilityToggle(userChoices, notUserChoices);
+  }
+  ok(){
+    //window.location.reload();
   }
   visibilityToggle(userChoice : any, notUserChoice : any) {
     if (notUserChoice) {

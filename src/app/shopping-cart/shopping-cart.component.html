@@ -47,6 +47,18 @@
     <p class="checkoutQuestion">Confirm order for a total of</p>
     <p class="checkoutQuestion"><b>${{grandTotal.toFixed(2)}}?</b></p>
     <br>
-    <button class="btn btn-success" routerLink="/my-oders" (click)="buyNow()">CONFIRM</button>
+    <button class="btn btn-success"  (click)="buyNow()">CONFIRM</button>
     <button class="btn btn-success" (click)="cancelCheckout()">CANCEL</button>
+</div>
+
+<div id="walletDetailPopup" class="popup">
+    <h3 class="checkoutTitle"> OderDetails </h3>
+    <br>
+    <p class="checkoutQuestion"> Balance Prior to order: 500  </p>
+    <p class="checkoutQuestion"> Balance After  order: 500  </p>
+    
+    <p class="checkoutQuestion"><b>order Value: ${{grandTotal.toFixed(2)}}?</b></p>
+    <p class="checkoutQuestion">Trasaction id: 5555xxddv </p>
+    <br>
+    <button class="btn btn-success" routerLink="/my-oders" (click)="ok()">OK</button>
 </div>
