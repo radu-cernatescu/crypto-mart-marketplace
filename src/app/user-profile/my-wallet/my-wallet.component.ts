@@ -1,4 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
+import { CryptoService } from 'src/app/crypto.service';
+import { TokenStorageService } from 'src/app/token-storage.service';
+import { Wallet } from 'src/app/Wallet';
+import { NgxSpinnerService } from "ngx-spinner";
+import { User } from 'src/app/User';
 
 @Component({
   selector: 'app-my-wallet',
@@ -6,30 +12,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./my-wallet.component.css']
 })
 export class MyWalletComponent implements OnInit {
+  myWallet: Wallet;
+  user: User;
 
-  walletIsPreset!: boolean;
-  myTransaction =  [
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-    {id : "fdfgfdgdf", date: 1649098351, amount: 500},
-
-  ];
-  constructor() { }
+  constructor(private cryptoService: CryptoService,
+    private tokenStorage: TokenStorageService,
+    private spinnerService: NgxSpinnerService) {
+      this.myWallet = new Wallet();
+      this.user = this.tokenStorage.getUser();
+    }
 
   ngOnInit(): void {
-    // TO DO 
-    // API To check wether wllet is genrated or not and balance and wllet detils
-    // API to get All transaction details
+    this.refreshWallet();
+    let spinnerCheck = setInterval(() => {
+      try {
+        if (document.getElementById("address")!.innerHTML == '') {
+          this.spinnerService.show();
+        }
+        else {
+          this.spinnerService.hide();
+        }
+      } catch(err) {
+        clearInterval(spinnerCheck);
+      }
+    }, 1000);
+    
   }
-  genrateWllet(){
-    // TO DO 
-    // API To genrate wallet
-    this.walletIsPreset = true;
 
+  refreshWallet() {
+    this.cryptoService.getWalletInfo(this.user).subscribe((res: any) => {
+      if (res.message == "FAILED") {
+        this.refreshWallet();
+      }
+      else if (res.wallet.balance == 0) {
+        this.cryptoService.syncWallet(this.user).subscribe((res: any) => {
+          this.myWallet = res.wallet;
+        });
+      }
+      else {
+        this.myWallet = res.wallet;
+      }
+    });
   }
-
 }

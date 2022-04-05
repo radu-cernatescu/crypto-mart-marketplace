@@ -6,4 +6,6 @@ export class User{
     _id: string = '';
     type: string = '';
     isBlock: boolean = false;
+    wallet: string = '';
+    wallet_password: string = '';
 }

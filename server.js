@@ -4,9 +4,11 @@ const { MongoClient } = require('mongodb');
 const argon2 = require('argon2');
 const bodyParser = require('body-parser');
 const mailchimp = require('@mailchimp/mailchimp_transactional')('gCNp0sPDBIdbOKvYhikZww');
+const monerojs = require("monero-javascript");
 
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 /* Initialize Express backend */
 const app = express();
@@ -46,6 +48,7 @@ app.post("/api/user-login", async (req, res) => {
 /*
 */
 app.post("/api/sign-up", async (req, res) => {
+    const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
     await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
@@ -55,19 +58,36 @@ app.post("/api/sign-up", async (req, res) => {
                 res.send({message:"EXISTING USER"});
             }
             else {
-                const user = {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    password: await argon2.hash(req.body.password),
-                    type: req.body.type,
-                    isBlock: req.body.isBlock
-                }
-                await collection.insertOne(user).then(() => {
-                    res.send({message: "SUCCESS"});
-                }).catch(err => {
-                    res.send({message: "FAILED"});
-                });
+                let path, password;
+                try {
+                    path = req.body.email;
+                    password = await argon2.hash(req.body.password);
+                    await walletRpc.createWallet({
+                      path: path,
+                      password: password,
+                    });
+                    await walletRpc.sync();
+                    walletRpc.close();
+
+                    const user = {
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email,
+                        password: password,
+                        type: req.body.type,
+                        isBlock: req.body.isBlock,
+                        wallet: path,
+                        wallet_password: password
+                    }
+                    await collection.insertOne(user).then(() => {
+                        res.send({message: "SUCCESS"});
+                    }).catch(err => {
+                        res.send({message: "FAILED"});
+                    });
+                } catch(err) {
+                    //console.log(err.toString());
+                    res.send({message: "FAILED", reason: err.toString()});
+                } 
             }
         }).catch(() => {
             res.send({message:"FAILED"});
@@ -576,18 +596,52 @@ app.get("/api/get-orders", async (req, res) => {
 
 /* CRYPTO */
 
-// Generates a wallet and assigns it to the user
-app.post("/api/generate-wallet", async (req, res) => {
-    let user = req.body;
-
-    // do this on signup maybe, just remove this altogether
-});
-
 // Accepts a user object and gets the balances (total and unlocked) for that wallet
 app.post("/api/get-wallet-info", async (req, res) => {
+    const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
     let user = req.body;
+    let path = user.wallet;
+    let password = user.wallet_password;
 
     //open wallet
+    try {
+        await walletRpc.openWallet(path, password);
+        let wallet = {
+            balance: parseInt((await walletRpc.getBalance()).toString())/1000000000000, //  Balance in Atomic Units (One atomic unit is currently 1e-12 XMR (0.000000000001 XMR, or one piconero)
+            primaryAddress: await walletRpc.getPrimaryAddress(), // Very long string - looks like: 46G6moWH7kQJrjExVATHiyNhrXPLCUHwZeoGZta5QecHepE45m9Z279QVftVxfj5imHDMubV5imE6ik6saQK7hfd6PBv5JG
+            mnemonicPhrase: await walletRpc.getMnemonic(),
+            privateSpendKey: await walletRpc.getPrivateSpendKey(),
+            privateViewKey:await walletRpc.getPrivateViewKey(),
+            transactions: []
+        };  
+        let txs = await walletRpc.getTxs(); // get ARRAY of transactions containing transfers to/from the wallet
+        for (let i = 0; i < txs.length; i++) {
+            delete txs[i].state['block'];
+            txs[i].state['fee'] = txs[i].state['fee'].toString();
+            
+            let transaction = txs[i].state;
+            if (transaction.isIncoming) {
+                for (let k = 0; k < transaction.incomingTransfers.length; k++) {
+                    delete transaction.incomingTransfers[k].state['tx'];
+                    txs[i].state.incomingTransfers[k].state['amount'] = txs[i].state.incomingTransfers[k].state.amount.toString();
+                }
+            }
+            else if (transaction.isOutgoing) {
+                delete transaction.outgoingTransfer.state['tx'];
+                txs[i].state.outgoingTransfer.state['amount'] = txs[i].state.outgoingTransfer.state.amount.toString();
+            }
+            wallet['transactions'].push(txs[i].state);
+        }  
+        await walletRpc.sync();
+    
+        walletRpc.close();
+
+        res.send({message: "SUCCESS", wallet: wallet});     
+       
+    } catch(err) {
+        console.log(err);
+        res.send({message: "FAILED", reason: err});
+    }
 
     //get balance,etc; res.send them
 

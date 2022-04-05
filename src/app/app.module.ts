@@ -20,6 +20,7 @@ import { UserListsComponent } from './admin-panel/user-lists/user-lists.componen
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
 import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
 import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component'
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent] 
