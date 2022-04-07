@@ -38,7 +38,7 @@
         <p> <b>Grand Total:</b> ${{grandTotal.toFixed(2)}}</p>
     </div>
     <br>
-    <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="1 > grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
+    <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="0 >= grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
 </div>
 
 <div id="checkoutPopup" class="popup">

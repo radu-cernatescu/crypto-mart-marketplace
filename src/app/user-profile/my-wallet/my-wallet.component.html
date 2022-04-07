@@ -4,39 +4,58 @@
         <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{this.myWallet.primaryAddress}}" alt="QRCode">
     </div>
     <div class="objectInCenter" >
-        <p id="text">CryptoMart Balance: {{this.myWallet.balance}}</p>
-        <p id="address">{{this.myWallet.primaryAddress}}</p>
+        <p class="text">CryptoMart Balance: {{this.myWallet.balance}}</p>
+        <p class="text" id="address">{{this.myWallet.primaryAddress}}</p>
+        <p class="text">PRIVATE View Key: {{this.myWallet.privateViewKey}}</p>
+        <button (click)="refreshWallet()">Refresh</button>
     </div>
 </div>
-<h2>Incoming Transactions</h2>
 
+<h2 class="text">Deposits</h2>
 <div id="transaction" class="objectInCenter">
     <ul class="list-group">
         <div id="MarketItemsContainer">
-            <ng-container *ngFor="let item of this.myWallet.transactions; let i = index">
+            <ng-container *ngFor="let item of this.deposits; let i = index">
                 <div *ngIf="item.isIncoming" class="list-group-item" id="ItemContainer">
-                    <p id="text" >TX Hash: {{item.hash}}</p>
-                    <p id="text">Fee: {{item.fee/1000000000000}} </p>
-                    <p id="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p id="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}}</p>
+                    <p class="text" >TX ID: {{item.hash}}</p>
+                    <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
+                    <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
+                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR</p>
                 </div>
-                
                 <hr>
             </ng-container>
         </div>
     </ul> 
 </div>
 
-<h2>Outgoing Transactions</h2>
+<h2 class="text">Purchases</h2>
 <div id="transaction" class="objectInCenter">
     <ul class="list-group">
         <div id="MarketItemsContainer">
-            <ng-container *ngFor="let item of this.myWallet.transactions; let i = index">
-                <div *ngIf="item.isOutgoing" class="list-group-item" id="ItemContainer">
-                    <p id="text" >TX Hash: {{item.hash}}</p>
-                    <p id="text">Fee: {{item.fee/1000000000000}} </p>
-                    <p id="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p id="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}}</p>
+            <ng-container *ngFor="let item of this.purchases; let i = index">
+                <div class="list-group-item" id="ItemContainer">
+                    <p class="text" >TX ID: {{item.hash}}</p>
+                    <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
+                    <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
+                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR</p>
+                </div>
+                
+                <hr>
+            </ng-container>
+        </div>
+    </ul>
+</div>
+
+<h2 class="text">Sold Listings</h2>
+<div id="transaction" class="objectInCenter">
+    <ul class="list-group">
+        <div id="MarketItemsContainer">
+            <ng-container *ngFor="let item of this.soldListings; let i = index">
+                <div class="list-group-item" id="ItemContainer">
+                    <p class="text" >TX ID: {{item.hash}}</p>
+                    <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
+                    <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
+                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR</p>
                 </div>
                 
                 <hr>
@@ -45,4 +64,20 @@
     </ul> 
 </div>
 
-
+<h2 class="text">Withdrawals</h2>
+<div id="transaction" class="objectInCenter">
+    <ul class="list-group">
+        <div id="MarketItemsContainer">
+            <ng-container *ngFor="let item of this.withdrawals; let i = index">
+                <div *ngIf="item.isOutgoing" class="list-group-item" id="ItemContainer">
+                    <p class="text" >TX ID: {{item.hash}}</p>
+                    <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
+                    <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
+                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR</p>
+                </div>
+                
+                <hr>
+            </ng-container>
+        </div>
+    </ul> 
+</div>

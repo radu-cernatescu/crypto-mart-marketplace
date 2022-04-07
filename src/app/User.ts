@@ -8,4 +8,5 @@ export class User{
     isBlock: boolean = false;
     wallet: string = '';
     wallet_password: string = '';
+    wallet_address: string = '';
 }

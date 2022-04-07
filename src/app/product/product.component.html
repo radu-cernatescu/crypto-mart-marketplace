@@ -15,6 +15,9 @@
         <div id="PriceContainer">
             <p> Price: ${{item?.price}}</p> 
         </div>
+        <div id="PriceContainer">
+            <p> {{item?.xmrPrice}} XMR</p> 
+        </div>
         <hr>
         <div *ngIf="item?.colors.length > 0">
             <p><span id="ColorTitle">Color:</span> {{selectedColor}} </p>

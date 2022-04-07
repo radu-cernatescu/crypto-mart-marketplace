@@ -1,5 +1,6 @@
 export class ShoppingCartItem {
-    userId: string = ""; // userId of seller in database
+    userId: string = "";
+    sellerId: string = ''; // userId of seller in database
     itemId: string = "";
     firstName: string = ""; // Seller's first name
     title: string = "";

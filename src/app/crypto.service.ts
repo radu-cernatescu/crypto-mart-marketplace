@@ -23,4 +23,17 @@ export class CryptoService {
   syncWallet(user: User) {
     return this.http.post(this.CMS_API + "sync-wallet", user);
   }
+
+  getTransactionType(txid: any) {
+    console.log(txid)
+    return this.http.post(this.CMS_API + "get-transaction-type", {txid: txid});
+  }
+
+  setTransactionType(txid: string) {
+    return this.http.post(this.CMS_API + "set-transaction-type", txid);
+  }
+
+  getXMRrate() {
+    return this.http.get(this.CMS_API + "get-xmr-rate");
+  }
 }

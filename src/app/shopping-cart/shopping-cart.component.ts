@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CryptoService } from '../crypto.service';
 import { ItemsService } from '../items.service';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -8,14 +11,25 @@ import { ItemsService } from '../items.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
+  user: User;
   userItems : any;
   subTotal: number = 0;
   grandTotal: number = 0;
   tax: number = 0;
   numOfItems: number = 0;
   fiveDayLetter!: Date;
+  current_rate: any;
+  xmrGrandTotal: number = 0;
+  xmrPrice: number = 0;
 
-  constructor(private itemsService: ItemsService) {}
+  constructor(private itemsService: ItemsService,
+    private tokenService: TokenStorageService, private cryptoService: CryptoService) {
+      this.user = tokenService.getUser();
+
+      this.cryptoService.getXMRrate().subscribe((res: any) => {
+        this.current_rate = res.data.data.monero.cad;
+      });
+    }
 
   ngOnInit(): void {
     let today = new Date();
@@ -45,6 +59,7 @@ export class ShoppingCartComponent implements OnInit {
     this.subTotal = amount;
     this.tax = +(amount * 0.13).toFixed(2);
     this.grandTotal = +(amount + this.tax).toFixed(2);
+
   }
 
   quantityChange(event: any, index: number){
@@ -61,8 +76,10 @@ export class ShoppingCartComponent implements OnInit {
     this.loadItems();
   }
   buyNow(){
-    this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
+    this.itemsService.checkoutCart(this.userItems, this.user).subscribe((message:any) => {
+      console.log(message);
+    });
+    //this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
    // TO DO 
    // API for wallet balance prior to order
    // API For wallet balance after order

@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
+var ObjectId = require('mongodb').ObjectID;
 const argon2 = require('argon2');
 const bodyParser = require('body-parser');
 const mailchimp = require('@mailchimp/mailchimp_transactional')('gCNp0sPDBIdbOKvYhikZww');
 const monerojs = require("monero-javascript");
-
+//1. Import coingecko-api
+const CoinGecko = require('coingecko-api');
+ 
+//2. Initiate the CoinGecko API Client
+const CoinGeckoClient = new CoinGecko();
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -67,8 +72,7 @@ app.post("/api/sign-up", async (req, res) => {
                       password: password,
                     });
                     await walletRpc.sync();
-                    walletRpc.close();
-
+                    
                     const user = {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
@@ -77,8 +81,10 @@ app.post("/api/sign-up", async (req, res) => {
                         type: req.body.type,
                         isBlock: req.body.isBlock,
                         wallet: path,
-                        wallet_password: password
+                        wallet_password: password,
+                        wallet_address: await walletRpc.getPrimaryAddress()
                     }
+                    walletRpc.close();
                     await collection.insertOne(user).then(() => {
                         res.send({message: "SUCCESS"});
                     }).catch(err => {
@@ -348,6 +354,7 @@ app.post("/api/add-item", async (req, res) => {
             }
             else {
                 req.body.item.userId = req.body.user._id;
+
                 await collection.insertOne(req.body.item).then(() => {
                     res.send({message: "SUCCESS"});
                 }).catch(() => {res.send({message: "FAILED"})});
@@ -437,6 +444,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
             if (!existingObject) {
                 let newShoppingItem = {
                     userId: user._id,
+                    sellerId: item.sellerId,
                     itemId: item.itemId,
                     quantity : item.quantity,
                     images: item.images,
@@ -454,6 +462,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
                     newShoppingItem['size'] = item.size;
                 }
             
+                console.log(newShoppingItem);
                 await client.connect().then(async () => {
                     await collection.insertOne(newShoppingItem).then(() => {
                         res.send({ message: "SUCCESS "});
@@ -529,20 +538,116 @@ app.post("/api/get-shopping-cart", async (req, res) => {
 
 /* ORDERS */
 app.post("/api/checkout-cart", async (req, res) => {
-    let cartItems = req.body;
+    let cartItems = req.body.items;
+    let from_user = req.body.user;
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i]['time'] = new Date();
     }
-    //console.log(cartItems);
-    await client.connect().then(async () => {
-        const collection = client.db("users").collection("orders");
+    console.log(cartItems);
 
-        await collection.insertMany(cartItems).then(() => {
-            res.send({message: "SUCCESS"});
-        }).catch((err) => {
-            res.send({message: "FAILED", err: err});
-        })
-    }).catch(err => {/*console.log(err);*/});
+    let success_count = 0;
+    let balance_before, balance_after, amountTotal, amountTotalDollars;
+    for (let i = 0; i < cartItems.length; i++) {
+        // send transaction to seller
+        let amount;
+        await client.connect().then(async () => {
+            const collection = client.db("users").collection("logins");
+            await collection.findOne(
+                { "_id": ObjectId(cartItems[i].sellerId)}
+            ).then(async user => {
+                console.log(user);
+                console.log(cartItems[i].sellerId)
+                if (user) {
+                    to = user.wallet_address;
+                    await CoinGeckoClient.simple.price({
+                        ids: ['monero'],
+                        vs_currencies: ['cad']
+                    }).then(async (data) => {
+                        let moneroPrice = data.data.monero.cad;
+                        amount = ((cartItems[i].price * cartItems[i].quantity)/moneroPrice)*1000000000000;
+                    
+                        let path = from_user.wallet;
+                        let password = from_user.wallet_password;
+                        const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+                        await walletRpc.openWallet(path, password);
+                        balance_before = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
+                        let walletAddress = await walletRpc.getPrimaryAddress();
+
+                        
+                        //console.log(amount);
+                        try {
+                            let tx = await walletRpc.createTx({
+                            accountIndex: 0,
+                            address: user.wallet_address,
+                            amount: monerojs.BigInteger(amount)
+                            });
+                        
+                            let fee = await tx.getFee();
+                            //let new_fee = await tx.setFee();
+                            //let hash = await walletRpc.relayTx(tx);
+
+                            const transactions = client.db("users").collection("transactions");
+
+                            await transactions.insertOne({from: walletAddress, to: user.wallet_address, type: "purchase", txid: tx.getHash()}).then(async () => {
+                                await client.connect().then(async () => {
+                                    const collection = client.db("users").collection("orders");
+                                    await collection.insertOne(cartItems[i]).then(() => {
+                                        res.send({message: "SUCCESS"});
+                                    }).catch((err) => {
+                                        res.send({message: "FAILED", err: err});
+                                    })
+                                }).catch(err => {console.log(err);});
+                            }).catch((err) => {res.send({message:"FAILED"});});
+                        
+                            console.log(tx + "\n======");
+                            console.log("Fee: " + fee);
+                            console.log("Tx Hash: " + tx.getHash());
+    
+                        } catch(err) {
+                            console.log(err.toString());
+                            let reason = 'none given';
+                            if (err.toString().includes("Request timed out")) {
+                                console.log("Time out error");
+                                reason = 'time out';
+                            }
+                            else if (err.toString().includes("not enough money")) {
+                                console.log('not enough funds');
+                                reason = 'not enough funds';
+                            }
+                            else if (err.toString().includes("not enough unlocked money")) {
+                                console.log("Queue transaction");
+                            }
+                            res.send({message:"FAILED", reason: reason});
+                        }
+                }).catch();
+                }
+                else{
+                    res.send({message:"FAILED"});
+                }
+            
+            }).catch((err) => {res.send({message:"FAILED"});});
+        }).catch((err) => {});
+
+
+        // if from user has unlockable amount right now, proceed with transaction
+
+        // else if from user does not have unlockable amount right now, then estimate their unlockable amount
+        // by fetching the wallet, getting transactions with less than 10 confirmations, subtracting from
+        // total balance, and if that is greater than transaction amount including fees, queue it
+
+        // QUEUING SYSTEM - FIFO array stored in user object, function in server.js running every 5 seconds
+        // to check for outstanding transactions, as soon as unlocked amount is available, pop first transaction out
+
+        // else, res.send that not enough funds
+    }
+
+    let response = {
+        balance_before: balance_before,
+        amount: amount,
+    };
+    
+
+    
 });
 
 app.post("/api/clear-cart", async (req, res) => {
@@ -606,6 +711,7 @@ app.post("/api/get-wallet-info", async (req, res) => {
     //open wallet
     try {
         await walletRpc.openWallet(path, password);
+        await walletRpc.sync();
         let wallet = {
             balance: parseInt((await walletRpc.getBalance()).toString())/1000000000000, //  Balance in Atomic Units (One atomic unit is currently 1e-12 XMR (0.000000000001 XMR, or one piconero)
             primaryAddress: await walletRpc.getPrimaryAddress(), // Very long string - looks like: 46G6moWH7kQJrjExVATHiyNhrXPLCUHwZeoGZta5QecHepE45m9Z279QVftVxfj5imHDMubV5imE6ik6saQK7hfd6PBv5JG
@@ -632,40 +738,47 @@ app.post("/api/get-wallet-info", async (req, res) => {
             }
             wallet['transactions'].push(txs[i].state);
         }  
-        await walletRpc.sync();
     
         walletRpc.close();
 
         res.send({message: "SUCCESS", wallet: wallet});     
        
     } catch(err) {
+        walletRpc.close();
         console.log(err);
         res.send({message: "FAILED", reason: err});
     }
-
-    //get balance,etc; res.send them
-
 });
 
-// Accepts two users (from and to), and the XMR amount to transact
-app.post("/api/send-transaction", async (req, res) => {
-    let from = req.body.from;
-    let to = req.body.to;
-    let amount = req.body.amount;
+/* Get transaction type (withdrawal, purchase)
+*/
+app.post("/api/get-transaction-type", async (req, res) => {
+    let txid = req.body.txid;
 
-    // if from user has unlockable amount right now, proceed with transaction
-
-    // else if from user does not have unlockable amount right now, then estimate their unlockable amount
-    // by fetching the wallet, getting transactions with less than 10 confirmations, subtracting from
-    // total balance, and if that is greater than transaction amount including fees, queue it
-
-      // QUEUING SYSTEM - FIFO array stored in user object, function in server.js running every 5 seconds
-      // to check for outstanding transactions, as soon as unlocked amount is available, pop first transaction out
-
-    // else, res.send that not enough funds
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("transactions");
+        await collection.findOne({
+            txid: {$eq: txid}
+        }).then(async transaction => {
+            if (transaction) {
+                res.send({message:"SUCCESS", transaction: transaction});
+            }
+            else{
+                res.send({message:"FAILED"});
+            }
+        
+        }).catch((err) => {res.send({message:"FAILED"});});
+    }).catch((err) => {res.send({message:"FAILED"});});
 });
 
-
+app.get("/api/get-xmr-rate", async (req, res) => {
+    await CoinGeckoClient.simple.price({
+        ids: ['monero'],
+        vs_currencies: ['cad']
+    }).then((data) => {
+        res.send({message:"SUCCESS", data: data});
+    }).catch((err) => { res.send({message: "FAILED", reason: err});});
+});
 
 /* Allows express to serve files from this directory
 */
@@ -680,4 +793,4 @@ app.get('/*', function(req, res) {
 
 /*
 */
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);
