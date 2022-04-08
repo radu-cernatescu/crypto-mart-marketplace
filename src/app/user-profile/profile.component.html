@@ -14,9 +14,20 @@
   <div class="col-xs-10">
     
     <div class="spacer"></div>
+
+
+
+
+    <!--NEW LISTING FORM-->
     <div id = "newListingContainer">
       <app-sell-edit [(sellMode)]="sellMode"></app-sell-edit>
     </div>
+
+
+
+
+
+    <!--USER MARKET LISTINGS-->
     <svg id="pmarketAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>
@@ -43,7 +54,7 @@
                 <b>Description:</b><br>
                 {{ sellItem.description.substring(0, 150) }}...
               </p>
-              <p *ngIf="sellItem.description.length < 150">
+              <p *ngIf="150 > sellItem.description.length">
                 <b>Description:</b><br>
                 {{ sellItem.description }}
               </p>
@@ -60,6 +71,17 @@
       <p style="color:white"> No listings! Add one to the left... </p>
     </ng-template>
     
+
+
+
+
+
+
+
+
+
+
+    <!--ARCHIVED MARKET LISTINGS-->
     <svg id="parchiveAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>
@@ -71,6 +93,9 @@
         <use xlink:href="#parchiveAnimatedLines" class="line"></use>
       </g>
     </svg>
+
+
+    <!--Sold Market Listings-->
     <svg id="psoldAnimatedContainer">
       <!--CUSTOM TITLE ANIMATION-->
       <symbol id="psoldAnimatedLines"> <text y="80%"> Sold Market Listings: </text> </symbol>
@@ -82,5 +107,13 @@
         <use xlink:href="#psoldAnimatedLines" class="line"></use>
       </g>
     </svg>
+
+
+
+
+
+
+
+
   </div>
 </div>

@@ -1,15 +1,15 @@
-<header style="display: flex;" id="head">
+<header id="head">
    <div>
-      <h1 style="margin-top: -40px;"><a ><img height="180px" width="500px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1>
+      <h1 id="logo"><a><img height="180px" width="500px" src="..\assets\img\logo.png" alt="CRYPTO MART"></a></h1>
    </div>
    <div id="NavigationBar" class="row" class="col-md-12">
       <div id="NavButtonContainer">
-         <button class="btn btn-success" id="NavButton" routerLink="/main"> HOME</button>
+         <button class="btn btn-success" id="NavButton" routerLink="/main">HOME</button>
          <button class="btn btn-success" id="NavButton" routerLink="/shoping-cart">CART</button>
-         <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
-         <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
-         <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
-         <button class="btn btn-success" id="NavButton" routerLink="">PLACEHOLDER</button>
+         <button class="btn btn-success" id="NavButton" routerLink="/main">BUY AGAIN</button>
+         <button class="btn btn-success" id="NavButton" routerLink="/main">COUPONS</button>
+         <button class="btn btn-success" id="NavButton" routerLink="/main">BROWSING HISTORY</button>
+         <button class="btn btn-success" id="NavButton" routerLink="/main">DEALS</button>
       </div>
    </div>
    <div id="AccountContainer">
@@ -17,40 +17,20 @@
          <button class="btn btn-success" id="AuthentificationButton" routerLink="/sign-in"><i class="fa fa-user"></i> SIGN IN </button>
          <button class="btn btn-success" id="AuthentificationButton" routerLink="/sign-up"><i class="fa fa-key"></i> SIGN UP </button>
       </div>
-      <div *ngIf="this.isLoggedIn" id="AccountSettingsContainer">
-         <h4 id="WelcomeMessage">Welcome {{this.user.firstName}}!</h4>
-         <div class="container" id="DropDownMenu">
-            <div class="row">
-               <div class="col-md-12">
-                  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                  <div class="mininavbar">
-                     <div *ngIf="this.isLoggedIn">
-                        <div class="mininavbar">
-                           <ul class="nav navbar-nav navbar-right">
-                              <li class="dropdown" appDropdown>
-                                 <a style="cursor: pointer;" class="dropdown-toggle" role="button"> My Account <span class="caret"></span></a>
-                                 <ul class="dropdown-menu">
-                                    <li>
-                                       <a style="cursor: pointer;" routerLink="/profile">My Market</a>
-                                    </li>
-                                    <li>
-                                       <a style="cursor: pointer;" routerLink="/inbox">My Inbox&nbsp;&nbsp;<img *ngIf="this.unreadNotifs" width="15%" src="..\assets\img\red-1-notif.png"/></a>
-                                    </li>
-                                    <li *ngIf="this.user.type == 'admin'">
-                                       <a style="cursor: pointer;" routerLink="/admin-panel">Admin Panel</a>
-                                    </li>
-                                    <li>
-                                       <a style="cursor: pointer;"  (click)="logout()">Logout</a>
-                                    </li>
-                                 </ul>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+   </div>
+
+   <!--Post Login Welcome Message-->
+   <div *ngIf="this.isLoggedIn" id="WelcomeMessageContainer">
+      <h4 id="WelcomeMessage">Welcome {{this.user.firstName}}!</h4>
+      <!--Post Login Account Settings Menu Dropdown-->
+      <div class="dropdown" id="DropDownContainer" appDropdown>
+         <a class="dropdown-toggle" role="button"> My Account <span class="caret"></span></a>
+         <ul class="dropdown-menu">
+            <li> <a class="setting" routerLink="/profile">My Market</a> </li>
+            <li> <a class="setting" routerLink="/inbox">My Inbox&nbsp;&nbsp;<img *ngIf="this.unreadNotifs" width="15%" src="..\assets\img\red-1-notif.png"/></a> </li>
+            <li *ngIf="this.user.type == 'admin'"> <a class="setting" routerLink="/admin-panel">Admin Panel</a> </li>
+            <li> <a class="setting" (click)="logout()">Sign Out</a> </li>
+         </ul>
       </div>
    </div>
 </header>

@@ -8,9 +8,9 @@
     border: 4px solid #1C2541;
 }
 
-#logoHolder {
-    margin-top: -2%;
-    height: 100%;
+#logo {
+    margin-top: -5%;
+    margin-bottom: 0%;
 }
 
 #NavButtonContainer {
@@ -49,16 +49,63 @@
     margin-top: 5%;
 }
 
-#AccountSettingsContainer {
+#WelcomeMessageContainer {
     text-align: center;
-    padding-left: 30%;
-    width: 100%;
+    width: 24%;
+    margin-left: -17%;
+    margin-right: 2.6%;
 }
 
 #WelcomeMessage {
+    white-space: nowrap;
+    margin-top: 15%;
     color: white;
     font-weight: bold;
     font-size: large;
+}
+
+/*CUSTOM ACCORDION*/
+.dropdown-toggle {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    background-color: #45B0AE;
+}
+
+.setting {
+    color: #1C2541;
+    font-weight: bold;
+}
+
+.setting:hover {
+    animation-name: colorhoverheader;
+    animation-duration: 200ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
+}
+
+#DropDownContainer {
+    cursor: pointer;
+    width: 60%;
+    padding: 5%;
+    margin-top: 12%; 
+    margin-left: 21%;
+    background-color: #45B0AE;
+    color: #3A506B;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #1C2541;
+    border-radius: 5px;
+}
+
+#DropDownContainer:hover {
+    animation-name: colorhoverheader;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
 }
 
 /* CUSTOM BUTTONS */
@@ -71,7 +118,7 @@ button.btn-success {
 
 button.btn-success:focus {
     background-color: #6FFFE9;
-    color: #1D2835
+    color: #1D2835;
 }
 
 button.btn-success:hover {
@@ -86,22 +133,4 @@ button.btn-success:hover {
     to {background-color: #6FFFE9}
     from {color: #3A506B}
     to {color: #1D2835}
-}
-
-/* CUSTOM ACCORDION*/
-.dropdown-toggle {
-    position: relative;
-    color: rgb(255, 255, 255);
-    border-color: #6FFFE9;
-    font-weight: bold;
-}
-
-.dropdown-menu {
-    position: relative;
-}
-
-#DropDownMenu {
-    text-align: center;
-    width: 100%;
-    height: 100%;
 }

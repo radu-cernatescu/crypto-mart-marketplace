@@ -78,14 +78,6 @@
     height: 20%;
 }
 
-#categoryAnimatedContainer {
-    display: block;
-    font: 40px 'RoundedFont';
-    margin-left: 2%;
-    width: 100%;
-    height: 10%;
-}
-
 .line {
     fill: none;
     stroke-dasharray: 6% 29%;
