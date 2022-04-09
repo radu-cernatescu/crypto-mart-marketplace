@@ -20,6 +20,8 @@ import { UserListsComponent } from './admin-panel/user-lists/user-lists.componen
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
 import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
 import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component';
+import { MarketListingsComponent } from './user-profile/market-listings/market-listings.component';
+import { ListingsArchiveComponent } from './user-profile/listings-archive/listings-archive.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component'
     MyOrdersComponent,
     MyInboxComponent,
     MyWalletComponent,
+    MarketListingsComponent,
+    ListingsArchiveComponent,
   ],
   imports: [
     BrowserModule,
