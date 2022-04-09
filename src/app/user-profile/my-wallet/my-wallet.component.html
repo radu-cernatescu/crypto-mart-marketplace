@@ -1,13 +1,16 @@
-<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<ngx-spinner type="ball-scale-multiple" name="sync"><p style="font-size: 20px; color: white">Loading & syncing wallet...</p></ngx-spinner>
+<ngx-spinner type="ball-scale-multiple" name="withdraw"><p style="font-size: 20px; color: white">Withdrawing funds...</p></ngx-spinner>
 <div id="wallet" class="wallet">
     <div id="QRCode" class="objectInCenter" >
         <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{this.myWallet.primaryAddress}}" alt="QRCode">
     </div>
     <div class="objectInCenter" >
-        <p class="text">CryptoMart Balance: {{this.myWallet.balance}}</p>
+        <p class="text">CryptoMart Balance: {{this.myWallet.balance}} ~= CAD {{this.cadEquivalentBalance.toFixed(2)}}</p>
+        <p class="text">Balance available to spend now: {{this.myWallet.unlockedBalance}} ~= CAD {{this.cadEquivalentUnlockedBalance.toFixed(2)}}</p>
         <p class="text" id="address">{{this.myWallet.primaryAddress}}</p>
         <p class="text">PRIVATE View Key: {{this.myWallet.privateViewKey}}</p>
         <button (click)="refreshWallet()">Refresh</button>
+        <button (click)="withdraw()">Withdraw</button>
     </div>
 </div>
 
@@ -20,7 +23,7 @@
                     <p class="text" >TX ID: {{item.hash}}</p>
                     <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
                     <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR</p>
+                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR ~= $CAD {{(item.incomingTransfers[0].state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
                 </div>
                 <hr>
             </ng-container>
@@ -37,7 +40,7 @@
                     <p class="text" >TX ID: {{item.hash}}</p>
                     <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
                     <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR</p>
+                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR ~= $CAD {{(item.outgoingTransfer.state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
                 </div>
                 
                 <hr>
@@ -55,7 +58,7 @@
                     <p class="text" >TX ID: {{item.hash}}</p>
                     <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
                     <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR</p>
+                    <p class="text">Amount: {{item.incomingTransfers[0].state['amount']/1000000000000}} XMR ~= $CAD {{(item.incomingTransfers[0].state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
                 </div>
                 
                 <hr>
@@ -73,7 +76,7 @@
                     <p class="text" >TX ID: {{item.hash}}</p>
                     <p class="text">Fee: {{item.fee/1000000000000}} XMR</p>
                     <p class="text">Number of confirmations: {{item.numConfirmations}}</p>
-                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR</p>
+                    <p class="text">Amount: {{item.outgoingTransfer.state['amount']/1000000000000}} XMR ~= $CAD {{(item.outgoingTransfer.state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
                 </div>
                 
                 <hr>

@@ -24,6 +24,10 @@ export class CryptoService {
     return this.http.post(this.CMS_API + "sync-wallet", user);
   }
 
+  withdrawWallet(user: User, amount: number, address: string, sweep: boolean) {
+    return this.http.post(this.CMS_API + "withdraw-wallet", {user: user, amount: amount, address: address, sweep: sweep});
+  }
+
   getTransactionType(txid: any) {
     console.log(txid)
     return this.http.post(this.CMS_API + "get-transaction-type", {txid: txid});

@@ -5,4 +5,5 @@ export class Wallet {
     mnemonicPhrase: string = '';
     privateSpendKey: string = '';
     privateViewKey: string = '';
+    unlockedBalance: number = 0;
 };
