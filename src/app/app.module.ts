@@ -22,6 +22,7 @@ import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
 import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component';
 import { MarketListingsComponent } from './user-profile/market-listings/market-listings.component';
 import { ListingsArchiveComponent } from './user-profile/listings-archive/listings-archive.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ListingsArchiveComponent } from './user-profile/listings-archive/listin
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent] 

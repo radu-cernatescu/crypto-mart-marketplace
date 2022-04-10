@@ -14,8 +14,7 @@ export class UserService {
     isLoggedIn = false;
 
     constructor(private http: HttpClient) { 
-        this.CMS_API = ENV.CMS_API;
-        
+      this.CMS_API = ENV.CMS_API;
     }
 
     loginUser(email: any, password: any): Observable<any> {
