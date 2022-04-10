@@ -99,8 +99,6 @@ export class MyWalletComponent implements OnInit {
             });
           }
         }
-      } else {
-        window.location.reload();
       }
     });
 
