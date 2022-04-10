@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from '../crypto.service';
 import { ItemsService } from '../items.service';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -8,14 +12,30 @@ import { ItemsService } from '../items.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
+  user: User;
   userItems : any;
   subTotal: number = 0;
   grandTotal: number = 0;
   tax: number = 0;
   numOfItems: number = 0;
   fiveDayLetter!: Date;
+  current_rate: any;
 
-  constructor(private itemsService: ItemsService) {}
+  xmrGrandTotal: number = 0;
+  grantTotalDollars: number = 0;
+  priorBalance: number = 0;
+  afterBalance: number = 0;
+  totalFee: number = 0;
+
+  constructor(private itemsService: ItemsService,
+    private tokenService: TokenStorageService, private cryptoService: CryptoService,
+    private spinnerService: NgxSpinnerService) {
+      this.user = this.tokenService.getUser();
+
+      this.cryptoService.getXMRrate().subscribe((res: any) => {
+        this.current_rate = res.data.data.monero.cad;
+      });
+    }
 
   ngOnInit(): void {
     let today = new Date();
@@ -43,8 +63,9 @@ export class ShoppingCartComponent implements OnInit {
 
     this.numOfItems = items;
     this.subTotal = amount;
-    this.tax = +(amount * 0.13).toFixed(2);
+    this.tax = (this.subTotal * 0.13);
     this.grandTotal = +(amount + this.tax).toFixed(2);
+
   }
 
   quantityChange(event: any, index: number){
@@ -61,16 +82,37 @@ export class ShoppingCartComponent implements OnInit {
     this.loadItems();
   }
   buyNow(){
-    this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
-   // TO DO 
-   // API for wallet balance prior to order
-   // API For wallet balance after order
-   // API for transaction ID 
-   // OR you can get all these details i the response of checkoutCart API call at line number 64
-    let userChoices = document.getElementById("walletDetailPopup");
-    let notUserChoices = document.getElementById("checkoutPopup");
-    this.visibilityToggle(userChoices, notUserChoices);
+    this.spinnerService.show();
+    this.itemsService.checkoutCart(this.userItems, this.user).subscribe((message:any) => {
+      this.spinnerService.hide();
+      //console.log(message);
+      if (message.message == "SUCCESS") {
+
+        // Clear user's cart
+        this.itemsService.clearCart(this.userItems).subscribe((message:any) => {
+          //console.log(message)
+        });
+
+        this.priorBalance = message.response.balance_before;
+        this.afterBalance = message.response.balance_after;
+        this.xmrGrandTotal = message.response.amountTotal;
+        this.grantTotalDollars = message.response.amountTotalDollars;
+        this.totalFee = message.response.totalFee;
+
+        let userChoices = document.getElementById("walletDetailPopup");
+        let notUserChoices = document.getElementById("checkoutPopup");
+        this.visibilityToggle(userChoices, notUserChoices);
+      }
+      else if (message.message == "FAILED" && message.reason == "transaction already underway on your account, please wait 10 confirmations (~20 min).") {
+        alert(`Error:\nNot enough unlocked funds\nor\n` + message.reason+ " (Check MyWallet to see transactions and balance).");
+      }
+      else if (message.message == "FAILED" && message.reason == "not enough funds") {
+        alert(`Error: ` + message.reason);
+      }
+      else if (message.message == "FAILED" && message.reason == "time out") {
+        alert(`Error (no funds were moved): ` + message.reason);
+      }
+    });
   }
   ok(){
     //window.location.reload();

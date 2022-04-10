@@ -22,6 +22,7 @@
                         <h3><u>Delivery Info</u></h3>
                         <p> <b>Purchased on:</b> {{item.time | date: 'dd/MM/yyyy'}} </p>
                         <p> <b>Expected Arrival Date:</b> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
+                        <p> <b>Tx ID:</b> {{item.txid}}</p>
                         <!--Required: Adding delivery date estimate-->
                     </div>
                     <div id="paymentSummaryContainer">

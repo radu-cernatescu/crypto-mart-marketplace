@@ -1,3 +1,4 @@
+<ngx-spinner type="ball-scale-multiple"><p style="font-size: 20px; color: white">Checking out...</p></ngx-spinner>
 <div class="col-md-3 container" id="cartItemsContainer">
     <ul>
         <h3>Shopping Cart</h3>
@@ -38,7 +39,7 @@
         <p> <b>Grand Total:</b> ${{grandTotal.toFixed(2)}}</p>
     </div>
     <br>
-    <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="1 > grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
+    <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="0 >= grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
 </div>
 
 <div id="checkoutPopup" class="popup">
@@ -52,13 +53,13 @@
 </div>
 
 <div id="walletDetailPopup" class="popup">
-    <h3 class="checkoutTitle"> OderDetails </h3>
+    <h3 class="checkoutTitle"> Order Details </h3>
     <br>
-    <p class="checkoutQuestion"> Balance Prior to order: 500  </p>
-    <p class="checkoutQuestion"> Balance After  order: 500  </p>
+    <p class="checkoutQuestion"> Balance Prior to order: {{this.priorBalance}} XMR </p>
+    <p class="checkoutQuestion"> Balance After  order: {{this.afterBalance}} XMR </p>
+    <p class="checkoutQuestion"> Fee: {{this.totalFee/1000000000000}} XMR</p>
     
-    <p class="checkoutQuestion"><b>order Value: ${{grandTotal.toFixed(2)}}?</b></p>
-    <p class="checkoutQuestion">Trasaction id: 5555xxddv </p>
+    <p class="checkoutQuestion"><b>Order Value: $CAD {{grandTotal.toFixed(2)}}</b></p>
     <br>
     <button class="btn btn-success" routerLink="/my-oders" (click)="ok()">OK</button>
 </div>

@@ -5,7 +5,7 @@
     flex-direction: column;
     
 }
-#text{
+.text{
     color: rgb(230, 230, 230);
     background-color: #7A96B8;
 }

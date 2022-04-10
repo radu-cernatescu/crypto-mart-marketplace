@@ -3,6 +3,7 @@ export class Item {
     firstName: string = ""; // Seller's first name
     title: string = "";
     price: number = 0;
+    dollarPrice: number = 0;
     description: string = "";
     images: string[] = [];
     colors?: any;

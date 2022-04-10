@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CryptoService } from 'src/app/crypto.service';
 import { UserService } from 'src/app/user.service';
 import { User } from '../../User';
 
@@ -68,7 +69,7 @@ export class SignUpComponent implements OnInit {
 
       this.service.addUser(this.user).subscribe((res: any) =>
         {
-          console.log(res.message)
+          console.log(res)
           if (res.message == "SUCCESS") {
             //User found
             alert("Signup successful!");
