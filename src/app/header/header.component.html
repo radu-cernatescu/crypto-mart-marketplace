@@ -28,6 +28,7 @@
          <ul class="dropdown-menu">
             <li> <a class="setting" routerLink="/profile">My Market</a> </li>
             <li> <a class="setting" routerLink="/inbox">My Inbox&nbsp;&nbsp;<img *ngIf="this.unreadNotifs" width="15%" src="..\assets\img\red-1-notif.png"/></a> </li>
+            <li> <a class="setting" routerLink="/my-wallet">My Wallet</a> </li>
             <li *ngIf="this.user.type == 'admin'"> <a class="setting" routerLink="/admin-panel">Admin Panel</a> </li>
             <li> <a class="setting" (click)="logout()">Sign Out</a> </li>
          </ul>
