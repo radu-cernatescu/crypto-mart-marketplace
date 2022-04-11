@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   subscription!: Subscription;
   user: User;
   sellMode: boolean = false;
+  listingsMode: boolean = false;
+  archiveMode: boolean = false;
 
   constructor(private tokenService: TokenStorageService, private itemsService: ItemsService) {
     this.user = this.tokenService.getUser();
@@ -47,11 +49,20 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
-  onEditItem(item: Item){
-    this.itemsService.startedEditing.next(item);
-  }
   sellItem() {
     this.sellMode = true;
+    this.listingsMode = false;
+    this.archiveMode = false;
+  }
+  toggleListingsView() {
+    this.sellMode = false;
+    this.listingsMode = true;
+    this.archiveMode = false;
+  }
+  toggleArchiveView() {
+    this.sellMode = false;
+    this.listingsMode = false;
+    this.archiveMode = true;
   }
 }
  
