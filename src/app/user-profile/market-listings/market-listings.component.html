@@ -1,7 +1,7 @@
 <div *ngIf="listingsMode">
     <svg id="pmarketAnimatedContainer">
         <!--CUSTOM TITLE ANIMATION-->
-        <symbol id="pmarketAnimatedLines"> <text y="80%"> Your Market Listings: </text> </symbol>
+        <symbol id="pmarketAnimatedLines"> <text y="80%"> Market Listings: </text> </symbol>
         <g>
             <use xlink:href="#pmarketAnimatedLines" class="line"></use>
             <use xlink:href="#pmarketAnimatedLines" class="line"></use>
@@ -38,6 +38,6 @@
         </ul>
     </ng-container>
     <ng-template #NoItemsBlock>
-        <p style="color:white"> No listings! Add one to the left... </p>
+        <h3> No listings! Add one to the left... </h3>
     </ng-template>
 </div>

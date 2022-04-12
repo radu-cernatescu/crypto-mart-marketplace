@@ -38,11 +38,6 @@ export class MyWalletComponent implements OnInit {
     this.fetchWallet();
   }
 
-  refreshWallet() {
-    document.getElementById("address")!.innerHTML = '';
-    this.fetchWallet();
-  }
-
   fetchWallet() {
     this.spinnerService.show("sync");
     this.cryptoService.getWalletInfo(this.user).subscribe((res: any) => {
@@ -57,7 +52,6 @@ export class MyWalletComponent implements OnInit {
       }
 
       if (this.myWallet.primaryAddress != '') {
-        document.getElementById("address")!.innerHTML = this.myWallet.primaryAddress;
         this.cryptoService.getXMRrate().subscribe((res: any) => {
           this.cadEquivalentBalance = this.myWallet.balance * res.data.data.monero.cad;
           this.cadEquivalentUnlockedBalance = this.myWallet.unlockedBalance * res.data.data.monero.cad;
@@ -146,5 +140,14 @@ export class MyWalletComponent implements OnInit {
       this.spinnerService.hide("withdraw");
     });
     
+  }
+
+  openCity(tabChoice: any) {
+    var i;
+    var x = Array.from(document.getElementsByClassName("itemListContainer") as HTMLCollectionOf<HTMLElement>)
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";  
+    }
+    document.getElementById(tabChoice)!.style.display = "block";  
   }
 }

@@ -20,7 +20,6 @@ export class ShoppingCartComponent implements OnInit {
   numOfItems: number = 0;
   fiveDayLetter!: Date;
   current_rate: any;
-
   xmrGrandTotal: number = 0;
   grantTotalDollars: number = 0;
   priorBalance: number = 0;
@@ -42,7 +41,16 @@ export class ShoppingCartComponent implements OnInit {
     this.fiveDayLetter = new Date(today);
     this.fiveDayLetter.setDate(today.getDate()+5);
     this.userItems = [];
-    this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
+    this.itemsService.getUserCartItems().subscribe((res:any)=> {
+      this.userItems = res.cart; 
+      for (let i = 0; i < this.userItems.length; i++) {
+        this.cryptoService.getXMRrate().subscribe((res: any) => {
+          
+          this.userItems[i]['dollarPrice'] = (this.userItems[i].price/res.data.data.monero.cad);
+        });
+      }
+      this.loadItems();
+    })
   }
 
   deleteItemFromCart(i:number){
@@ -57,15 +65,15 @@ export class ShoppingCartComponent implements OnInit {
     if (this.userItems) {
       for(let i=0; i < this.userItems.length; i++){
         items +=  this.userItems[i].quantity;
-        amount +=  this.userItems[i].quantity * this.userItems[i].price;
+        this.cryptoService.getXMRrate().subscribe((res: any) => {
+          amount +=  this.userItems[i].quantity * (this.userItems[i].price/res.data.data.monero.cad);
+          this.subTotal = amount;
+          this.numOfItems = items;
+          this.tax = (this.subTotal * 0.13);
+          this.grandTotal = +(amount + this.tax);
+        });
       }
     }
-
-    this.numOfItems = items;
-    this.subTotal = amount;
-    this.tax = (this.subTotal * 0.13);
-    this.grandTotal = +(amount + this.tax).toFixed(2);
-
   }
 
   quantityChange(event: any, index: number){

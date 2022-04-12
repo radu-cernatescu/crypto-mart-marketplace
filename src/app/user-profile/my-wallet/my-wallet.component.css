@@ -1,40 +1,140 @@
-.wallet{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
+h3 {
+    color: #a5ccfc;
+    text-shadow: 1px 1px 4px #88a9d1;
 }
+
+p {
+    color: white;
+}
+
+hr {
+    width: 90%;
+}
+
 .text{
     color: rgb(230, 230, 230);
     background-color: #7A96B8;
 }
+
+.secretText {
+    text-decoration: none;
+    color: transparent;
+    background-color: black;
+    width: max-content;
+}
+
+.secretText:hover {
+    color: white;
+}
+
 .objectInCenter{
     align-self: center;
 }
-#MarketItemsContainer {
-    width: 98%;
-    max-height: 690px;
+
+.itemListContainer {
+    background-color: #1C2541;
+    display: none;
+    width: 80%;
+    max-height: 80%;
     overflow-y: scroll;
-    margin-left: 1%;
-    background-color: #0B132B;
-    border: 4px solid #1C2541;
-    border-radius: 15px;
-    padding: 0.4% 0.2%;
+    height: fit-content;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    padding: 1%;
 }
 
-#ItemContainer {
-    margin-bottom: 0.1%;
-    cursor: pointer;
-    color: rgb(230, 230, 230);
+.itemContainer {
     background-color: #7A96B8;
     border: 2px solid #3A506B;
+    text-align: center;
     border-radius: 10px;
+    padding: 1%;
 }
 
-#ItemContainer:hover {
-    animation-name: colorhover;
-    animation-duration: 300ms;
-    background-color: #BDCADB;
-    color: #0B132B;
+.transactionTitles {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.detailText {
+    font-size: 24px;
+}
+
+#wallet {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-left: 30%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#QRCode {
+    flex-direction: column;
+    padding-right: 5%;
+}
+
+#tabNavigationMenu {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 1%;
+}
+
+/* CUSTOM BUTTONS */
+button.btn-walletOption {
+    margin-left: -0.2%;
+    width: 50.2%;
+    background-color: #45B0AE;
+    color: #3A506B;
+    font-weight: bold;
+    border: 1px solid #1C2541;
+}
+
+button.btn-walletOption:hover {
+    animation-name: colorhoverwallet;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
+}
+
+button.btn-tab {
+    width: 25%;
+    padding: 1%;
+    background-color: #45B0AE;
+    color: #3A506B;
+    border: 1px solid #1C2541;
+    font-weight: bold;
+}
+
+button.btn-tab:hover {
+    animation-name: colorhoverwallet;
+    animation-duration: 400ms;
+    background-color: #6FFFE9;
+    color: #1D2835;
+}
+
+@keyframes colorhoverwallet {
+    from {background-color: #45B0AE}
+    to {background-color: #6FFFE9}
+    from {color: #3A506B}
+    to {color: #1D2835}
+}
+
+/*CUSTOM SCROLLBAR*/
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track { /* Track */
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb { /* Handle */
+    background-color: #90b0d8;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover { /* Handle on hover */
+    background: #9bbee9; 
 }

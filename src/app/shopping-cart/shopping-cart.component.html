@@ -19,7 +19,10 @@
                     <p> <span><b>Expected delivery by:</b></span> {{fiveDayLetter | date: 'dd/MM/yyyy'}} </p>
                 </div>
                 <div id="itemOptionsContainer">
-                    <span class="badge"> ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
+                    <div id="priceContainer">
+                        <span class="badge"> CAD ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
+                        <span class="badge"> XMR ${{ sellItem.dollarPrice * sellItem.quantity | number : '1.2-4'}} </span>
+                    </div>
                     <p id="cartOptionsTitle"> <b>Item Options:</b> </p>
                     <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" step="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
                     <button class="btn btn-success" id="deleteButton" (click)="deleteItemFromCart(i)">Delete</button>
@@ -34,9 +37,13 @@
     <h3 class="checkoutTitle"> SUMMARY </h3>
     <br>
     <div id="checkoutInfo">
-        <p> <b>Subtotal ({{numOfItems}} items):</b> ${{subTotal.toFixed(2)}}</p>
-        <p> <b>Tax (HST):</b> ${{tax.toFixed(2)}}</p>
-        <p> <b>Grand Total:</b> ${{grandTotal.toFixed(2)}}</p>
+        <p> <b>Order Size: {{numOfItems}} items </b> </p>
+        <p> <b><u>Subtotal:</u></b> </p> 
+        <p> <b> XMR </b>${{subTotal.toFixed(4)}}</p>
+        <p> <b><u>Tax (HST):</u></b> </p>
+        <p> <b> XMR </b>${{tax.toFixed(4)}} </p>
+        <p> <b><u>Grand Total:</u></b> </p>
+        <p> <b> XMR </b>${{grandTotal.toFixed(4)}}</p>
     </div>
     <br>
     <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="0 >= grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
