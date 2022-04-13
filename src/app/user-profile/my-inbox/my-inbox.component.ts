@@ -21,7 +21,7 @@ export class MyInboxComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getListingDeleteNotif(this.user).subscribe((res: any) => {
       //console.log(res);
-
+      console.log(this.userItems)
       this.userItems = res.notifications;
     });
   }

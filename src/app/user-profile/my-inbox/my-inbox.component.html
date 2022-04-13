@@ -5,7 +5,7 @@
         <div *ngIf="userItems.length > 0; else noItemsBlock">
             <ng-container *ngFor="let item of userItems; let i = index">
                 <hr>
-                <div id="ItemContainer">
+                <div id="ItemContainer" *ngIf="item.reason != 'SOLD'">
                     <div id="ItemInfo">
                         <b>Banned Listing!</b><br/><br/>
                         <span><b>Item Title:</b> {{ item.item.title }}</span>
@@ -14,6 +14,19 @@
                         <p>
                             {{ item.reason }}
                         </p>
+                    </div>
+                    <div>
+                        <span class="badge">${{ item.item.price }}</span>
+                    </div>
+                    <div id="itemOptionsContainer">
+                        <button class="btn btn-danger" (click)="markAsRead(item)"><p id="rotatedText">Mark as read</p></button>
+                    </div>
+                </div>
+                <div id="ItemContainer" *ngIf="item.reason == 'SOLD'">
+                    <div id="ItemInfo">
+                        <b>Sold Listing!</b><br/><br/>
+                        <span><b>Item Title:</b> {{ item.item.title }}</span>
+                        <br><br>
                     </div>
                     <div>
                         <span class="badge">${{ item.item.price }}</span>

@@ -96,6 +96,10 @@ export class ShoppingCartComponent implements OnInit {
       //console.log(message);
       if (message.message == "SUCCESS") {
 
+        this.itemsService.sendItemSoldNotification(message.response.txid, this.user, this.userItems[0]).subscribe((message:any) => {
+          //console.log(message)
+        });
+
         // Clear user's cart
         this.itemsService.clearCart(this.userItems).subscribe((message:any) => {
           //console.log(message)

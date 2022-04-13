@@ -53,7 +53,7 @@
     <h3 class="checkoutTitle"> CONFIRMATION </h3>
     <br>
     <p class="checkoutQuestion">Confirm order for a total of</p>
-    <p class="checkoutQuestion"><b>${{grandTotal.toFixed(2)}}?</b></p>
+    <p class="checkoutQuestion"><b>${{this.grantTotalDollars.toFixed(2)}}?</b></p>
     <br>
     <button class="btn btn-success"  (click)="buyNow()">CONFIRM</button>
     <button class="btn btn-success" (click)="cancelCheckout()">CANCEL</button>

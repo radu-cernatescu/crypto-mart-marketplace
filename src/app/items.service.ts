@@ -101,4 +101,9 @@ export class ItemsService {
   getOrders() {
     return this.http.get(this.CMS_API + "get-orders");
   }
+
+  sendItemSoldNotification(txid: string, user: User, item: Item) {
+
+    return this.http.post(this.CMS_API + "send-listing-sold-notif", {user: user, item: item, txid: txid});
+  }
 }

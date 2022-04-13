@@ -271,6 +271,25 @@ app.post("/api/send-listing-delete-notif", async (req, res) => {
 
 });
 
+/*
+*/
+app.post("/api/send-listing-sold-notif", async (req, res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+    let txid = req.body.txid;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let insertObj = { item: item, itemId: item._id, reason: 'SOLD', unread: true, email: user.email, txid: txid };
+
+        await collection.insertOne(insertObj).then(() => {
+            res.send({message: "SUCCESS"})
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+});
+
 /* */
 app.post("/api/get-listing-delete-notifs", async (req,res) => {
     let user = req.body;
@@ -542,6 +561,7 @@ app.post("/api/checkout-cart", async (req, res) => {
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i]['time'] = new Date();
     }
+    let txid;
     //console.log(cartItems);
 
     let balance_before, balance_after, amountTotal, amountTotalDollars;
@@ -605,6 +625,7 @@ app.post("/api/checkout-cart", async (req, res) => {
                                     // once the transaction process is complete, the item is added to orders
                                     const collection = client.db("users").collection("orders");
                                     cartItems[i]['txid'] = hash;
+                                    txid = hash;
                                     await collection.insertOne(cartItems[i]).then(() => {
                                         //res.send({message: "SUCCESS"});
                                     }).catch((err) => {
@@ -662,7 +683,8 @@ app.post("/api/checkout-cart", async (req, res) => {
             amountTotal: amountTotal,
             amountTotalDollars: amountTotalDollars,
             balance_after: balance_after,
-            totalFee: totalFee
+            totalFee: totalFee,
+            txid: txid
         };
 
         res.send({message: "SUCCESS", response: response});
@@ -882,4 +904,4 @@ app.get('/*', function(req, res) {
 
 /*
 */
-app.listen(process.env.PORT || 80);
+app.listen(process.env.PORT || 8080);
