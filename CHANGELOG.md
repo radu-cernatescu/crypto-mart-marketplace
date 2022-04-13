@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## Sprint 6
+
+### PR #99
+
+Created front end for wallet page:
+* Dropdown for my wallet
+* Static implementation of functionalities
+* Added comments for further implementation
+
+### PR #102
+
+* Implemented multiple routes to get wallets & send transactions.
+* Allow deposit, withdrawal, and purchasing using Monero.
+* Refactor prices to include XMR, implement CoinGecko API for exchange
+
+### PR #103
+
+* Frontend redesign of the right side space on the Header component.
+* Buttons fit better on page.
+* Adjusted spacing and sizing to create a seamless transition between the sign in and logged in portions of the Header component.
+* Reworked Accordion.
+
+### PR #104
+
+* Implemented CSS/HTML frontend styling to wallet component.
+* Implemented TS functionality regarding tab buttons element.
+* Restyled Orders CSS/HTML to fit new cryptocurrency values.
+* Restyled Market-listings CSS/HTML to fit new cryptocurrency values.
+* Restyled Shopping-cart CSS/HTML to fit new cryptocurrency values.
+* Restyled Product CSS/HTML to fit new cryptocurrency values.
+* Restyled Main CSS/HTML to better position new cryptocurrency values.
+* Additional slight positional changes for better subtle styling; fixing minor visual bugs.
+
+
 ## Sprint 5
 
 ### PR #93
