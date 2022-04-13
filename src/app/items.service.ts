@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { environment as ENV } from '../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -74,11 +74,10 @@ export class ItemsService {
 
   buyItem(item: any) { 
     this.boughtItem.push(item);
-    
   }
 
-  checkoutCart(items: ShoppingCartItem[]) {
-    return this.http.post(this.CMS_API + "checkout-cart", items);
+  checkoutCart(items: ShoppingCartItem[], user: User) {
+    return this.http.post(this.CMS_API + "checkout-cart", {items: items, user: user});
   }
 
   clearCart(items: ShoppingCartItem[]) {
@@ -101,5 +100,10 @@ export class ItemsService {
 
   getOrders() {
     return this.http.get(this.CMS_API + "get-orders");
+  }
+
+  sendItemSoldNotification(txid: string, user: User, item: Item) {
+   
+    return this.http.post(this.CMS_API + "send-listing-sold-notif", {user: user, item: item, txid: txid});
   }
 }

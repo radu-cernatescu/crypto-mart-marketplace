@@ -27,20 +27,11 @@
                     {{ sellItem.description }}
                 </p>
             </div>
-            <div>
-                <span class="badge">${{ sellItem.price }}</span>
+            <div id="priceContainer">
+                <span class="badge">CAD ${{ sellItem.price }}</span>
+                <span class="badge">XMR {{ sellItem.dollarPrice | number : '1.2-4'}}</span>
             </div>
         </div>
     </div>
 </div>
 </ul> 
-<svg id="categoryAnimatedContainer"> <!--CUSTOM TITLE ANIMATION-->
-	<symbol id="categoryAnimatedLines"> <text y="80%">Categories</text> </symbol>
-	<g>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-		<use xlink:href="#categoryAnimatedLines" class="line"></use>
-	</g>
-</svg>

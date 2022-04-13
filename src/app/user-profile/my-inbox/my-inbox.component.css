@@ -98,12 +98,37 @@ h3 {
     height: 50%;
 }
 
+.btn-danger-sold{
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transform: translateX(74px) translateY(57px) rotate(90deg);
+    height: 34%;
+    width: 97%;
+    background-color: #9b304bd5;
+    color: #000000;
+    border-color: #1C2541;
+    margin: 0%;
+}
+
+.btn-danger-sold:hover {
+    transform: translateY(43px) translateX(60px) rotate(90deg);
+    height: 50%;
+}
+
 .btn-danger:focus {
     background-color: #9b304bd5;
     color: #000000;
 }
 
 .btn-danger:hover {
+    animation-name: colorhoverdanger;
+    animation-duration: 200ms;
+    background-color: #990000;
+    color: #000000;
+}
+
+.btn-danger-sold:hover {
     animation-name: colorhoverdanger;
     animation-duration: 200ms;
     background-color: #990000;

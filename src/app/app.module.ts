@@ -19,6 +19,10 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { UserListsComponent } from './admin-panel/user-lists/user-lists.component';
 import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
 import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
+import { MyWalletComponent } from './user-profile/my-wallet/my-wallet.component';
+import { MarketListingsComponent } from './user-profile/market-listings/market-listings.component';
+import { ListingsArchiveComponent } from './user-profile/listings-archive/listings-archive.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -36,13 +40,17 @@ import { MyInboxComponent } from './user-profile/my-inbox/my-inbox.component';
     UserListsComponent,
     MyOrdersComponent,
     MyInboxComponent,
+    MyWalletComponent,
+    MarketListingsComponent,
+    ListingsArchiveComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent] 

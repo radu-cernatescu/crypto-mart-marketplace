@@ -44,6 +44,9 @@ export class SignInComponent implements OnInit {
         this.user.lastName = res.data.lastName;
         this.user.type = res.data.type;
         this.user.isBlock = res.data.isBlock;
+        this.user.wallet = res.data.wallet;
+        this.user.wallet_address = res.data.wallet_address;
+        this.user.wallet_password = res.data.wallet_password;
 
         if (!this.user.isBlock) {
           this.tokenStorage.saveToken(res.data._id);

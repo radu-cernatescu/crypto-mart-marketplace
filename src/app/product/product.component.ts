@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ShoppingCartItem } from '../ShoppingCartItem';
 import { TokenStorageService } from '../token-storage.service';
 import { User } from '../User';
+import { CryptoService } from '../crypto.service';
 
 @Component({
   selector: 'app-product',
@@ -28,7 +29,8 @@ export class ProductComponent implements OnInit {
   constructor(private itemsService: ItemsService, 
     private readonly geolocation$: GeolocationService,
     private readonly userService: UserService,
-    private router: Router, private tokenStorage: TokenStorageService) {
+    private router: Router, private tokenStorage: TokenStorageService,
+    private cryptoService: CryptoService) {
       this.user = this.tokenStorage.getUser();
     }
 
@@ -41,6 +43,11 @@ export class ProductComponent implements OnInit {
       this.selectedColor = this.item.colors[0];
       this.selectedSize = this.item.sizes[0];
       this.description = this.item.description;
+      console.log(this.item);
+      this.cryptoService.getXMRrate().subscribe((res: any) => {
+          
+        this.item['xmrPrice'] = (this.item.price/res.data.data.monero.cad);
+      });
     });
     
     /* Comment out until GPS API is fixed
@@ -83,8 +90,10 @@ export class ProductComponent implements OnInit {
     let notUserChoices = document.getElementById("boughtPopup");
     this.toggleVisibility(userChoices, notUserChoices);
 
+    
     const item: ShoppingCartItem = {
-      userId : this.item.userId,
+      userId: this.user._id,
+      sellerId : this.item.userId,
       title : this.item.title,
       description : this.item.description,
       price : this.item.price,

@@ -3,7 +3,8 @@ hr{
 }
 
 h3 {
-    color: white;
+    color: rgb(230, 230, 230);
+    text-shadow: 1px 1px 4px #dddddd;
 }
 
 .badge {
@@ -11,7 +12,7 @@ h3 {
     font-size: large;
     padding-right: 5%;
     margin-top: 4%;
-    margin-left: 35%;
+    margin-left: 30%;
 }
 
 #quantity {
@@ -25,7 +26,7 @@ h3 {
     border: 2px solid #0B132B;
 }
 
-#cartItemsContainer { /*Updated width value for better on-page positioning*/
+#cartItemsContainer {
     width: 78%;
     margin-top: 5%;
     margin-left: 1%;
@@ -107,6 +108,10 @@ h3 {
     border-right: 2px solid black;
 }
 
+#priceContainer {
+    width: 100%;
+}
+
 #cartOptionsTitle {
     font-size: large;
     padding-left: 28%;
@@ -124,7 +129,7 @@ h3 {
     padding-right: 0.3%;
 }
 
-#checkOutMenu { /*Updated margin value for better on-page positioning*/
+#checkOutMenu {
     width: 15%;
     height: fit-content;
     margin-top: 5%;

@@ -1,0 +1,102 @@
+<ngx-spinner type="ball-scale-multiple" name="sync"><p style="font-size: 20px; color: white">Loading & syncing wallet...</p></ngx-spinner>
+<ngx-spinner type="ball-scale-multiple" name="withdraw"><p style="font-size: 20px; color: white">Withdrawing funds...</p></ngx-spinner>
+
+<div id="wallet">
+    <div id="QRCode" class="objectInCenter" >
+        <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={{this.myWallet.primaryAddress}}" alt="QRCode">
+        <div id="walletOptionContainer">
+            <button class="btn-walletOption" (click)="this.fetchWallet()">Refresh</button>
+            <button class="btn-walletOption" (click)="withdraw()">Withdraw</button>
+        </div>
+    </div>
+    <div id="walletDetails" class="objectInCenter" >
+        <h3> <b><u>CryptoMart Balance:</u></b> </h3>
+        <p> XMR {{this.myWallet.balance}} ~= CAD {{this.cadEquivalentBalance.toFixed(2)}}</p>
+
+        <h3><b><u>Crypto-wallet Spendable Balance:</u></b></h3>
+        <p> XMR {{this.myWallet.unlockedBalance}} ~= CAD {{this.cadEquivalentUnlockedBalance.toFixed(2)}} </p>
+
+        <h3><b><u>Crypto-wallet Address:</u></b></h3>
+        <p class="secretText">{{this.myWallet.primaryAddress}}</p>
+
+        <h3><b><u>Private View Key:</u></b></h3>
+        <p class="secretText">{{this.myWallet.privateViewKey}}</p>
+    </div>
+</div>
+
+<div id="tabNavigationMenu">
+    <button class="btn-tab" (click)="openCity('deposits')">Deposits</button>
+    <button class="btn-tab" (click)="openCity('purchases')">Purchases</button>
+    <button class="btn-tab" (click)="openCity('soldListings')">Sold Listings</button>
+    <button class="btn-tab" (click)="openCity('withdrawls')">Withdrawals</button>
+</div>
+
+<div id="deposits" class="itemListContainer">
+    <h3 class="transactionTitles"><b>Deposits</b></h3>
+    <ng-container *ngFor="let item of this.deposits; let i = index">
+        <hr>
+        <div *ngIf="item.isIncoming" class="itemContainer">
+            <p class="detailText"><b><u>Transaction ID:</u></b></p>
+            <p class="detailText">{{item.hash}}</p>
+            <p class="detailText"><b><u>Fee:</u></b></p>
+            <p class="detailText">XMR {{item.fee/1000000000000}}</p>
+            <p class="detailText"><b><u>Number of confirmations:</u></b></p>
+            <p class="detailText">{{item.numConfirmations}}</p>
+            <p class="detailText"><b><u>Amount:</u></b></p>
+            <p class="detailText">{{item.incomingTransfers[0].state['amount']/1000000000000}} XMR ~= $CAD {{(item.incomingTransfers[0].state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
+        </div>
+    </ng-container>
+</div>
+
+<div id="purchases" class="itemListContainer">
+    <h3 class="transactionTitles"><b>Purchases</b></h3>
+    <ng-container *ngFor="let item of this.purchases; let i = index">
+        <hr>
+        <div class="list-group-item" class="itemContainer">
+            <p class="detailText"><b><u>Transaction ID:</u></b></p>
+            <p class="detailText">{{item.hash}}</p>
+            <p class="detailText"><b><u>Fee:</u></b></p>
+            <p class="detailText">XMR {{item.fee/1000000000000}}</p>
+            <p class="detailText"><b><u>Number of confirmations:</u></b></p>
+            <p class="detailText">{{item.numConfirmations}}</p>
+            <p class="detailText"><b><u>Amount:</u></b></p>
+            <p class="detailText">{{item.outgoingTransfer.state['amount']/1000000000000}} XMR ~= $CAD {{(item.outgoingTransfer.state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
+        </div>
+    </ng-container>
+</div>
+
+<div id="soldListings" class="itemListContainer">
+    <h3 class="transactionTitles"><b>Sold Listings</b></h3>
+    <ng-container *ngFor="let item of this.soldListings; let i = index">
+        <hr>
+        <div class="list-group-item" class="itemContainer">
+            <p class="detailText"><b><u>Transaction ID:</u></b></p>
+            <p class="detailText">{{item.hash}}</p>
+            <p class="detailText"><b><u>Fee:</u></b></p>
+            <p class="detailText">XMR {{item.fee/1000000000000}}</p>
+            <p class="detailText"><b><u>Number of confirmations:</u></b></p>
+            <p class="detailText">{{item.numConfirmations}}</p>
+            <p class="detailText"><b><u>Amount:</u></b></p>
+            <p class="detailText">{{item.incomingTransfers[0].state['amount']/1000000000000}} XMR ~= $CAD {{(item.incomingTransfers[0].state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
+        </div>
+    </ng-container>
+</div>
+
+<div id="withdrawls" class="itemListContainer">
+    <h3 class="transactionTitles"><b>Withdrawls</b></h3>
+    <ng-container *ngFor="let item of this.withdrawals; let i = index">
+        <hr>
+        <div *ngIf="item.isOutgoing" class="itemContainer">
+            <p class="detailText"><b><u>Transaction ID:</u></b></p>
+            <p class="detailText">{{item.hash}}</p>
+            <p class="detailText"><b><u>Fee:</u></b></p>
+            <p class="detailText">XMR {{item.fee/1000000000000}}</p>
+            <p class="detailText"><b><u>Number of confirmations:</u></b></p>
+            <p class="detailText">{{item.numConfirmations}}</p>
+            <p class="detailText"><b><u>Amount:</u></b></p>
+            <p class="detailText">{{item.outgoingTransfer.state['amount']/1000000000000}} XMR ~= $CAD {{(item.outgoingTransfer.state['amount']/1000000000000 * this.xmrToCad).toFixed(2)}}</p>
+        </div>
+    </ng-container>
+</div>
+
+<br>

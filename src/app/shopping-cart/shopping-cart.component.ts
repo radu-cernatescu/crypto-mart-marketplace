@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CryptoService } from '../crypto.service';
 import { ItemsService } from '../items.service';
+import { TokenStorageService } from '../token-storage.service';
+import { User } from '../User';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -8,21 +12,45 @@ import { ItemsService } from '../items.service';
 })
 export class ShoppingCartComponent implements OnInit {
 
+  user: User;
   userItems : any;
   subTotal: number = 0;
   grandTotal: number = 0;
   tax: number = 0;
   numOfItems: number = 0;
   fiveDayLetter!: Date;
+  current_rate: any;
+  xmrGrandTotal: number = 0;
+  grantTotalDollars: number = 0;
+  priorBalance: number = 0;
+  afterBalance: number = 0;
+  totalFee: number = 0;
 
-  constructor(private itemsService: ItemsService) {}
+  constructor(private itemsService: ItemsService,
+    private tokenService: TokenStorageService, private cryptoService: CryptoService,
+    private spinnerService: NgxSpinnerService) {
+      this.user = this.tokenService.getUser();
+
+      this.cryptoService.getXMRrate().subscribe((res: any) => {
+        this.current_rate = res.data.data.monero.cad;
+      });
+    }
 
   ngOnInit(): void {
     let today = new Date();
     this.fiveDayLetter = new Date(today);
     this.fiveDayLetter.setDate(today.getDate()+5);
     this.userItems = [];
-    this.itemsService.getUserCartItems().subscribe((res:any)=> {this.userItems = res.cart; this.loadItems();})
+    this.itemsService.getUserCartItems().subscribe((res:any)=> {
+      this.userItems = res.cart; 
+      for (let i = 0; i < this.userItems.length; i++) {
+        this.cryptoService.getXMRrate().subscribe((res: any) => {
+          
+          this.userItems[i]['dollarPrice'] = (this.userItems[i].price/res.data.data.monero.cad);
+        });
+      }
+      this.loadItems();
+    });
   }
 
   deleteItemFromCart(i:number){
@@ -37,14 +65,17 @@ export class ShoppingCartComponent implements OnInit {
     if (this.userItems) {
       for(let i=0; i < this.userItems.length; i++){
         items +=  this.userItems[i].quantity;
-        amount +=  this.userItems[i].quantity * this.userItems[i].price;
+        this.cryptoService.getXMRrate().subscribe((res: any) => {
+          amount +=  this.userItems[i].quantity * (this.userItems[i].price/res.data.data.monero.cad);
+          this.subTotal = amount;
+          this.numOfItems = items;
+          this.tax = (this.subTotal * 0.13);
+          this.grandTotal =+ (amount + this.tax);
+        });
       }
     }
+    console.log(this.userItems)
 
-    this.numOfItems = items;
-    this.subTotal = amount;
-    this.tax = +(amount * 0.13).toFixed(2);
-    this.grandTotal = +(amount + this.tax).toFixed(2);
   }
 
   quantityChange(event: any, index: number){
@@ -60,10 +91,47 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.loadItems();
   }
-  buyNow(){
-    this.itemsService.checkoutCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    this.itemsService.clearCart(this.userItems).subscribe((message:any) => {console.log(message)});
-    window.location.reload();
+
+  buyNow() {
+    this.spinnerService.show();
+    this.itemsService.checkoutCart(this.userItems, this.user).subscribe((message:any) => {
+      this.spinnerService.hide();
+      //console.log(message);
+      if (message.message == "SUCCESS") {
+        this.itemsService.sendItemSoldNotification(message.response.txid, this.user, this.userItems[0]).subscribe((message:any) => {
+          console.log(message)
+        });
+
+        // Clear user's cart
+        this.itemsService.clearCart(this.userItems).subscribe((message:any) => {
+          //console.log(message)
+        });
+        
+       //console.log(message);
+
+        this.priorBalance = message.response.balance_before;
+        this.afterBalance = message.response.balance_after;
+        this.xmrGrandTotal = message.response.amountTotal;
+        this.grantTotalDollars = message.response.amountTotalDollars;
+        this.totalFee = message.response.totalFee;
+
+        let userChoices = document.getElementById("walletDetailPopup");
+        let notUserChoices = document.getElementById("checkoutPopup");
+        this.visibilityToggle(userChoices, notUserChoices);
+      }
+      else if (message.message == "FAILED" && message.reason == "transaction already underway on your account, please wait 10 confirmations (~20 min).") {
+        alert(`Error:\nNot enough unlocked funds\nor\n` + message.reason+ " (Check MyWallet to see transactions and balance).");
+      }
+      else if (message.message == "FAILED" && message.reason == "not enough funds") {
+        alert(`Error: ` + message.reason);
+      }
+      else if (message.message == "FAILED" && message.reason == "time out") {
+        alert(`Error (no funds were moved): ` + message.reason);
+      }
+    });
+  }
+  ok(){
+    //window.location.reload();
   }
   visibilityToggle(userChoice : any, notUserChoice : any) {
     if (notUserChoice) {

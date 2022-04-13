@@ -1,0 +1,14 @@
+<div *ngIf="archiveMode">
+    <svg id="parchiveAnimatedContainer">
+        <!--CUSTOM TITLE ANIMATION-->
+        <symbol id="parchiveAnimatedLines"> <text y="80%"> Your Archived Market Listings: </text> </symbol>
+        <g>
+            <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+            <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+            <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+            <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+            <use xlink:href="#parchiveAnimatedLines" class="line"></use>
+        </g>
+    </svg>
+    <h3> You have no archived market listings. </h3>
+</div>

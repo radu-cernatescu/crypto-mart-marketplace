@@ -1,12 +1,19 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient } = require('mongodb');
+var ObjectId = require('mongodb').ObjectID;
 const argon2 = require('argon2');
 const bodyParser = require('body-parser');
-const mailchimp = require('@mailchimp/mailchimp_transactional')('gCNp0sPDBIdbOKvYhikZww');
-
+//const mailchimp = require('@mailchimp/mailchimp_transactional')('gCNp0sPDBIdbOKvYhikZww');
+const monerojs = require("monero-javascript");
+//1. Import coingecko-api
+const CoinGecko = require('coingecko-api');
+ 
+//2. Initiate the CoinGecko API Client
+const CoinGeckoClient = new CoinGecko();
 const uri = "mongodb+srv://dbUser:ejmpFQ2aFQzMaJpI@userdb.srfax.mongodb.net/UserDB?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 /* Initialize Express backend */
 const app = express();
@@ -46,6 +53,7 @@ app.post("/api/user-login", async (req, res) => {
 /*
 */
 app.post("/api/sign-up", async (req, res) => {
+    const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
     await client.connect().then(async () => {
         const collection = client.db("users").collection("logins");
         await collection.findOne({
@@ -55,19 +63,37 @@ app.post("/api/sign-up", async (req, res) => {
                 res.send({message:"EXISTING USER"});
             }
             else {
-                const user = {
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
-                    password: await argon2.hash(req.body.password),
-                    type: req.body.type,
-                    isBlock: req.body.isBlock
-                }
-                await collection.insertOne(user).then(() => {
-                    res.send({message: "SUCCESS"});
-                }).catch(err => {
-                    res.send({message: "FAILED"});
-                });
+                let path, password;
+                try {
+                    path = req.body.email;
+                    password = await argon2.hash(req.body.password);
+                    await walletRpc.createWallet({
+                      path: path,
+                      password: password,
+                    });
+                    await walletRpc.sync();
+                    
+                    const user = {
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email,
+                        password: password,
+                        type: req.body.type,
+                        isBlock: req.body.isBlock,
+                        wallet: path,
+                        wallet_password: password,
+                        wallet_address: await walletRpc.getPrimaryAddress()
+                    }
+                    walletRpc.close();
+                    await collection.insertOne(user).then(() => {
+                        res.send({message: "SUCCESS"});
+                    }).catch(err => {
+                        res.send({message: "FAILED"});
+                    });
+                } catch(err) {
+                    //console.log(err.toString());
+                    res.send({message: "FAILED", reason: err.toString()});
+                } 
             }
         }).catch(() => {
             res.send({message:"FAILED"});
@@ -87,9 +113,6 @@ app.get("/api/invitecodes/", async (req, res) =>{
     }).catch(err => {/*console.log(err)*/});
 
 });
-
-/* TO DO - Adding & Removing Invite codes */
-
 
 /* Mailchimp deprecated :(
 
@@ -210,7 +233,6 @@ app.post("/api/remove-user", async (req, res) => {
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
         })
     }
-
 });
 
 /* Check to see if a user is blocked */
@@ -240,28 +262,46 @@ app.post("/api/send-listing-delete-notif", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let insertObj = { item: item, itemId: item._id, reason: reason, unread: true, email: user.email }
+        let insertObj = { item: item, itemId: item._id, reason: reason, unread: true, userId: item.userId }
         await collection.insertOne(insertObj).then(() => {
             res.send({message: "SUCCESS"})
         }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+});
 
+/*
+*/
+app.post("/api/send-listing-sold-notif", async (req, res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+    let txid = req.body.txid;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let insertObj = { item: item, itemId: item._id, reason: 'SOLD', unread: true, userId: item.sellerId, txid: txid };
+
+        await collection.insertOne(insertObj).then(() => {
+            res.send({message: "SUCCESS"})
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
 });
 
 /* */
 app.post("/api/get-listing-delete-notifs", async (req,res) => {
     let user = req.body;
+    console.log(user)
 
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email };
+        let filter = { userId: user._id };
 
         let notifications = await collection.find(filter).toArray();
 
         res.send({message: "SUCCESS", notifications: notifications});
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
-
 });
 
 /* */
@@ -272,7 +312,7 @@ app.post("/api/delete-listing-delete-notifs", async (req,res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email, itemId: item.item._id };
+        let filter = { userId: user._id, itemId: item.item._id };
 
         await collection.deleteOne(filter).then((response) => {
             res.send({message: "SUCCESS", response: response});
@@ -289,7 +329,7 @@ app.post("/api/mark-read-listing-delete-notifs", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email, itemId: item.item._id };
+        let filter = { userId: user._id, itemId: item.item._id };
 
         let newvalues = { $set: { unread: false } };
 
@@ -331,6 +371,7 @@ app.post("/api/add-item", async (req, res) => {
             }
             else {
                 req.body.item.userId = req.body.user._id;
+
                 await collection.insertOne(req.body.item).then(() => {
                     res.send({message: "SUCCESS"});
                 }).catch(() => {res.send({message: "FAILED"})});
@@ -420,6 +461,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
             if (!existingObject) {
                 let newShoppingItem = {
                     userId: user._id,
+                    sellerId: item.sellerId,
                     itemId: item.itemId,
                     quantity : item.quantity,
                     images: item.images,
@@ -437,6 +479,7 @@ app.post("/api/add-shopping-item", async (req, res) => {
                     newShoppingItem['size'] = item.size;
                 }
             
+                //console.log(newShoppingItem);
                 await client.connect().then(async () => {
                     await collection.insertOne(newShoppingItem).then(() => {
                         res.send({ message: "SUCCESS "});
@@ -448,13 +491,11 @@ app.post("/api/add-shopping-item", async (req, res) => {
                 collection.updateOne(myQuery, newvalues).then(() => {
                     res.send({ message: "SUCCESS "});
                 }).catch((err) => { res.send({ message: "FAILED", reason: err}) });
-                existingObject.quantity+=1;
-                
+                existingObject.quantity+=1; 
             }
         }
         
     }).then((message) => {/*console.log(message)*/}).catch((err) => {/*console.log(err)*/});
-
 });
 
 /*
@@ -512,20 +553,150 @@ app.post("/api/get-shopping-cart", async (req, res) => {
 
 /* ORDERS */
 app.post("/api/checkout-cart", async (req, res) => {
-    let cartItems = req.body;
+    let cartItems = req.body.items;
+    let from_user = req.body.user;
+    let isFailed = false;
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i]['time'] = new Date();
     }
+    let txid;
     //console.log(cartItems);
-    await client.connect().then(async () => {
-        const collection = client.db("users").collection("orders");
 
-        await collection.insertMany(cartItems).then(() => {
-            res.send({message: "SUCCESS"});
-        }).catch((err) => {
-            res.send({message: "FAILED", err: err});
-        })
-    }).catch(err => {/*console.log(err);*/});
+    let balance_before, balance_after, amountTotal = 0, amountTotalDollars = 0;
+    let totalFee = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+
+        try {
+        // get balance before transaction
+        let path = from_user.wallet;
+        let password = from_user.wallet_password;
+        const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+        await walletRpc.openWallet(path, password);
+        balance_before = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
+        walletRpc.close();
+
+        // send transaction to seller
+        await client.connect().then(async () => {
+            let amount = 0;
+            const collection = client.db("users").collection("logins");
+            // first find the seller
+            await collection.findOne(
+                { "_id": ObjectId(cartItems[i].sellerId) }
+            ).then(async user => {
+                //console.log(user);
+                //console.log(cartItems[i].sellerId)
+                if (user) {
+                    // get seller's wallet address
+                    to = user.wallet_address;
+                    // get the most up to date xmr conversion rate to CAD
+                    await CoinGeckoClient.simple.price({
+                        ids: ['monero'],
+                        vs_currencies: ['cad']
+                    }).then(async (data) => {
+                        let moneroPrice = data.data.monero.cad;
+                        amount = ((cartItems[i].price * cartItems[i].quantity)/moneroPrice)*1000000000000;
+                        amountTotal += amount;
+                        amountTotalDollars += (cartItems[i].price * cartItems[i].quantity * 1.13);
+                    
+                        // open wallet and create transaction, relay it to monero blockchain
+                        let path = from_user.wallet;
+                        let password = from_user.wallet_password;
+                        const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+                        await walletRpc.openWallet(path, password);
+                        balance_before = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
+                        let walletAddress = await walletRpc.getPrimaryAddress();
+                        //console.log(balance_before);
+                        //console.log(amount);
+                        try {
+                            // if from user has unlockable amount right now, proceed with transaction
+                            let tx = await walletRpc.createTx({
+                            accountIndex: 0,
+                            address: user.wallet_address,
+                            amount: monerojs.BigInteger(amount)
+                            });
+                        
+                            let fee = await tx.getFee();
+                            let hash = await walletRpc.relayTx(tx);
+                            //let hash = await tx.getHash();
+
+                            
+                            // add transaction to and specify it's type in transactions collection
+                            const transactions = client.db("users").collection("transactions");
+
+                            await transactions.insertOne({from: walletAddress, to: user.wallet_address, type: "purchase", txid: tx.getHash()}).then(async () => {
+                                await client.connect().then(async () => {
+                                    // once the transaction process is complete, the item is added to orders
+                                    const collection = client.db("users").collection("orders");
+                                    cartItems[i]['txid'] = hash;
+                                    txid = hash;
+                                    await collection.insertOne(cartItems[i]).then(() => {
+                                        //res.send({message: "SUCCESS"});
+                                    }).catch((err) => {
+                                        isFailed = true;
+                                        res.send({message: "FAILED", err: err});
+                                    })
+                                }).catch((err) => {res.send({message: "FAILED", err: err});});
+                            }).catch((err) => {res.send({message:"FAILED"});});
+                        
+                            console.log(tx + "\n======");
+                            console.log("Fee: " + fee);
+                            totalFee += fee;
+                            txid = hash;
+                            console.log("Tx Hash: " + tx.getHash());
+                            
+    
+                        } catch(err) {
+                            isFailed = true;
+                            //console.log(err.toString());
+                            let reason = 'none given';
+                            if (err.toString().includes("Request timed out")) {
+                                //console.log("Error: Time out");
+                                reason = 'time out';
+                            }
+                            else if (err.toString().includes("not enough money")) {
+                                //console.log('Error: not enough funds');
+                                reason = 'not enough funds';
+                            }
+                            else if (err.toString().includes("not enough unlocked money")) {
+                                //console.log("Error: Transaction already underway.");
+                                reason = 'transaction already underway on your account, please wait 10 confirmations (~20 min).'
+                            }
+                            res.send({message:"FAILED", reason: reason, item: cartItems[i]});
+                        }
+                }).catch();
+                }
+                else{
+                    isFailed = true;
+                    res.send({message:"FAILED"});
+                }
+            }).catch((err) => {res.send({message:"FAILED"}); isFailed = true;});
+        }).catch((err) => {});
+        }catch(err) {}
+    }
+
+    if (!isFailed) {
+        try {
+            // get balance after transaction
+            let path = from_user.wallet;
+            let password = from_user.wallet_password;
+            const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+            await walletRpc.openWallet(path, password);
+            balance_after = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
+            walletRpc.close();
+        } catch(err) {}
+
+        let response = {
+            balance_before: balance_before,
+            amountTotal: amountTotal,
+            amountTotalDollars: amountTotalDollars,
+            balance_after: balance_after,
+            totalFee: totalFee,
+            txid: txid
+        };
+
+        res.send({message: "SUCCESS", response: response});
+    }
+    
 });
 
 app.post("/api/clear-cart", async (req, res) => {
@@ -575,6 +746,156 @@ app.get("/api/get-orders", async (req, res) => {
             res.send({message: "FAILED"});
         }
     });
+});
+
+/* CRYPTO */
+
+// Accepts a user object and gets the balances (total and unlocked) for that wallet
+app.post("/api/get-wallet-info", async (req, res) => {
+    const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+    let user = req.body;
+    let path = user.wallet;
+    let password = user.wallet_password;
+
+    //open wallet
+    try {
+        await walletRpc.openWallet(path, password);
+        await walletRpc.sync();
+        let wallet = {
+            balance: parseInt((await walletRpc.getBalance()).toString())/1000000000000, //  Balance in Atomic Units (One atomic unit is currently 1e-12 XMR (0.000000000001 XMR, or one piconero)
+            primaryAddress: await walletRpc.getPrimaryAddress(), // Very long string - looks like: 46G6moWH7kQJrjExVATHiyNhrXPLCUHwZeoGZta5QecHepE45m9Z279QVftVxfj5imHDMubV5imE6ik6saQK7hfd6PBv5JG
+            mnemonicPhrase: await walletRpc.getMnemonic(),
+            privateSpendKey: await walletRpc.getPrivateSpendKey(),
+            privateViewKey: await walletRpc.getPrivateViewKey(),
+            transactions: [],
+            unlockedBalance: parseInt((await walletRpc.getUnlockedBalance()).toString())/1000000000000
+        };  
+        let txs = await walletRpc.getTxs(); // get ARRAY of transactions containing transfers to/from the wallet
+        for (let i = 0; i < txs.length; i++) {
+            delete txs[i].state['block'];
+            txs[i].state['fee'] = txs[i].state['fee'].toString();
+            
+            let transaction = txs[i].state;
+            if (transaction.isIncoming) {
+                for (let k = 0; k < transaction.incomingTransfers.length; k++) {
+                    delete transaction.incomingTransfers[k].state['tx'];
+                    txs[i].state.incomingTransfers[k].state['amount'] = txs[i].state.incomingTransfers[k].state.amount.toString();
+                }
+            }
+            else if (transaction.isOutgoing) {
+                delete transaction.outgoingTransfer.state['tx'];
+                txs[i].state.outgoingTransfer.state['amount'] = txs[i].state.outgoingTransfer.state.amount.toString();
+            }
+            wallet['transactions'].push(txs[i].state);
+        }  
+    
+        walletRpc.close();
+
+        res.send({message: "SUCCESS", wallet: wallet});     
+       
+    } catch(err) {
+        //walletRpc.close();
+        //console.log(err);
+        res.send({message: "FAILED", reason: err});
+    }
+});
+
+/* Get transaction type (withdrawal, purchase)
+*/
+app.post("/api/get-transaction-type", async (req, res) => {
+    let txid = req.body.txid;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("transactions");
+        await collection.findOne({
+            txid: {$eq: txid}
+        }).then(async transaction => {
+            if (transaction) {
+                res.send({message:"SUCCESS", transaction: transaction});
+            }
+            else{
+                res.send({message:"FAILED"});
+            }
+        
+        }).catch((err) => {res.send({message:"FAILED"});});
+    }).catch((err) => {res.send({message:"FAILED"});});
+});
+
+app.get("/api/get-xmr-rate", async (req, res) => {
+    await CoinGeckoClient.simple.price({
+        ids: ['monero'],
+        vs_currencies: ['cad']
+    }).then((data) => {
+        res.send({message:"SUCCESS", data: data});
+    }).catch((err) => { res.send({message: "FAILED", reason: err});});
+});
+
+app.post("/api/withdraw-wallet", async(req, res) => {
+    let user = req.body.user;
+    let amount = (req.body.amount - 0.00000959) *1000000000000;
+    let address = req.body.address;
+    let sweep = req.body.sweep;
+
+    //console.log(req.body);
+
+    if (address != null) {
+        let path = user.wallet;
+        let password = user.wallet_password;
+        let walletRpc;
+        try {
+            walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+            await walletRpc.openWallet(path, password);
+            let from_address = await walletRpc.getPrimaryAddress();
+        
+            // sweep to send ALL funds.
+            if (sweep) {
+                let tx_arr = await walletRpc.sweepUnlocked({address: address, relay: true});
+                let tx;
+                if (tx_arr != null && tx_arr.length > 0) {
+                    tx = tx_arr[0].state;
+                }
+                let fee = await monerojs.BigInteger(tx.fee);
+    
+                //console.log("sweeping:");
+                //console.log(tx);
+                //console.log("Fee: " + fee);
+                await client.connect().then(async () => {
+                    const transactions = client.db("users").collection("transactions");
+        
+                    await transactions.insertOne({type: "withdrawal", txid: tx.hash, from: from_address}).then(() => {
+                        res.send({message: "SUCCESS"});
+                    }).catch(err => {res.send({message: "FAILED"});});
+                }).catch(err => {res.send({message: "FAILED"});});
+        
+                walletRpc.close();
+            }
+            else {
+                // if from user has unlockable amount right now, proceed with transaction
+                let tx = await walletRpc.createTx({
+                accountIndex: 0,
+                address: address,
+                amount: monerojs.BigInteger(amount)
+                });
+            
+                let hash = await walletRpc.relayTx(tx);
+        
+                await client.connect().then(async () => {
+                    const transactions = client.db("users").collection("transactions");
+        
+                    await transactions.insertOne({type: "withdrawal", txid: hash, from: from_address}).then(() => {
+                        res.send({message: "SUCCESS"});
+                    }).catch(err => {res.send({message: "FAILED"});});
+                }).catch(err => {res.send({message: "FAILED"});});
+        
+                //console.log(tx);
+                walletRpc.close();
+            }
+        } catch(err) {
+            res.send({message: "FAILED"});
+            //console.log(err);
+            //walletRpc.close();
+        }
+    }
 });
 
 /* Allows express to serve files from this directory
