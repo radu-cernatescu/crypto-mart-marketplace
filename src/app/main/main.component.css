@@ -61,12 +61,19 @@
     padding-top: 1%;
     left: 3%;
     font-size: large;
-	width: 100%;
+    width: 100%;
+    margin-right: 10%;
+}
+
+#priceContainer {
+    align-items: center;
+    max-width: min-content;
 }
 
 .badge {
     background-color: #0B132B;
     font-size: large;
+    margin-top: 6%;
 }
 
 /* CUSTOM TITLES */

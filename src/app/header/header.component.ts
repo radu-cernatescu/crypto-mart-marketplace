@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     this.userService.getListingDeleteNotif(this.user).subscribe((res: any) => {
-      console.log(res)
+      //console.log(res)
 
       this.notifications = res.notifications;
 

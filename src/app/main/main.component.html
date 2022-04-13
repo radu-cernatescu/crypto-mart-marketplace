@@ -27,9 +27,9 @@
                     {{ sellItem.description }}
                 </p>
             </div>
-            <div>
-                <span class="badge">${{ sellItem.price }}</span>
-                <span class="badge">{{ sellItem.dollarPrice }} XMR</span>
+            <div id="priceContainer">
+                <span class="badge">CAD ${{ sellItem.price }}</span>
+                <span class="badge">XMR {{ sellItem.dollarPrice | number : '1.2-4'}}</span>
             </div>
         </div>
     </div>

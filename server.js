@@ -233,7 +233,6 @@ app.post("/api/remove-user", async (req, res) => {
             }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
         })
     }
-
 });
 
 /* Check to see if a user is blocked */
@@ -263,28 +262,46 @@ app.post("/api/send-listing-delete-notif", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let insertObj = { item: item, itemId: item._id, reason: reason, unread: true, email: user.email }
+        let insertObj = { item: item, itemId: item._id, reason: reason, unread: true, userId: item.userId }
         await collection.insertOne(insertObj).then(() => {
             res.send({message: "SUCCESS"})
         }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+});
 
+/*
+*/
+app.post("/api/send-listing-sold-notif", async (req, res) => {
+    let user = req.body.user;
+    let item = req.body.item;
+    let txid = req.body.txid;
+
+    await client.connect().then(async () => {
+        const collection = client.db("users").collection("notifications");
+
+        let insertObj = { item: item, itemId: item._id, reason: 'SOLD', unread: true, userId: item.sellerId, txid: txid };
+
+        await collection.insertOne(insertObj).then(() => {
+            res.send({message: "SUCCESS"})
+        }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
+
+    }).catch((err) => { res.send({ message: "FAILED", reason: err}); });
 });
 
 /* */
 app.post("/api/get-listing-delete-notifs", async (req,res) => {
     let user = req.body;
+    console.log(user)
 
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email };
+        let filter = { userId: user._id };
 
         let notifications = await collection.find(filter).toArray();
 
         res.send({message: "SUCCESS", notifications: notifications});
     }).catch((err) => { res.send({ message: "FAILED", reason: err}); })
-
 });
 
 /* */
@@ -295,7 +312,7 @@ app.post("/api/delete-listing-delete-notifs", async (req,res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email, itemId: item.item._id };
+        let filter = { userId: user._id, itemId: item.item._id };
 
         await collection.deleteOne(filter).then((response) => {
             res.send({message: "SUCCESS", response: response});
@@ -312,7 +329,7 @@ app.post("/api/mark-read-listing-delete-notifs", async (req, res) => {
     await client.connect().then(async () => {
         const collection = client.db("users").collection("notifications");
 
-        let filter = { email: user.email, itemId: item.item._id };
+        let filter = { userId: user._id, itemId: item.item._id };
 
         let newvalues = { $set: { unread: false } };
 
@@ -542,12 +559,14 @@ app.post("/api/checkout-cart", async (req, res) => {
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i]['time'] = new Date();
     }
+    let txid;
     //console.log(cartItems);
 
-    let balance_before, balance_after, amountTotal, amountTotalDollars;
+    let balance_before, balance_after, amountTotal = 0, amountTotalDollars = 0;
     let totalFee = 0;
     for (let i = 0; i < cartItems.length; i++) {
 
+        try {
         // get balance before transaction
         let path = from_user.wallet;
         let password = from_user.wallet_password;
@@ -586,6 +605,8 @@ app.post("/api/checkout-cart", async (req, res) => {
                         await walletRpc.openWallet(path, password);
                         balance_before = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
                         let walletAddress = await walletRpc.getPrimaryAddress();
+                        //console.log(balance_before);
+                        //console.log(amount);
                         try {
                             // if from user has unlockable amount right now, proceed with transaction
                             let tx = await walletRpc.createTx({
@@ -596,7 +617,9 @@ app.post("/api/checkout-cart", async (req, res) => {
                         
                             let fee = await tx.getFee();
                             let hash = await walletRpc.relayTx(tx);
+                            //let hash = await tx.getHash();
 
+                            
                             // add transaction to and specify it's type in transactions collection
                             const transactions = client.db("users").collection("transactions");
 
@@ -605,6 +628,7 @@ app.post("/api/checkout-cart", async (req, res) => {
                                     // once the transaction process is complete, the item is added to orders
                                     const collection = client.db("users").collection("orders");
                                     cartItems[i]['txid'] = hash;
+                                    txid = hash;
                                     await collection.insertOne(cartItems[i]).then(() => {
                                         //res.send({message: "SUCCESS"});
                                     }).catch((err) => {
@@ -614,10 +638,12 @@ app.post("/api/checkout-cart", async (req, res) => {
                                 }).catch((err) => {res.send({message: "FAILED", err: err});});
                             }).catch((err) => {res.send({message:"FAILED"});});
                         
-                            //console.log(tx + "\n======");
-                           // console.log("Fee: " + fee);
+                            console.log(tx + "\n======");
+                            console.log("Fee: " + fee);
                             totalFee += fee;
-                            //console.log("Tx Hash: " + tx.getHash());
+                            txid = hash;
+                            console.log("Tx Hash: " + tx.getHash());
+                            
     
                         } catch(err) {
                             isFailed = true;
@@ -643,26 +669,29 @@ app.post("/api/checkout-cart", async (req, res) => {
                     isFailed = true;
                     res.send({message:"FAILED"});
                 }
-            
             }).catch((err) => {res.send({message:"FAILED"}); isFailed = true;});
         }).catch((err) => {});
+        }catch(err) {}
     }
 
     if (!isFailed) {
-        // get balance after transaction
-        let path = from_user.wallet;
-        let password = from_user.wallet_password;
-        const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
-        await walletRpc.openWallet(path, password);
-        balance_after = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
-        walletRpc.close();
+        try {
+            // get balance after transaction
+            let path = from_user.wallet;
+            let password = from_user.wallet_password;
+            const walletRpc = await monerojs.connectToWalletRpc("http://172.105.103.62:8181", "radu", "R123R123");
+            await walletRpc.openWallet(path, password);
+            balance_after = parseInt((await walletRpc.getBalance()).toString())/1000000000000;
+            walletRpc.close();
+        } catch(err) {}
 
         let response = {
             balance_before: balance_before,
             amountTotal: amountTotal,
             amountTotalDollars: amountTotalDollars,
             balance_after: balance_after,
-            totalFee: totalFee
+            totalFee: totalFee,
+            txid: txid
         };
 
         res.send({message: "SUCCESS", response: response});

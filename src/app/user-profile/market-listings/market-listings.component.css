@@ -1,3 +1,8 @@
+h3 {
+    margin-left: 2%;
+    color: rgb(255, 255, 255);
+}
+
 #inLine {
     white-space: nowrap;
     font-weight: bold;
