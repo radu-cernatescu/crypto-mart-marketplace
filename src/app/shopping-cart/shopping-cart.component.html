@@ -21,7 +21,7 @@
                 <div id="itemOptionsContainer">
                     <div id="priceContainer">
                         <span class="badge"> CAD ${{ sellItem.price * sellItem.quantity | number : '1.2-2'}} </span>
-                        <span class="badge"> XMR ${{ sellItem.dollarPrice * sellItem.quantity | number : '1.2-4'}} </span>
+                        <span class="badge"> XMR {{ sellItem.dollarPrice * sellItem.quantity | number : '1.2-4'}} </span>
                     </div>
                     <p id="cartOptionsTitle"> <b>Item Options:</b> </p>
                     <p id="quantity"> <b>Quantity: </b> <input type="number" name="quantity" min="1" step="1" id="userIn" [(ngModel)]="userItems[i].quantity" (input)="quantityChange($event, i)"> </p>
@@ -39,11 +39,11 @@
     <div id="checkoutInfo">
         <p> <b>Order Size: {{numOfItems}} items </b> </p>
         <p> <b><u>Subtotal:</u></b> </p> 
-        <p> <b> XMR </b>${{subTotal.toFixed(4)}}</p>
+        <p> <b> XMR </b>{{subTotal.toFixed(4)}}</p>
         <p> <b><u>Tax (HST):</u></b> </p>
-        <p> <b> XMR </b>${{tax.toFixed(4)}} </p>
+        <p> <b> XMR </b>{{tax.toFixed(4)}} </p>
         <p> <b><u>Grand Total:</u></b> </p>
-        <p> <b> XMR </b>${{grandTotal.toFixed(4)}}</p>
+        <p> <b> XMR </b>{{grandTotal.toFixed(4)}}</p>
     </div>
     <br>
     <button class="btn btn-success" id="checkoutButton" (click)="checkoutPop()" [disabled]="0 >= grandTotal">CHECKOUT</button> <!--Required: Disable button if no items are in cart-->
@@ -53,7 +53,7 @@
     <h3 class="checkoutTitle"> CONFIRMATION </h3>
     <br>
     <p class="checkoutQuestion">Confirm order for a total of</p>
-    <p class="checkoutQuestion"><b>${{this.grantTotalDollars.toFixed(2)}}?</b></p>
+    <p class="checkoutQuestion"><b>XMR {{this.grandTotal.toFixed(6)}}?</b></p>
     <br>
     <button class="btn btn-success"  (click)="buyNow()">CONFIRM</button>
     <button class="btn btn-success" (click)="cancelCheckout()">CANCEL</button>
@@ -66,7 +66,7 @@
     <p class="checkoutQuestion"> Balance After  order: {{this.afterBalance}} XMR </p>
     <p class="checkoutQuestion"> Fee: {{this.totalFee/1000000000000}} XMR</p>
     
-    <p class="checkoutQuestion"><b>Order Value: $CAD {{grandTotal.toFixed(2)}}</b></p>
+    <p class="checkoutQuestion"><b>Order Value: $CAD {{this.grantTotalDollars.toFixed(2)}}</b></p>
     <br>
     <button class="btn btn-success" routerLink="/my-oders" (click)="ok()">OK</button>
 </div>

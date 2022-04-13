@@ -103,7 +103,7 @@ export class ItemsService {
   }
 
   sendItemSoldNotification(txid: string, user: User, item: Item) {
-
+   
     return this.http.post(this.CMS_API + "send-listing-sold-notif", {user: user, item: item, txid: txid});
   }
 }

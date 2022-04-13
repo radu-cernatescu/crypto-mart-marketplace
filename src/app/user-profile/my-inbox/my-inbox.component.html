@@ -26,10 +26,15 @@
                     <div id="ItemInfo">
                         <b>Sold Listing!</b><br/><br/>
                         <span><b>Item Title:</b> {{ item.item.title }}</span>
+                        <br/>
+                        <span><b>Quantity:</b> {{ item.item.quantity }}</span>
+                        <br/>
+                        <span><b>Shipping:</b> {{ item.item.shippingOption }}</span>
                         <br><br>
                     </div>
                     <div>
                         <span class="badge">${{ item.item.price }}</span>
+                        
                     </div>
                     <div id="itemOptionsContainer">
                         <button class="btn btn-danger" (click)="markAsRead(item)"><p id="rotatedText">Mark as read</p></button>

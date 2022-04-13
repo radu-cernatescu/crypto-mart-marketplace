@@ -50,7 +50,7 @@ export class ShoppingCartComponent implements OnInit {
         });
       }
       this.loadItems();
-    })
+    });
   }
 
   deleteItemFromCart(i:number){
@@ -70,10 +70,12 @@ export class ShoppingCartComponent implements OnInit {
           this.subTotal = amount;
           this.numOfItems = items;
           this.tax = (this.subTotal * 0.13);
-          this.grandTotal = +(amount + this.tax);
+          this.grandTotal =+ (amount + this.tax);
         });
       }
     }
+    console.log(this.userItems)
+
   }
 
   quantityChange(event: any, index: number){
@@ -89,21 +91,23 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.loadItems();
   }
-  buyNow(){
+
+  buyNow() {
     this.spinnerService.show();
     this.itemsService.checkoutCart(this.userItems, this.user).subscribe((message:any) => {
       this.spinnerService.hide();
       //console.log(message);
       if (message.message == "SUCCESS") {
-
         this.itemsService.sendItemSoldNotification(message.response.txid, this.user, this.userItems[0]).subscribe((message:any) => {
-          //console.log(message)
+          console.log(message)
         });
 
         // Clear user's cart
         this.itemsService.clearCart(this.userItems).subscribe((message:any) => {
           //console.log(message)
         });
+        
+       //console.log(message);
 
         this.priorBalance = message.response.balance_before;
         this.afterBalance = message.response.balance_after;
