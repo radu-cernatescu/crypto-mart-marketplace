@@ -1,4 +1,5 @@
-# Group15
+# Crypto Mart Marketplace
+##### Seneca College Capstone Project
 
 Members
 |   Member Name   | Github Account  |             Email               |
